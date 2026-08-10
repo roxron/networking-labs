@@ -14,12 +14,12 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="subnet-r1-r2" parent="1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" value="10.0.0.0/30" vertex="1">
-          <mxGeometry height="30" width="100" x="465" y="475" as="geometry" />
+          <mxGeometry height="30" width="100" x="465" y="505" as="geometry" />
         </mxCell>
-        <mxCell id="label-r1-g0-0" parent="1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" value="G0/0&lt;br&gt;10.0.0.1/30" vertex="1">
+        <mxCell id="label-r1-g0-0" parent="1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" value="G0/0&lt;br&gt;.1" vertex="1">
           <mxGeometry height="40" width="100" x="420" y="555" as="geometry" />
         </mxCell>
-        <mxCell id="label-r2-g0-0" parent="1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" value="G0/0&lt;br&gt;10.0.0.2/30" vertex="1">
+        <mxCell id="label-r2-g0-0" parent="1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" value="G0/0&lt;br&gt;.2" vertex="1">
           <mxGeometry height="40" width="100" x="540" y="555" as="geometry" />
         </mxCell>
       </root>
