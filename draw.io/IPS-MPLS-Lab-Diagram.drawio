@@ -88,6 +88,72 @@
         <mxCell id="label-r3-g0-2" parent="1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" value="G0/2&lt;br&gt;.22" vertex="1">
           <mxGeometry height="40" width="70" x="415" y="715" as="geometry" />
         </mxCell>
+        <mxCell id="router-p5" parent="1" style="sketch=0;points=[[0.5,0,0],[1,0.5,0],[0.5,1,0],[0,0.5,0],[0.145,0.145,0],[0.8555,0.145,0],[0.855,0.8555,0],[0.145,0.855,0]];verticalLabelPosition=top;html=1;verticalAlign=bottom;aspect=fixed;align=center;pointerEvents=1;shape=mxgraph.cisco19.rect;prIcon=router;fillColor=#FAFAFA;strokeColor=#005073;" value="P5" vertex="1">
+          <mxGeometry height="50" width="50" x="890" y="525" as="geometry" />
+        </mxCell>
+        <mxCell id="router-p6" parent="1" style="sketch=0;points=[[0.5,0,0],[1,0.5,0],[0.5,1,0],[0,0.5,0],[0.145,0.145,0],[0.8555,0.145,0],[0.855,0.8555,0],[0.145,0.855,0]];verticalLabelPosition=bottom;html=1;verticalAlign=top;aspect=fixed;align=center;pointerEvents=1;shape=mxgraph.cisco19.rect;prIcon=router;fillColor=#FAFAFA;strokeColor=#005073;" value="P6" vertex="1">
+          <mxGeometry height="50" width="50" x="890" y="775" as="geometry" />
+        </mxCell>
+        <mxCell id="link-p2-p5" edge="1" parent="1" source="router-r2" target="router-p5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;endArrow=none;endFill=0;strokeWidth=2;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="subnet-p2-p5" parent="1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" value="10.0.0.24/30" vertex="1">
+          <mxGeometry height="30" width="110" x="765" y="555" as="geometry" />
+        </mxCell>
+        <mxCell id="label-p2-g0-3" parent="1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" value="G0/3&lt;br&gt;.25" vertex="1">
+          <mxGeometry height="40" width="70" x="695" y="510" as="geometry" />
+        </mxCell>
+        <mxCell id="label-p5-g0-0" parent="1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" value="G0/0&lt;br&gt;.26" vertex="1">
+          <mxGeometry height="40" width="70" x="815" y="510" as="geometry" />
+        </mxCell>
+        <mxCell id="link-p2-p6" edge="1" parent="1" source="router-r2" target="router-p6" style="edgeStyle=none;rounded=0;html=1;dashed=1;dashPattern=8 8;endArrow=none;endFill=0;strokeWidth=2;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="subnet-p2-p6" parent="1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;rotation=45;" value="10.0.0.28/30" vertex="1">
+          <mxGeometry height="30" width="110" x="735" y="625" as="geometry" />
+        </mxCell>
+        <mxCell id="label-p2-g0-4" parent="1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" value="G0/4&lt;br&gt;.29" vertex="1">
+          <mxGeometry height="40" width="70" x="735" y="575" as="geometry" />
+        </mxCell>
+        <mxCell id="label-p6-g0-1" parent="1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" value="G0/1&lt;br&gt;.30" vertex="1">
+          <mxGeometry height="40" width="70" x="815" y="735" as="geometry" />
+        </mxCell>
+        <mxCell id="link-p4-p6" edge="1" parent="1" source="router-r4" target="router-p6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;endArrow=none;endFill=0;strokeWidth=2;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="subnet-p4-p6" parent="1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" value="10.0.0.32/30" vertex="1">
+          <mxGeometry height="30" width="110" x="765" y="770" as="geometry" />
+        </mxCell>
+        <mxCell id="label-p4-g0-3" parent="1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" value="G0/3&lt;br&gt;.33" vertex="1">
+          <mxGeometry height="40" width="70" x="695" y="800" as="geometry" />
+        </mxCell>
+        <mxCell id="label-p6-g0-0" parent="1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" value="G0/0&lt;br&gt;.34" vertex="1">
+          <mxGeometry height="40" width="70" x="815" y="800" as="geometry" />
+        </mxCell>
+        <mxCell id="link-p4-p5" edge="1" parent="1" source="router-r4" target="router-p5" style="edgeStyle=none;rounded=0;html=1;dashed=1;dashPattern=8 8;endArrow=none;endFill=0;strokeWidth=2;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="subnet-p4-p5" parent="1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;rotation=-45;" value="10.0.0.36/30" vertex="1">
+          <mxGeometry height="30" width="110" x="735" y="700" as="geometry" />
+        </mxCell>
+        <mxCell id="label-p4-g0-4" parent="1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" value="G0/4&lt;br&gt;.37" vertex="1">
+          <mxGeometry height="40" width="70" x="735" y="725" as="geometry" />
+        </mxCell>
+        <mxCell id="label-p5-g0-1" parent="1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" value="G0/1&lt;br&gt;.38" vertex="1">
+          <mxGeometry height="40" width="70" x="815" y="575" as="geometry" />
+        </mxCell>
+        <mxCell id="link-p5-p6" edge="1" parent="1" source="router-p5" target="router-p6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;endArrow=none;endFill=0;strokeWidth=2;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="subnet-p5-p6" parent="1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;rotation=-90;" value="10.0.0.40/30" vertex="1">
+          <mxGeometry height="30" width="110" x="865" y="650" as="geometry" />
+        </mxCell>
+        <mxCell id="label-p5-g0-2" parent="1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" value="G0/2&lt;br&gt;.41" vertex="1">
+          <mxGeometry height="40" width="70" x="945" y="585" as="geometry" />
+        </mxCell>
+        <mxCell id="label-p6-g0-2" parent="1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" value="G0/2&lt;br&gt;.42" vertex="1">
+          <mxGeometry height="40" width="70" x="945" y="725" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
