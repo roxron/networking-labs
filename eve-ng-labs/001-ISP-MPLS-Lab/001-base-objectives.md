@@ -315,6 +315,111 @@ interface GigabitEthernet0/1
  no shutdown
 ```
 
+#### Base Interface Verification
+
+Run the following commands on every router after configuring its interfaces:
+
+```cisco
+show ip interface brief | exclude unassigned
+show interfaces description | include up
+show ip route connected
+show interfaces stats | exclude disabled
+```
+
+Expected checks:
+
+- Every configured physical interface and Loopback0 appears in `show ip interface brief`.
+- Every configured physical interface is `up/up`.
+- The interface descriptions identify the correct neighboring device and interface.
+- Every local `/30` transit network and `/32` loopback appears as connected or local in the routing table.
+- Enabled interfaces show packet counters rather than a disabled state.
+
+> [!NOTE]
+> Command output filtering is case-sensitive on some IOS releases. If `| include up` or `| exclude disabled` produces unexpected output, run the unfiltered command and inspect the complete result.
+
+#### Directly Connected Neighbor Troubleshooting
+
+Run the applicable ping block from each router. These tests validate every directly connected physical link before OSPF or MPLS is configured.
+
+##### P1 Neighbor Pings
+
+```cisco
+ping 10.0.0.2
+ping 10.0.0.6
+ping 10.0.0.18
+ping 10.0.1.1
+```
+
+##### P2 Neighbor Pings
+
+```cisco
+ping 10.0.0.1
+ping 10.0.0.10
+ping 10.0.0.22
+ping 10.0.0.26
+ping 10.0.0.30
+```
+
+##### P3 Neighbor Pings
+
+```cisco
+ping 10.0.0.14
+ping 10.0.0.5
+ping 10.0.0.21
+ping 10.0.1.5
+```
+
+##### P4 Neighbor Pings
+
+```cisco
+ping 10.0.0.13
+ping 10.0.0.9
+ping 10.0.0.17
+ping 10.0.0.34
+ping 10.0.0.38
+```
+
+##### P5 Neighbor Pings
+
+```cisco
+ping 10.0.0.25
+ping 10.0.0.37
+ping 10.0.0.42
+ping 10.0.1.9
+```
+
+##### P6 Neighbor Pings
+
+```cisco
+ping 10.0.0.33
+ping 10.0.0.29
+ping 10.0.0.41
+ping 10.0.1.13
+```
+
+##### PE1 Neighbor Pings
+
+```cisco
+ping 10.0.1.2
+ping 10.0.1.6
+```
+
+##### PE2 Neighbor Pings
+
+```cisco
+ping 10.0.1.10
+ping 10.0.1.14
+```
+
+Each ping should return a success rate of 100 percent. If a ping fails:
+
+1. Compare the local and remote IP addresses with the interface table.
+2. Confirm that both interfaces use mask `255.255.255.252`.
+3. Check that both interfaces are `up/up` and have `no shutdown` configured.
+4. Confirm the EVE-NG cable connects the interfaces named in their descriptions.
+5. Check ARP resolution with `show ip arp <neighbor-address>`.
+6. Use `show interfaces <interface>` to check encapsulation, errors, drops, and line-protocol state.
+
 ### 2. Configure OSPF
 
 Use Loopback0 as the router ID. Keep loopbacks passive and enable adjacency formation only on transit interfaces.
