@@ -731,15 +731,256 @@ Check the following conditions on both ends of the failed adjacency:
 
 ### 3. Configure MPLS and LDP
 
+Enable MPLS forwarding globally and select LDP as the label distribution protocol. Use Loopback0 as the stable LDP router ID. Enable MPLS on every P-to-P and PE-to-P interface, but not on Loopback0 or any future customer-facing interface.
+
+#### P1 MPLS and LDP Configuration
+
 ```cisco
+mpls ip
 mpls label protocol ldp
 mpls ldp router-id Loopback0 force
 !
 interface GigabitEthernet0/0
  mpls ip
+!
+interface GigabitEthernet0/1
+ mpls ip
+!
+interface GigabitEthernet0/2
+ mpls ip
+!
+interface GigabitEthernet0/3
+ mpls ip
 ```
 
-Apply `mpls ip` to all P-to-P and PE-to-P interfaces.
+#### P2 MPLS and LDP Configuration
+
+```cisco
+mpls ip
+mpls label protocol ldp
+mpls ldp router-id Loopback0 force
+!
+interface GigabitEthernet0/0
+ mpls ip
+!
+interface GigabitEthernet0/1
+ mpls ip
+!
+interface GigabitEthernet0/2
+ mpls ip
+!
+interface GigabitEthernet0/3
+ mpls ip
+!
+interface GigabitEthernet0/4
+ mpls ip
+```
+
+#### P3 MPLS and LDP Configuration
+
+```cisco
+mpls ip
+mpls label protocol ldp
+mpls ldp router-id Loopback0 force
+!
+interface GigabitEthernet0/0
+ mpls ip
+!
+interface GigabitEthernet0/1
+ mpls ip
+!
+interface GigabitEthernet0/2
+ mpls ip
+!
+interface GigabitEthernet0/3
+ mpls ip
+```
+
+#### P4 MPLS and LDP Configuration
+
+```cisco
+mpls ip
+mpls label protocol ldp
+mpls ldp router-id Loopback0 force
+!
+interface GigabitEthernet0/0
+ mpls ip
+!
+interface GigabitEthernet0/1
+ mpls ip
+!
+interface GigabitEthernet0/2
+ mpls ip
+!
+interface GigabitEthernet0/3
+ mpls ip
+!
+interface GigabitEthernet0/4
+ mpls ip
+```
+
+#### P5 MPLS and LDP Configuration
+
+```cisco
+mpls ip
+mpls label protocol ldp
+mpls ldp router-id Loopback0 force
+!
+interface GigabitEthernet0/0
+ mpls ip
+!
+interface GigabitEthernet0/1
+ mpls ip
+!
+interface GigabitEthernet0/2
+ mpls ip
+!
+interface GigabitEthernet0/3
+ mpls ip
+```
+
+#### P6 MPLS and LDP Configuration
+
+```cisco
+mpls ip
+mpls label protocol ldp
+mpls ldp router-id Loopback0 force
+!
+interface GigabitEthernet0/0
+ mpls ip
+!
+interface GigabitEthernet0/1
+ mpls ip
+!
+interface GigabitEthernet0/2
+ mpls ip
+!
+interface GigabitEthernet0/3
+ mpls ip
+```
+
+#### PE1 MPLS and LDP Configuration
+
+```cisco
+mpls ip
+mpls label protocol ldp
+mpls ldp router-id Loopback0 force
+!
+interface GigabitEthernet0/0
+ mpls ip
+!
+interface GigabitEthernet0/1
+ mpls ip
+```
+
+#### PE2 MPLS and LDP Configuration
+
+```cisco
+mpls ip
+mpls label protocol ldp
+mpls ldp router-id Loopback0 force
+!
+interface GigabitEthernet0/0
+ mpls ip
+!
+interface GigabitEthernet0/1
+ mpls ip
+```
+
+#### MPLS and LDP Verification
+
+Use only MPLS- and LDP-specific commands for this stage:
+
+```cisco
+show mpls interfaces
+show mpls ldp parameters
+show mpls ldp discovery
+show mpls ldp neighbor
+show mpls ldp neighbor detail
+show mpls ldp bindings
+show mpls forwarding-table
+```
+
+Expected LDP neighbor counts match the physical MPLS adjacencies:
+
+| Router | Expected LDP Peers | Count |
+|---|---|---:|
+| P1 | P2, P3, P4, PE1 | 4 |
+| P2 | P1, P3, P4, P5, P6 | 5 |
+| P3 | P1, P2, P4, PE1 | 4 |
+| P4 | P1, P2, P3, P5, P6 | 5 |
+| P5 | P2, P4, P6, PE2 | 4 |
+| P6 | P2, P4, P5, PE2 | 4 |
+| PE1 | P1, P3 | 2 |
+| PE2 | P5, P6 | 2 |
+
+Verify that:
+
+- Every provider-facing physical interface appears as MPLS enabled and operational.
+- The LDP router ID is the router's Loopback0 address.
+- Every expected LDP peer is operational.
+- Remote provider loopbacks have local and remote label bindings.
+- The MPLS forwarding table has labeled next hops for remote `/32` FECs.
+
+#### MPLS LSP Ping
+
+MPLS LSP ping validates the label-switched path to a remote IPv4 FEC. Run the following tests from the indicated routers.
+
+P1:
+
+```cisco
+ping mpls ipv4 10.0.52.1/32
+ping mpls ipv4 10.0.52.2/32
+```
+
+P2:
+
+```cisco
+ping mpls ipv4 10.0.52.1/32
+ping mpls ipv4 10.0.52.2/32
+```
+
+P3:
+
+```cisco
+ping mpls ipv4 10.0.52.1/32
+ping mpls ipv4 10.0.52.2/32
+```
+
+P4:
+
+```cisco
+ping mpls ipv4 10.0.52.1/32
+ping mpls ipv4 10.0.52.2/32
+```
+
+P5:
+
+```cisco
+ping mpls ipv4 10.0.52.1/32
+ping mpls ipv4 10.0.52.2/32
+```
+
+P6:
+
+```cisco
+ping mpls ipv4 10.0.52.1/32
+ping mpls ipv4 10.0.52.2/32
+```
+
+PE1:
+
+```cisco
+ping mpls ipv4 10.0.52.2/32
+```
+
+PE2:
+
+```cisco
+ping mpls ipv4 10.0.52.1/32
+```
+
+Each MPLS echo request should return successfully. A failure indicates a problem with the target FEC, LDP label bindings, or the label-switched forwarding path.
 
 ### 4. Test Resiliency
 
@@ -747,30 +988,6 @@ Apply `mpls ip` to all P-to-P and PE-to-P interfaces.
 - Record the normal IGP next hops and MPLS forwarding entry.
 - Shut one link at a time and verify that traffic reconverges.
 - Restore the interface before testing another failure.
-
-## Verification Commands
-
-```cisco
-show ip interface brief
-show interfaces description
-show isis neighbors
-show isis interface brief
-show ip route isis
-show mpls interfaces
-show mpls ldp discovery
-show mpls ldp neighbor
-show mpls ldp bindings
-show mpls forwarding-table
-```
-
-PE1-to-PE2 test:
-
-```cisco
-ping 10.0.52.2 source 10.0.52.1
-traceroute 10.0.52.2 source 10.0.52.1
-show ip route 10.0.52.2
-show ip cef 10.0.52.2 detail
-```
 
 ## Expected Results
 
