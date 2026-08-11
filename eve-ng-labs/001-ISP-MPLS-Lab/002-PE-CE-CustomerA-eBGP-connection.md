@@ -176,7 +176,7 @@ Decide what CE-A should learn from PE1. For this initial task, prefer either a f
 ### 6. Preserve Provider-Core Isolation
 
 - Do not enable MPLS on the CE-facing interface.
-- Do not form an OSPF adjacency with CE-A.
+- Do not form an IS-IS adjacency with CE-A.
 - Do not redistribute the customer BGP prefix into the provider IGP.
 - P routers should continue to carry only provider infrastructure routes.
 
@@ -208,7 +208,7 @@ On a P router:
 
 ```cisco
 show ip route <CUSTOMER-A-NETWORK> <CUSTOMER-MASK>
-show ip ospf database
+show isis database
 show mpls ldp neighbor
 ```
 
@@ -222,7 +222,7 @@ The customer prefix should not appear in the P-router IGP table during this task
 - CE-A advertises only the approved Customer A prefix.
 - PE1 receives and installs that prefix as a BGP route.
 - CE-A receives only the routes allowed by the provider's outbound policy.
-- The customer route is not redistributed into OSPF.
+- The customer route is not redistributed into IS-IS.
 - P routers remain unaware of Customer A prefixes.
 - Existing MPLS underlay operation remains unchanged.
 
@@ -236,7 +236,7 @@ The customer prefix should not appear in the P-router IGP table during this task
 | `Bad peer AS` notification | `remote-as` does not match the peer's local AS | Correct the AS numbers on both routers |
 | Session is established but no prefix arrives | Missing exact route or inactive address family | Check CE routing table, `network` mask, and neighbor activation |
 | Prefix is rejected by PE1 | Prefix list does not match | Inspect prefix-list counters and exact prefix length |
-| Customer prefix appears on P routers | Accidental redistribution into the IGP | Remove redistribution and verify OSPF configuration |
+| Customer prefix appears on P routers | Accidental redistribution into the IGP | Remove redistribution and verify IS-IS configuration |
 | CE receives too many routes | Missing or incorrect outbound policy on PE1 | Apply an explicit outbound prefix list |
 
 ## Completion Checklist

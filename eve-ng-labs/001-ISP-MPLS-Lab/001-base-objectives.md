@@ -7,7 +7,7 @@ Build the routed and label-switched foundation for the ISP lab. Six P routers fo
 ## Prerequisites
 
 - An EVE-NG topology matching [ISP-MPLS-Lab-Diagram.drawio](./ISP-MPLS-Lab-Diagram.drawio)
-- Router images that support IPv4 routing, OSPF, MPLS, and LDP
+- Router images that support IPv4 routing, IS-IS, MPLS, and LDP
 - Console access to P1–P6, PE1, and PE2
 - Unique physical interfaces assigned to every point-to-point link
 
@@ -64,7 +64,7 @@ Build the routed and label-switched foundation for the ISP lab. Six P routers fo
 ## Technologies and Protocols
 
 - IPv4
-- OSPF area 0 as the reference IGP
+- IS-IS Level 2 as the provider IGP
 - MPLS forwarding
 - LDP
 - ECMP and redundant path convergence
@@ -72,7 +72,7 @@ Build the routed and label-switched foundation for the ISP lab. Six P routers fo
 ## Objectives
 
 1. Configure all router identities and interfaces.
-2. Establish OSPF adjacencies on every provider link.
+2. Establish IS-IS Level 2 adjacencies on every provider link.
 3. Advertise all P and PE loopbacks.
 4. Enable MPLS on every provider-facing physical interface.
 5. Establish LDP sessions throughout the topology.
@@ -339,7 +339,7 @@ Expected checks:
 
 #### Directly Connected Neighbor Troubleshooting
 
-Run the applicable ping block from each router. These tests validate every directly connected physical link before OSPF or MPLS is configured.
+Run the applicable ping block from each router. These tests validate every directly connected physical link before IS-IS or MPLS is configured.
 
 ##### P1 Neighbor Pings
 
@@ -420,24 +420,314 @@ Each ping should return a success rate of 100 percent. If a ping fails:
 5. Check ARP resolution with `show ip arp <neighbor-address>`.
 6. Use `show interfaces <interface>` to check encapsulation, errors, drops, and line-protocol state.
 
-### 2. Configure OSPF
+### 2. Configure IS-IS
 
-Use Loopback0 as the router ID. Keep loopbacks passive and enable adjacency formation only on transit interfaces.
+The updated topology uses IS-IS as the MPLS-core IGP. All routers belong to area `49.0001` and operate as Level 2-only routers. The diagram assigns the following NET patterns:
+
+- P routers: `49.0001.A000.0000.000X.00`
+- PE routers: `49.0001.B000.0000.000X.00`
+
+The final six-byte portion before the NSEL is the IS-IS system ID and must be unique. Loopback0 is passive so its IPv4 prefix is advertised without attempting to form an adjacency. Every physical provider link uses the IS-IS point-to-point network type.
+
+#### P1 IS-IS Configuration
 
 ```cisco
-router ospf 1
- router-id 10.0.50.1
- passive-interface default
- no passive-interface GigabitEthernet0/0
- no passive-interface GigabitEthernet0/1
- no passive-interface GigabitEthernet0/2
- no passive-interface GigabitEthernet0/3
- network 10.0.0.0 0.0.0.255 area 0
- network 10.0.1.0 0.0.0.255 area 0
- network 10.0.50.1 0.0.0.0 area 0
+router isis CORE
+ net 49.0001.A000.0000.0001.00
+ is-type level-2-only
+ metric-style wide
+ log-adjacency-changes
+ passive-interface Loopback0
+!
+interface Loopback0
+ ip router isis CORE
+!
+interface GigabitEthernet0/0
+ ip router isis CORE
+ isis network point-to-point
+!
+interface GigabitEthernet0/1
+ ip router isis CORE
+ isis network point-to-point
+!
+interface GigabitEthernet0/2
+ ip router isis CORE
+ isis network point-to-point
+!
+interface GigabitEthernet0/3
+ ip router isis CORE
+ isis network point-to-point
 ```
 
-Adapt the interfaces and loopback network statement for each router. PE loopbacks are in `10.0.52.0/23`.
+#### P2 IS-IS Configuration
+
+```cisco
+router isis CORE
+ net 49.0001.A000.0000.0002.00
+ is-type level-2-only
+ metric-style wide
+ log-adjacency-changes
+ passive-interface Loopback0
+!
+interface Loopback0
+ ip router isis CORE
+!
+interface GigabitEthernet0/0
+ ip router isis CORE
+ isis network point-to-point
+!
+interface GigabitEthernet0/1
+ ip router isis CORE
+ isis network point-to-point
+!
+interface GigabitEthernet0/2
+ ip router isis CORE
+ isis network point-to-point
+!
+interface GigabitEthernet0/3
+ ip router isis CORE
+ isis network point-to-point
+!
+interface GigabitEthernet0/4
+ ip router isis CORE
+ isis network point-to-point
+```
+
+#### P3 IS-IS Configuration
+
+```cisco
+router isis CORE
+ net 49.0001.A000.0000.0003.00
+ is-type level-2-only
+ metric-style wide
+ log-adjacency-changes
+ passive-interface Loopback0
+!
+interface Loopback0
+ ip router isis CORE
+!
+interface GigabitEthernet0/0
+ ip router isis CORE
+ isis network point-to-point
+!
+interface GigabitEthernet0/1
+ ip router isis CORE
+ isis network point-to-point
+!
+interface GigabitEthernet0/2
+ ip router isis CORE
+ isis network point-to-point
+!
+interface GigabitEthernet0/3
+ ip router isis CORE
+ isis network point-to-point
+```
+
+#### P4 IS-IS Configuration
+
+```cisco
+router isis CORE
+ net 49.0001.A000.0000.0004.00
+ is-type level-2-only
+ metric-style wide
+ log-adjacency-changes
+ passive-interface Loopback0
+!
+interface Loopback0
+ ip router isis CORE
+!
+interface GigabitEthernet0/0
+ ip router isis CORE
+ isis network point-to-point
+!
+interface GigabitEthernet0/1
+ ip router isis CORE
+ isis network point-to-point
+!
+interface GigabitEthernet0/2
+ ip router isis CORE
+ isis network point-to-point
+!
+interface GigabitEthernet0/3
+ ip router isis CORE
+ isis network point-to-point
+!
+interface GigabitEthernet0/4
+ ip router isis CORE
+ isis network point-to-point
+```
+
+#### P5 IS-IS Configuration
+
+```cisco
+router isis CORE
+ net 49.0001.A000.0000.0005.00
+ is-type level-2-only
+ metric-style wide
+ log-adjacency-changes
+ passive-interface Loopback0
+!
+interface Loopback0
+ ip router isis CORE
+!
+interface GigabitEthernet0/0
+ ip router isis CORE
+ isis network point-to-point
+!
+interface GigabitEthernet0/1
+ ip router isis CORE
+ isis network point-to-point
+!
+interface GigabitEthernet0/2
+ ip router isis CORE
+ isis network point-to-point
+!
+interface GigabitEthernet0/3
+ ip router isis CORE
+ isis network point-to-point
+```
+
+#### P6 IS-IS Configuration
+
+```cisco
+router isis CORE
+ net 49.0001.A000.0000.0006.00
+ is-type level-2-only
+ metric-style wide
+ log-adjacency-changes
+ passive-interface Loopback0
+!
+interface Loopback0
+ ip router isis CORE
+!
+interface GigabitEthernet0/0
+ ip router isis CORE
+ isis network point-to-point
+!
+interface GigabitEthernet0/1
+ ip router isis CORE
+ isis network point-to-point
+!
+interface GigabitEthernet0/2
+ ip router isis CORE
+ isis network point-to-point
+!
+interface GigabitEthernet0/3
+ ip router isis CORE
+ isis network point-to-point
+```
+
+#### PE1 IS-IS Configuration
+
+```cisco
+router isis CORE
+ net 49.0001.B000.0000.0001.00
+ is-type level-2-only
+ metric-style wide
+ log-adjacency-changes
+ passive-interface Loopback0
+!
+interface Loopback0
+ ip router isis CORE
+!
+interface GigabitEthernet0/0
+ ip router isis CORE
+ isis network point-to-point
+!
+interface GigabitEthernet0/1
+ ip router isis CORE
+ isis network point-to-point
+```
+
+#### PE2 IS-IS Configuration
+
+```cisco
+router isis CORE
+ net 49.0001.B000.0000.0002.00
+ is-type level-2-only
+ metric-style wide
+ log-adjacency-changes
+ passive-interface Loopback0
+!
+interface Loopback0
+ ip router isis CORE
+!
+interface GigabitEthernet0/0
+ ip router isis CORE
+ isis network point-to-point
+!
+interface GigabitEthernet0/1
+ ip router isis CORE
+ isis network point-to-point
+```
+
+#### IS-IS Verification
+
+Run these commands on every router:
+
+```cisco
+show clns protocol
+show clns interface
+show isis neighbors
+show isis neighbors detail
+show isis database
+show isis topology
+show ip route isis
+show ip protocols
+```
+
+Expected checks:
+
+- The local NET matches the router's assigned NET from the diagram.
+- The IS-IS process operates as Level 2-only and uses wide metrics.
+- Every physical provider interface is IS-IS enabled and uses point-to-point mode.
+- Every directly connected provider neighbor reaches the `Up` state at Level 2.
+- Each router's Level 2 link-state database contains one LSP for every P and PE router.
+- All seven remote `/32` loopbacks appear as IS-IS routes.
+- No adjacency forms on Loopback0 because it is passive.
+
+#### IS-IS Adjacency Expectations
+
+| Router | Expected Level 2 Neighbors | Count |
+|---|---|---:|
+| P1 | P2, P3, P4, PE1 | 4 |
+| P2 | P1, P3, P4, P5, P6 | 5 |
+| P3 | P1, P2, P4, PE1 | 4 |
+| P4 | P1, P2, P3, P5, P6 | 5 |
+| P5 | P2, P4, P6, PE2 | 4 |
+| P6 | P2, P4, P5, PE2 | 4 |
+| PE1 | P1, P3 | 2 |
+| PE2 | P5, P6 | 2 |
+
+#### IS-IS Troubleshooting
+
+If an expected adjacency does not form, run:
+
+```cisco
+show isis neighbors detail
+show clns interface <INTERFACE>
+show interfaces <INTERFACE>
+show running-config interface <INTERFACE>
+show running-config | section router isis
+debug isis adj-packets
+```
+
+Disable debugging after collecting the required output:
+
+```cisco
+undebug all
+```
+
+Check the following conditions on both ends of the failed adjacency:
+
+1. The physical interface is `up/up` and has direct IPv4 connectivity.
+2. `ip router isis CORE` is present on the correct interface.
+3. Both ends use `isis network point-to-point`.
+4. Both routers operate as Level 2-only routers.
+5. The NETs use area `49.0001` and have unique system IDs.
+6. No duplicate NET exists elsewhere in the topology.
+7. Authentication, if added later, matches on both ends.
+8. Interface MTU and IS-IS hello parameters are compatible.
 
 ### 3. Configure MPLS and LDP
 
@@ -463,9 +753,9 @@ Apply `mpls ip` to all P-to-P and PE-to-P interfaces.
 ```cisco
 show ip interface brief
 show interfaces description
-show ip ospf neighbor
-show ip ospf interface brief
-show ip route ospf
+show isis neighbors
+show isis interface brief
+show ip route isis
 show mpls interfaces
 show mpls ldp discovery
 show mpls ldp neighbor
@@ -485,7 +775,7 @@ show ip cef 10.0.52.2 detail
 ## Expected Results
 
 - Every configured physical interface is `up/up`.
-- OSPF neighbors reach the `FULL` state.
+- All expected IS-IS Level 2 neighbors reach the `Up` state.
 - All routers learn the eight provider loopbacks.
 - LDP neighbors form on every MPLS-enabled adjacency.
 - MPLS forwarding entries exist for remote loopbacks.
@@ -497,8 +787,8 @@ show ip cef 10.0.52.2 detail
 | Symptom | Checks |
 |---|---|
 | Direct ping fails | Check cabling, IP mask, interface state, and peer address |
-| OSPF neighbor is missing | Compare area, timers, network type, authentication, and MTU |
-| Loopback route is missing | Check the OSPF network statement and passive-interface design |
+| IS-IS neighbor is missing | Compare IS-IS level, network type, authentication, hello parameters, and MTU |
+| Loopback route is missing | Check `ip router isis CORE` and the passive-interface configuration |
 | LDP neighbor is missing | Confirm `mpls ip` on both ends and IGP reachability to LDP IDs |
 | Route exists without a label | Inspect LDP bindings and the MPLS forwarding table |
 | Failure causes isolation | Verify the alternate IGP and LDP path before the shutdown test |
@@ -507,7 +797,7 @@ show ip cef 10.0.52.2 detail
 
 - [ ] All interface addresses configured
 - [ ] All direct-neighbor pings successful
-- [ ] All expected OSPF adjacencies established
+- [ ] All expected IS-IS Level 2 adjacencies established
 - [ ] All provider loopbacks reachable
 - [ ] All expected LDP sessions established
 - [ ] PE1-to-PE2 label-switched forwarding verified

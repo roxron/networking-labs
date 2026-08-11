@@ -32,7 +32,7 @@ Future exercises can add topics such as:
 - Additional customer prefixes
 - Customer route filtering and prefix limits
 - BGP policy using communities and local preference
-- IS-IS as an alternative provider IGP
+- OSPF as an alternative provider IGP
 - BGP route reflectors
 - MPLS traffic engineering, Segment Routing, or fast reroute
 - Internet access and shared-services VRFs
