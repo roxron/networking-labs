@@ -1,311 +1,274 @@
-# ISP MPLS L3VPN Lab
+# ISP MPLS Core Lab
 
 ## Lab Purpose
 
-This EVE-NG lab demonstrates how an ISP can use Multiprotocol Label Switching (MPLS) and Multiprotocol BGP (MP-BGP) to provide Layer 3 VPN connectivity between two customer sites. The provider core uses an IGP and MPLS label switching, while the provider-edge (PE) routers keep customer routes isolated in a Virtual Routing and Forwarding (VRF) instance.
+This EVE-NG lab builds a redundant service-provider MPLS backbone. Six provider (P) routers form the transit core, and two provider-edge (PE) routers are dual-homed to that core. The lab focuses on underlay reachability, MPLS label distribution, path redundancy, and preparation for services such as MPLS Layer 3 VPNs.
 
-> [!NOTE]
-> The lab directory currently contains no EVE-NG `.unl` file or device configurations. The topology, addressing, and device names below form a reference design for building the lab. Update them if the exported topology uses different values.
+The addressing and links in this document are taken from [ISP-MPLS-Lab-Diagram.drawio](./ISP-MPLS-Lab-Diagram.drawio). The diagram does not show CE routers, customer networks, VRFs, routing process numbers, or BGP autonomous-system numbers; those are therefore outside the current topology.
 
 ## Topology Overview
 
 ```text
- Customer Site A                 ISP MPLS Backbone                 Customer Site B
-
-  192.168.10.0/24                                               192.168.20.0/24
-         |                                                            |
-       CE1 Lo0                                                      CE2 Lo0
-       CE1 Gi0/1                                                    CE2 Gi0/1
-         | 172.16.1.0/30                              172.16.2.0/30 |
-       PE1 Gi0/0                                                    PE2 Gi0/1
-       PE1 Gi0/1                                                    PE2 Gi0/0
-         | 10.0.12.0/30          10.0.23.0/30          10.0.34.0/30 |
-         +------------ P1 ---------------- P2 ----------------------+
-
-  MP-BGP VPNv4: PE1 ================================================= PE2
-  OSPF + LDP:    PE1 -------- P1 -------- P2 -------- PE2
+                         PE1                              PE2
+                      /       \                        /       \
+                     /         \                      /         \
+                   P1-----------P2------------------+           |
+                   | \         / |                              |
+                   |   \     /   |                              |
+                   |     \ /     |                              |
+                   |     / \     |                              |
+                   |   /     \   |                              |
+                   | /         \ |                              |
+                   P3-----------P4------------------+           |
+                                | \                /            |
+                                |   \            /              |
+                                |     P5--------P6               |
+                                |    /  \        /               |
+                                +---+    +------+----------------+
 ```
 
-The P routers switch labeled packets through the provider backbone and do not hold customer VPN routes. PE1 and PE2 exchange VPNv4 routes through MP-BGP. Each PE imports the remote routes into the `CUST-A` VRF.
+Logical adjacencies:
 
-## Devices and Roles
+- P1, P2, P3, and P4 form a full mesh of six point-to-point links.
+- P2 and P4 each connect to both P5 and P6.
+- P5 and P6 have a direct link between them.
+- PE1 is dual-homed to P1 and P3.
+- PE2 is dual-homed to P2 and P4.
+- All transit links use `/30` IPv4 subnets.
+- All routers use `/32` Loopback0 addresses as stable router and LDP identifiers.
 
-| Device | Role | Function |
-|---|---|---|
-| CE1 | Customer-edge router | Connects Customer Site A to PE1 and advertises the Site A LAN |
-| PE1 | Provider-edge router | Hosts the `CUST-A` VRF, exchanges customer routes with CE1, and originates VPNv4 routes |
-| P1 | Provider core router | Runs the provider IGP and LDP; label-switches traffic without learning VPN routes |
-| P2 | Provider core router | Runs the provider IGP and LDP; label-switches traffic without learning VPN routes |
-| PE2 | Provider-edge router | Hosts the `CUST-A` VRF, exchanges customer routes with CE2, and originates VPNv4 routes |
-| CE2 | Customer-edge router | Connects Customer Site B to PE2 and advertises the Site B LAN |
+## Devices and Their Roles
+
+| Device | Role | Loopback0 | Function |
+|---|---|---|---|
+| P1 | Provider core | `10.0.50.1/32` | Transit router and PE1 attachment point |
+| P2 | Provider core | `10.0.50.2/32` | Transit router and PE2 attachment point |
+| P3 | Provider core | `10.0.50.3/32` | Transit router and alternate PE1 attachment point |
+| P4 | Provider core | `10.0.50.4/32` | Transit router and alternate PE2 attachment point |
+| P5 | Provider core | `10.0.50.5/32` | Additional redundant transit router |
+| P6 | Provider core | `10.0.50.6/32` | Additional redundant transit router |
+| PE1 | Provider edge | `10.0.52.1/32` | Service edge dual-homed to P1 and P3 |
+| PE2 | Provider edge | `10.0.52.2/32` | Service edge dual-homed to P2 and P4 |
 
 ## Interface and IP Addressing
 
-### Router Interfaces
+### P-Router Core Links
 
-| Device | Interface | Connected To | VRF | IPv4 Address | Purpose |
+| Link | Subnet | Side A | Address | Side B | Address |
 |---|---|---|---|---|---|
-| CE1 | Loopback0 | Local | Global | `192.168.10.1/24` | Simulated Site A LAN |
-| CE1 | GigabitEthernet0/1 | PE1 Gi0/0 | Global | `172.16.1.1/30` | Customer-to-provider link |
-| PE1 | Loopback0 | Local | Global | `1.1.1.1/32` | Router ID, LDP ID, and MP-BGP endpoint |
-| PE1 | GigabitEthernet0/0 | CE1 Gi0/1 | `CUST-A` | `172.16.1.2/30` | Customer-facing link |
-| PE1 | GigabitEthernet0/1 | P1 Gi0/0 | Global | `10.0.12.1/30` | MPLS core link |
-| P1 | Loopback0 | Local | Global | `2.2.2.2/32` | Router ID and LDP ID |
-| P1 | GigabitEthernet0/0 | PE1 Gi0/1 | Global | `10.0.12.2/30` | MPLS core link |
-| P1 | GigabitEthernet0/1 | P2 Gi0/0 | Global | `10.0.23.1/30` | MPLS core link |
-| P2 | Loopback0 | Local | Global | `3.3.3.3/32` | Router ID and LDP ID |
-| P2 | GigabitEthernet0/0 | P1 Gi0/1 | Global | `10.0.23.2/30` | MPLS core link |
-| P2 | GigabitEthernet0/1 | PE2 Gi0/0 | Global | `10.0.34.1/30` | MPLS core link |
-| PE2 | Loopback0 | Local | Global | `4.4.4.4/32` | Router ID, LDP ID, and MP-BGP endpoint |
-| PE2 | GigabitEthernet0/0 | P2 Gi0/1 | Global | `10.0.34.2/30` | MPLS core link |
-| PE2 | GigabitEthernet0/1 | CE2 Gi0/1 | `CUST-A` | `172.16.2.2/30` | Customer-facing link |
-| CE2 | GigabitEthernet0/1 | PE2 Gi0/1 | Global | `172.16.2.1/30` | Customer-to-provider link |
-| CE2 | Loopback0 | Local | Global | `192.168.20.1/24` | Simulated Site B LAN |
+| P1–P2 | `10.0.0.0/30` | P1 Gi0/0 | `10.0.0.1/30` | P2 Gi0/0 | `10.0.0.2/30` |
+| P1–P3 | `10.0.0.4/30` | P1 Gi0/1 | `10.0.0.5/30` | P3 Gi0/1 | `10.0.0.6/30` |
+| P2–P4 | `10.0.0.8/30` | P2 Gi0/1 | `10.0.0.9/30` | P4 Gi0/1 | `10.0.0.10/30` |
+| P3–P4 | `10.0.0.12/30` | P3 Gi0/0 | `10.0.0.13/30` | P4 Gi0/0 | `10.0.0.14/30` |
+| P1–P4 | `10.0.0.16/30` | P1 Gi0/2 | `10.0.0.17/30` | P4 Gi0/2 | `10.0.0.18/30` |
+| P2–P3 | `10.0.0.20/30` | P2 Gi0/2 | `10.0.0.21/30` | P3 Gi0/2 | `10.0.0.22/30` |
+| P2–P5 | `10.0.0.24/30` | P2 Gi0/3 | `10.0.0.25/30` | P5 Gi0/0 | `10.0.0.26/30` |
+| P2–P6 | `10.0.0.28/30` | P2 Gi0/4 | `10.0.0.29/30` | P6 Gi0/1 | `10.0.0.30/30` |
+| P4–P6 | `10.0.0.32/30` | P4 Gi0/3 | `10.0.0.33/30` | P6 Gi0/0 | `10.0.0.34/30` |
+| P4–P5 | `10.0.0.36/30` | P4 Gi0/4 | `10.0.0.37/30` | P5 Gi0/1 | `10.0.0.38/30` |
+| P5–P6 | `10.0.0.40/30` | P5 Gi0/2 | `10.0.0.41/30` | P6 Gi0/2 | `10.0.0.42/30` |
 
-### Routing and VPN Parameters
+### PE-to-P Links
 
-| Parameter | Value |
+| Link | Subnet | PE Interface | PE Address | P Interface | P Address |
+|---|---|---|---|---|---|
+| PE1–P1 | `10.0.1.0/30` | PE1 Gi0/0 | `10.0.1.1/30` | P1 Gi0/3 | `10.0.1.2/30` |
+| PE1–P3 | `10.0.1.4/30` | PE1 Gi0/1 | `10.0.1.5/30` | P3 Gi0/3 | `10.0.1.6/30` |
+| PE2–P2 | `10.0.1.8/30` | PE2 Gi0/0 | `10.0.1.9/30` | P2 Gi0/3 | `10.0.1.10/30` |
+| PE2–P4 | `10.0.1.12/30` | PE2 Gi0/1 | `10.0.1.13/30` | P4 Gi0/3 | `10.0.1.14/30` |
+
+> [!IMPORTANT]
+> The diagram assigns Gi0/3 on P2 and P4 to both a P-router link and a PE link. Specifically, P2 Gi0/3 appears on P2–P5 and PE2–P2, while P4 Gi0/3 appears on P4–P6 and PE2–P4. A physical router interface cannot carry both point-to-point subnets unless subinterfaces or a shared segment are intentionally used. Before deploying the lab, change one interface in each conflicting pair (for example, use P2 Gi0/5 and P4 Gi0/5 for the PE links) and update the EVE-NG cabling and configuration accordingly.
+
+### Addressing Summary
+
+| Address Block | Use |
 |---|---|
-| Provider autonomous system | `65000` |
-| Customer autonomous system | `65100` |
-| Provider IGP | OSPF process `1`, area `0` |
-| VRF name | `CUST-A` |
-| Route distinguisher | PE1: `65000:1`; PE2: `65000:2` |
-| Route target | Import/export `65000:100` |
-| PE-to-PE signaling | MP-BGP VPNv4 between `1.1.1.1` and `4.4.4.4` |
-| PE-to-CE routing | eBGP using customer AS `65100` |
-| MPLS label distribution | LDP |
+| `10.0.0.0/24` | P-to-P point-to-point links (`10.0.0.0/30` through `10.0.0.40/30`) |
+| `10.0.1.0/24` | PE-to-P point-to-point links (`10.0.1.0/30` through `10.0.1.12/30`) |
+| `10.0.50.0/23` | Reserved by the diagram for P-router loopbacks; used addresses are `10.0.50.1–10.0.50.6/32` |
+| `10.0.52.0/23` | Reserved by the diagram for PE-router loopbacks; used addresses are `10.0.52.1–10.0.52.2/32` |
 
 ## Technologies and Protocols Used
 
-- IPv4 addressing and routing
-- OSPF as the provider-core interior gateway protocol
-- MPLS forwarding in the provider core
+- IPv4 point-to-point addressing with `/30` prefixes
+- `/32` router loopbacks
+- An interior gateway protocol (IGP), such as OSPF or IS-IS, for underlay reachability
+- MPLS forwarding on all P-to-P and PE-to-P links
 - Label Distribution Protocol (LDP)
-- MP-BGP VPNv4 address family between PE routers
-- VRF route isolation on PE routers
-- Route distinguishers (RDs) to create unique VPNv4 routes
-- Route targets (RTs) to control VRF import and export
-- eBGP between the PE and CE routers
-- ICMP, traceroute, and MPLS-aware traceroute for validation
+- Equal-cost multipath (ECMP), where supported by the chosen IGP metrics
+- Fast rerouting through redundant physical paths
+- ICMP and traceroute for data-plane verification
+
+The diagram defines the physical and Layer 3 design but does not explicitly name an IGP. The examples below use single-area OSPF as the reference implementation.
 
 ## Lab Objectives
 
-After completing the lab, you should be able to:
-
-1. Establish IP connectivity throughout the provider backbone.
-2. Form OSPF adjacencies between PE and P routers.
-3. Enable MPLS and establish LDP neighbors across all provider-core links.
-4. Verify that PE loopbacks have label-switched paths through the core.
-5. Create and apply the `CUST-A` VRF on both PE routers.
-6. Establish an MP-BGP VPNv4 session between PE1 and PE2.
-7. Exchange customer routes over PE-to-CE eBGP sessions.
-8. Confirm end-to-end connectivity between the two customer LANs.
-9. Demonstrate that P routers do not require customer routes.
+1. Cable the 15 point-to-point links shown in the diagram.
+2. Configure every physical interface and Loopback0 address.
+3. Establish an IGP adjacency on every transit link.
+4. Advertise all eight loopbacks through the provider IGP.
+5. Enable MPLS on all P-to-P and PE-to-P links.
+6. Establish LDP sessions throughout the provider network.
+7. Verify label-switched paths between PE1 and PE2.
+8. Observe ECMP paths through the redundant core.
+9. Test convergence after individual links or P routers fail.
+10. Prepare the PE routers for later MP-BGP and VPN service configuration.
 
 ## Configuration Tasks
 
-### 1. Configure Base Addressing
+### 1. Resolve the Interface Conflicts
 
-- Assign hostnames and IPv4 addresses from the addressing table.
-- Enable all required interfaces with `no shutdown`.
-- Configure a `/32` Loopback0 interface on each provider router.
-- Configure the customer LAN prefixes on CE1 and CE2 Loopback0.
+Correct the duplicate P2 Gi0/3 and P4 Gi0/3 assignments noted above. The remaining examples assume the physical interfaces have been made unique.
 
-Example:
+### 2. Configure Base IPv4 Addressing
+
+Configure the hostname, Loopback0, and point-to-point interfaces on each router.
 
 ```cisco
-interface Loopback0
- ip address 1.1.1.1 255.255.255.255
+hostname P1
 !
-interface GigabitEthernet0/1
- description TO-P1
- ip address 10.0.12.1 255.255.255.252
+interface Loopback0
+ ip address 10.0.50.1 255.255.255.255
+!
+interface GigabitEthernet0/0
+ description TO-P2
+ ip address 10.0.0.1 255.255.255.252
  no shutdown
 ```
 
-### 2. Configure the Provider IGP
+Repeat this task using the addressing tables. Confirm that all directly connected neighbors respond to pings before configuring routing.
 
-Run OSPF area 0 on PE1, P1, P2, and PE2. Advertise provider loopbacks and core links only; do not place customer-facing interfaces in the provider OSPF domain.
+### 3. Configure the Provider IGP
+
+Use a single OSPF area for the reference lab. Set each router ID to its Loopback0 address, make interfaces passive by default, and enable OSPF only on required transit links.
 
 ```cisco
 router ospf 1
- router-id 1.1.1.1
- passive-interface Loopback0
- network 1.1.1.1 0.0.0.0 area 0
- network 10.0.12.0 0.0.0.3 area 0
+ router-id 10.0.50.1
+ passive-interface default
+ no passive-interface GigabitEthernet0/0
+ no passive-interface GigabitEthernet0/1
+ no passive-interface GigabitEthernet0/2
+ no passive-interface GigabitEthernet0/3
+ network 10.0.0.0 0.0.0.255 area 0
+ network 10.0.1.0 0.0.0.255 area 0
+ network 10.0.50.1 0.0.0.0 area 0
 ```
 
-### 3. Enable MPLS and LDP
+Include only the interfaces present on each router. PE loopbacks are in the `10.0.52.0/23` allocation and must also be advertised.
 
-Enable MPLS on every PE-to-P and P-to-P core interface. Use the provider loopback as the stable LDP router ID.
+### 4. Enable MPLS and LDP
+
+Use Loopback0 as the stable LDP identifier and enable MPLS on every provider-facing interface.
 
 ```cisco
 mpls label protocol ldp
 mpls ldp router-id Loopback0 force
 !
-interface GigabitEthernet0/1
+interface GigabitEthernet0/0
  mpls ip
 ```
 
-Do not enable MPLS on CE-facing interfaces.
+Apply `mpls ip` to each active P-to-P and PE-to-P interface. Do not apply it to future customer-facing interfaces unless the service design specifically requires it.
 
-### 4. Create the Customer VRF
+### 5. Validate Redundant Forwarding
 
-Create `CUST-A` on both PE routers. Use a unique RD on each PE and a shared route target.
+- Confirm PE1 has IGP and label-switched reachability to PE2 Loopback0.
+- Record the normal route and MPLS label stack.
+- Shut down one core link at a time and measure convergence.
+- Shut down one of each PE's uplinks and verify that the alternate path carries traffic.
+- Restore each interface after its test.
 
-PE1:
+### 6. Optional Service Extension
 
-```cisco
-ip vrf CUST-A
- rd 65000:1
- route-target export 65000:100
- route-target import 65000:100
-!
-interface GigabitEthernet0/0
- ip vrf forwarding CUST-A
- ip address 172.16.1.2 255.255.255.252
- no shutdown
-```
-
-PE2 uses RD `65000:2` and assigns the VRF to its CE-facing interface with address `172.16.2.2/30`.
-
-> Applying `ip vrf forwarding` removes the existing IP address from an interface. Apply the VRF first, and then configure the IP address.
-
-### 5. Configure MP-BGP Between the PE Routers
-
-Use the PE loopbacks for the iBGP session and activate the VPNv4 address family.
-
-PE1 example:
-
-```cisco
-router bgp 65000
- bgp log-neighbor-changes
- neighbor 4.4.4.4 remote-as 65000
- neighbor 4.4.4.4 update-source Loopback0
- !
- address-family vpnv4
-  neighbor 4.4.4.4 activate
-  neighbor 4.4.4.4 send-community extended
- exit-address-family
-```
-
-Configure the reciprocal neighbor on PE2 using PE1's loopback address, `1.1.1.1`.
-
-### 6. Configure PE-to-CE Routing
-
-Configure eBGP between each PE and its attached CE. The PE address family must be VRF-aware.
-
-PE1:
-
-```cisco
-router bgp 65000
- address-family ipv4 vrf CUST-A
-  neighbor 172.16.1.1 remote-as 65100
-  neighbor 172.16.1.1 activate
- exit-address-family
-```
-
-CE1:
-
-```cisco
-router bgp 65100
- neighbor 172.16.1.2 remote-as 65000
- network 192.168.10.0 mask 255.255.255.0
-```
-
-Apply the equivalent configuration on PE2 and CE2 for `172.16.2.0/30` and `192.168.20.0/24`.
-
-Because both CE routers use AS `65100`, a CE normally rejects a remote route containing its own AS. For a controlled lab, configure `as-override` on each PE's VRF neighbor:
-
-```cisco
-router bgp 65000
- address-family ipv4 vrf CUST-A
-  neighbor 172.16.1.1 as-override
- exit-address-family
-```
-
-Alternatively, assign a different AS to each customer site.
+After the MPLS underlay is stable, add CE routers and customer-facing PE interfaces. MP-BGP VPNv4, VRFs, route distinguishers, route targets, and PE-to-CE routing can then be layered onto the topology. Those parameters are not specified in the current diagram.
 
 ## Verification Commands
 
-### Underlay and MPLS Core
+### Interfaces and IGP
 
 ```cisco
 show ip interface brief
+show interfaces description
 show ip ospf neighbor
+show ip ospf interface brief
 show ip route ospf
+show ip route 10.0.52.1
+show ip route 10.0.52.2
+```
+
+### MPLS and LDP
+
+```cisco
 show mpls interfaces
+show mpls ldp discovery
 show mpls ldp neighbor
 show mpls ldp bindings
 show mpls forwarding-table
-ping 4.4.4.4 source 1.1.1.1
-traceroute 4.4.4.4 source 1.1.1.1
 ```
 
-### VRF and MP-BGP
+### End-to-End and Redundancy Tests
+
+From PE1:
 
 ```cisco
-show ip vrf
-show ip route vrf CUST-A
-show ip bgp vpnv4 all summary
-show ip bgp vpnv4 all
-show ip bgp vpnv4 vrf CUST-A
-show ip bgp vpnv4 all labels
+ping 10.0.52.2 source 10.0.52.1
+traceroute 10.0.52.2 source 10.0.52.1
+show ip route 10.0.52.2
+show ip cef 10.0.52.2 detail
 ```
 
-On newer IOS/IOS-XE images, the equivalent commands may use the following syntax:
+From PE2:
 
 ```cisco
-show bgp vpnv4 unicast all summary
-show bgp vpnv4 unicast all
-show bgp ipv4 unicast vrf CUST-A
+ping 10.0.52.1 source 10.0.52.2
+traceroute 10.0.52.1 source 10.0.52.2
+show ip route 10.0.52.1
+show mpls forwarding-table 10.0.52.1 32
 ```
 
-### PE-to-CE and End-to-End Connectivity
+During a failure test:
 
 ```cisco
-show ip bgp summary
-show ip bgp
-show ip route
-ping 192.168.20.1 source 192.168.10.1
-traceroute 192.168.20.1 source 192.168.10.1
+configure terminal
+interface GigabitEthernet0/0
+ shutdown
+end
+show ip ospf neighbor
+show ip route 10.0.52.2
+show mpls forwarding-table
 ```
 
-To test from a PE within the customer VRF:
-
-```cisco
-ping vrf CUST-A 192.168.20.1 source 172.16.1.2
-traceroute vrf CUST-A 192.168.20.1 source 172.16.1.2
-```
+Restore the tested interface with `no shutdown` when finished.
 
 ## Expected Results
 
-- OSPF reaches the `FULL` state on PE1-P1, P1-P2, and P2-PE2 links.
-- Every provider router learns all provider loopbacks through OSPF.
-- LDP neighbors form across the three core links.
-- The MPLS forwarding table contains labels for remote provider loopbacks.
-- The PE1-to-PE2 VPNv4 BGP session reaches `Established`.
-- Each PE learns its local customer prefix over eBGP and the remote customer prefix over MP-BGP.
-- `show ip route vrf CUST-A` on PE1 includes `192.168.20.0/24`; PE2 includes `192.168.10.0/24`.
-- CE1 learns `192.168.20.0/24`, and CE2 learns `192.168.10.0/24`.
-- A sourced ping from `192.168.10.1` to `192.168.20.1` succeeds.
-- The P routers contain provider infrastructure routes and labels but no `192.168.10.0/24` or `192.168.20.0/24` customer routes.
-- A traceroute between customer sites crosses the MPLS backbone; label details depend on platform and ICMP/MPLS propagation settings.
+- All configured physical interfaces reach the `up/up` state.
+- Each point-to-point interface can ping its directly connected neighbor.
+- OSPF reaches the `FULL` state on each active provider link.
+- Every router learns all remote P and PE loopbacks through the IGP.
+- LDP establishes a neighbor relationship over every MPLS-enabled adjacency.
+- Each router has local and remote label bindings for provider loopbacks.
+- PE1 can ping and trace to `10.0.52.2` using `10.0.52.1` as its source.
+- PE2 can ping and trace to `10.0.52.1` using `10.0.52.2` as its source.
+- Multiple equal-cost next hops appear where the topology and OSPF costs permit ECMP.
+- Traffic reconverges over an alternate path after any single non-partitioning link failure.
+- No customer or VPN routes appear because the current diagram defines only the provider underlay.
 
 ## Troubleshooting Notes
 
 | Symptom | Likely Cause | Checks and Corrective Actions |
 |---|---|---|
-| OSPF neighbor does not form | Addressing, area, interface, or MTU mismatch | Check `show ip ospf interface brief`, masks, area IDs, interface state, and MTU |
-| LDP neighbor is missing | MPLS is absent from one side, or the LDP router ID is unreachable | Check `show mpls interfaces`, enable `mpls ip` on both ends, and verify the loopback route |
-| VPNv4 BGP session is down | PE loopback is unreachable or neighbor/update-source is incorrect | Ping the remote loopback from the local loopback and inspect `show ip bgp vpnv4 all summary` |
-| VPNv4 session is up but no VPN routes appear | Extended communities are not sent, or local VRF has no routes | Configure `send-community extended`; check the VRF BGP table and PE-CE session |
-| Remote VPN route is in VPNv4 BGP but not in the VRF | Import RT does not match the exported RT | Compare `show ip bgp vpnv4 all` route targets with `show running-config | section ip vrf` |
-| PE cannot reach its CE | Interface is in the wrong VRF or its IP was removed | Check `show ip vrf interfaces`; reapply the address after `ip vrf forwarding CUST-A` |
-| CE does not advertise its LAN | BGP `network` statement lacks an exact route in the local RIB | Verify the Loopback0 prefix and mask with `show ip route` |
-| CE rejects the remote customer prefix | Its own AS appears in the AS path | Apply `as-override` on the PE neighbor or use unique AS numbers per site |
-| Customer ping fails although routes exist | Return route, source address, ACL, or interface state issue | Run sourced pings in both directions and inspect each hop's VRF route table |
-| MPLS traffic stops at a P router | Missing IGP route, LDP binding, or MPLS on a core interface | Correlate `show ip route`, `show mpls ldp bindings`, and `show mpls forwarding-table` |
+| Interface cannot be configured as documented | Duplicate Gi0/3 assignments on P2 or P4 | Correct the diagram/cabling by selecting unused physical interfaces |
+| Direct neighbor ping fails | Incorrect address, mask, cabling, or shutdown state | Compare both ends with the link table and check `show interfaces description` |
+| OSPF adjacency does not form | Area, subnet, timer, network type, or MTU mismatch | Use `show ip ospf interface` on both ends and compare settings |
+| Loopback is missing from the IGP | Missing or incorrect OSPF network statement | Check `show ip protocols` and the local OSPF database |
+| LDP neighbor is absent | MPLS enabled on only one side or LDP ID unreachable | Check `show mpls interfaces`, LDP discovery, and the IGP route to the peer loopback |
+| Route exists but no label is installed | LDP has not advertised/bound the FEC | Inspect `show mpls ldp bindings` and `show mpls forwarding-table` |
+| PE-to-PE ping fails | Missing return route or incorrect source | Verify both PE loopbacks are present on every router and use a sourced ping |
+| Only one path is installed | Unequal OSPF cost or platform ECMP limit | Compare cumulative costs and inspect `maximum-paths` support/settings |
+| Failure test causes loss of reachability | Alternate adjacency or label-switched path was not established | Verify the alternate IGP/LDP path before shutting the primary link |
+| Traceroute does not display labels | Platform behavior or MPLS TTL propagation setting | Confirm forwarding through MPLS tables; label display is image-dependent |
 
-When troubleshooting, validate the control plane in order: interfaces, provider IGP, LDP, MP-BGP VPNv4, PE-to-CE routing, VRF routes, and finally end-to-end forwarding.
+Troubleshoot in layers: physical interfaces, directly connected IPv4 reachability, IGP adjacencies, loopback routes, LDP neighbors, label forwarding entries, and finally PE-to-PE traffic.
