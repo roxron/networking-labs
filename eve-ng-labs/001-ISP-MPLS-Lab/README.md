@@ -21,7 +21,7 @@ The numbered Markdown files are intended to be completed in order. Each task sho
 | Task | Topic | Status | Document |
 |---:|---|---|---|
 | 001 | Build and verify the routed MPLS provider underlay | Ready | [001-base-objectives.md](./001-base-objectives.md) |
-| 002 | Establish PE-to-PE eBGP and build the CEtest VRF | Ready | [002-PE-to-PE-eBGP-CEtest-VRF.md](./002-PE-to-PE-eBGP-CEtest-VRF.md) |
+| 002 | Establish PE-to-PE iBGP and build the CEtest VRF | Ready | [002-PE-to-PE-iBGP-CEtest-VRF.md](./002-PE-to-PE-iBGP-CEtest-VRF.md) |
 
 Future exercises can add topics such as:
 
@@ -75,7 +75,7 @@ Examples:
 
 ```text
 001-base-objectives.md
-002-PE-to-PE-eBGP-CEtest-VRF.md
+002-PE-to-PE-iBGP-CEtest-VRF.md
 003-CustomerA-second-site.md
 004-MP-BGP-VPNv4.md
 ```
