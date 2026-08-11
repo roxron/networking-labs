@@ -4,15 +4,18 @@
 
 This is an expandable EVE-NG service-provider lab. It begins with a redundant MPLS underlay and grows through small, numbered exercises. Each exercise introduces a networking technology, adds a service, connects a customer, or extends an existing customer network.
 
+Import [001-ISP-MPLS-Lab.unl](./001-ISP-MPLS-Lab.unl) into EVE-NG to deploy the lab topology.
+
 The lab currently contains:
 
+- An importable EVE-NG topology: [001-ISP-MPLS-Lab.unl](./001-ISP-MPLS-Lab.unl)
 - Six provider core routers: P1 through P6
 - Two provider-edge routers: PE1 and PE2
 - Fifteen point-to-point provider links
 - Dedicated `/32` loopbacks for router IDs and MPLS label distribution
 - PE1 dual-homed to P1/P3 and PE2 dual-homed to P5/P6
 
-The source topology is maintained in [ISP-MPLS-Lab-Diagram.drawio](./ISP-MPLS-Lab-Diagram.drawio).
+The visual topology design is maintained in [ISP-MPLS-Lab-Diagram.drawio](./ISP-MPLS-Lab-Diagram.drawio).
 
 ## Learning Path
 
