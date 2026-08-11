@@ -21,14 +21,13 @@ The numbered Markdown files are intended to be completed in order. Each task sho
 | Task | Topic | Status | Document |
 |---:|---|---|---|
 | 001 | Build and verify the routed MPLS provider underlay | Ready | [001-base-objectives.md](./001-base-objectives.md) |
-| 002 | Connect Customer A to a PE router using eBGP | Planned | [002-PE-CE-CustomerA-eBGP-connection.md](./002-PE-CE-CustomerA-eBGP-connection.md) |
+| 002 | Establish PE-to-PE eBGP and build the CEtest VRF | Ready | [002-PE-to-PE-eBGP-CEtest-VRF.md](./002-PE-to-PE-eBGP-CEtest-VRF.md) |
 
 Future exercises can add topics such as:
 
+- Physical Customer A CE routers and PE-to-CE eBGP
 - A second Customer A site
-- MP-BGP VPNv4 between PE routers
-- VRFs, route distinguishers, and route targets
-- MPLS Layer 3 VPN end-to-end connectivity
+- MPLS Layer 3 VPN connectivity between physical customer sites
 - Additional customer prefixes
 - Customer route filtering and prefix limits
 - BGP policy using communities and local preference
@@ -76,7 +75,7 @@ Examples:
 
 ```text
 001-base-objectives.md
-002-PE-CE-CustomerA-eBGP-connection.md
+002-PE-to-PE-eBGP-CEtest-VRF.md
 003-CustomerA-second-site.md
 004-MP-BGP-VPNv4.md
 ```
