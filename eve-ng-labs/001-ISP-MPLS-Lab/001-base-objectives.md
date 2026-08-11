@@ -83,17 +83,235 @@ Build the routed and label-switched foundation for the ISP lab. Six P routers fo
 
 ### 1. Configure Base Interfaces
 
-Use the addressing tables for each router.
+Configure every loopback and physical interface shown in the topology. The physical-interface descriptions identify both the neighboring router and its interface.
+
+#### P1
 
 ```cisco
 hostname P1
 !
 interface Loopback0
+ description Router ID
  ip address 10.0.50.1 255.255.255.255
 !
 interface GigabitEthernet0/0
- description TO-P2
+ description Link to P2 G0/0
  ip address 10.0.0.1 255.255.255.252
+ no shutdown
+!
+interface GigabitEthernet0/1
+ description Link to P3 G0/1
+ ip address 10.0.0.5 255.255.255.252
+ no shutdown
+!
+interface GigabitEthernet0/2
+ description Link to P4 G0/2
+ ip address 10.0.0.17 255.255.255.252
+ no shutdown
+!
+interface GigabitEthernet0/3
+ description Link to PE1 G0/0
+ ip address 10.0.1.2 255.255.255.252
+ no shutdown
+```
+
+#### P2
+
+```cisco
+hostname P2
+!
+interface Loopback0
+ description Router ID
+ ip address 10.0.50.2 255.255.255.255
+!
+interface GigabitEthernet0/0
+ description Link to P1 G0/0
+ ip address 10.0.0.2 255.255.255.252
+ no shutdown
+!
+interface GigabitEthernet0/1
+ description Link to P4 G0/1
+ ip address 10.0.0.9 255.255.255.252
+ no shutdown
+!
+interface GigabitEthernet0/2
+ description Link to P3 G0/2
+ ip address 10.0.0.21 255.255.255.252
+ no shutdown
+!
+interface GigabitEthernet0/3
+ description Link to P5 G0/0
+ ip address 10.0.0.25 255.255.255.252
+ no shutdown
+!
+interface GigabitEthernet0/4
+ description Link to P6 G0/1
+ ip address 10.0.0.29 255.255.255.252
+ no shutdown
+```
+
+#### P3
+
+```cisco
+hostname P3
+!
+interface Loopback0
+ description Router ID
+ ip address 10.0.50.3 255.255.255.255
+!
+interface GigabitEthernet0/0
+ description Link to P4 G0/0
+ ip address 10.0.0.13 255.255.255.252
+ no shutdown
+!
+interface GigabitEthernet0/1
+ description Link to P1 G0/1
+ ip address 10.0.0.6 255.255.255.252
+ no shutdown
+!
+interface GigabitEthernet0/2
+ description Link to P2 G0/2
+ ip address 10.0.0.22 255.255.255.252
+ no shutdown
+!
+interface GigabitEthernet0/3
+ description Link to PE1 G0/1
+ ip address 10.0.1.6 255.255.255.252
+ no shutdown
+```
+
+#### P4
+
+```cisco
+hostname P4
+!
+interface Loopback0
+ description Router ID
+ ip address 10.0.50.4 255.255.255.255
+!
+interface GigabitEthernet0/0
+ description Link to P3 G0/0
+ ip address 10.0.0.14 255.255.255.252
+ no shutdown
+!
+interface GigabitEthernet0/1
+ description Link to P2 G0/1
+ ip address 10.0.0.10 255.255.255.252
+ no shutdown
+!
+interface GigabitEthernet0/2
+ description Link to P1 G0/2
+ ip address 10.0.0.18 255.255.255.252
+ no shutdown
+!
+interface GigabitEthernet0/3
+ description Link to P6 G0/0
+ ip address 10.0.0.33 255.255.255.252
+ no shutdown
+!
+interface GigabitEthernet0/4
+ description Link to P5 G0/1
+ ip address 10.0.0.37 255.255.255.252
+ no shutdown
+```
+
+#### P5
+
+```cisco
+hostname P5
+!
+interface Loopback0
+ description Router ID
+ ip address 10.0.50.5 255.255.255.255
+!
+interface GigabitEthernet0/0
+ description Link to P2 G0/3
+ ip address 10.0.0.26 255.255.255.252
+ no shutdown
+!
+interface GigabitEthernet0/1
+ description Link to P4 G0/4
+ ip address 10.0.0.38 255.255.255.252
+ no shutdown
+!
+interface GigabitEthernet0/2
+ description Link to P6 G0/2
+ ip address 10.0.0.41 255.255.255.252
+ no shutdown
+!
+interface GigabitEthernet0/3
+ description Link to PE2 G0/0
+ ip address 10.0.1.10 255.255.255.252
+ no shutdown
+```
+
+#### P6
+
+```cisco
+hostname P6
+!
+interface Loopback0
+ description Router ID
+ ip address 10.0.50.6 255.255.255.255
+!
+interface GigabitEthernet0/0
+ description Link to P4 G0/3
+ ip address 10.0.0.34 255.255.255.252
+ no shutdown
+!
+interface GigabitEthernet0/1
+ description Link to P2 G0/4
+ ip address 10.0.0.30 255.255.255.252
+ no shutdown
+!
+interface GigabitEthernet0/2
+ description Link to P5 G0/2
+ ip address 10.0.0.42 255.255.255.252
+ no shutdown
+!
+interface GigabitEthernet0/3
+ description Link to PE2 G0/1
+ ip address 10.0.1.14 255.255.255.252
+ no shutdown
+```
+
+#### PE1
+
+```cisco
+hostname PE1
+!
+interface Loopback0
+ description Router ID
+ ip address 10.0.52.1 255.255.255.255
+!
+interface GigabitEthernet0/0
+ description Link to P1 G0/3
+ ip address 10.0.1.1 255.255.255.252
+ no shutdown
+!
+interface GigabitEthernet0/1
+ description Link to P3 G0/3
+ ip address 10.0.1.5 255.255.255.252
+ no shutdown
+```
+
+#### PE2
+
+```cisco
+hostname PE2
+!
+interface Loopback0
+ description Router ID
+ ip address 10.0.52.2 255.255.255.255
+!
+interface GigabitEthernet0/0
+ description Link to P5 G0/3
+ ip address 10.0.1.9 255.255.255.252
+ no shutdown
+!
+interface GigabitEthernet0/1
+ description Link to P6 G0/3
+ ip address 10.0.1.13 255.255.255.252
  no shutdown
 ```
 
