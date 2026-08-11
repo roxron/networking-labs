@@ -10,7 +10,7 @@ The lab currently contains:
 - Two provider-edge routers: PE1 and PE2
 - Fifteen point-to-point provider links
 - Dedicated `/32` loopbacks for router IDs and MPLS label distribution
-- Redundant paths between the provider-edge routers
+- PE1 dual-homed to P1/P3 and PE2 dual-homed to P5/P6
 
 The source topology is maintained in [ISP-MPLS-Lab-Diagram.drawio](./ISP-MPLS-Lab-Diagram.drawio).
 
@@ -96,15 +96,6 @@ Each new task document should contain:
 - Completion checklist
 
 When a task is added, also add it to the **Learning Path** table in this README.
-
-## Known Diagram Issue
-
-The current Draw.io diagram assigns two separate links to P2 Gi0/3 and two separate links to P4 Gi0/3:
-
-- P2 Gi0/3 appears on both P2–P5 and PE2–P2.
-- P4 Gi0/3 appears on both P4–P6 and PE2–P4.
-
-Resolve these conflicts in the diagram and EVE-NG topology by selecting unused interfaces before applying the base configuration. The detailed notes are in Task 001.
 
 ## Repository Workflow
 

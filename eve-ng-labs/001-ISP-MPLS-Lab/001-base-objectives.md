@@ -17,7 +17,7 @@ Build the routed and label-switched foundation for the ISP lab. Six P routers fo
 - P2 and P4 each connect to P5 and P6.
 - P5 and P6 connect directly.
 - PE1 connects to P1 and P3.
-- PE2 connects to P2 and P4.
+- PE2 connects to P5 and P6.
 - All physical links use `/30` subnets.
 - Loopback0 addresses use `/32` masks.
 
@@ -26,11 +26,11 @@ Build the routed and label-switched foundation for the ISP lab. Six P routers fo
 | Device | Role | Loopback0 |
 |---|---|---|
 | P1 | Provider core and PE1 attachment | `10.0.50.1/32` |
-| P2 | Provider core and PE2 attachment | `10.0.50.2/32` |
+| P2 | Provider core | `10.0.50.2/32` |
 | P3 | Provider core and PE1 attachment | `10.0.50.3/32` |
-| P4 | Provider core and PE2 attachment | `10.0.50.4/32` |
-| P5 | Provider core | `10.0.50.5/32` |
-| P6 | Provider core | `10.0.50.6/32` |
+| P4 | Provider core | `10.0.50.4/32` |
+| P5 | Provider core and PE2 attachment | `10.0.50.5/32` |
+| P6 | Provider core and PE2 attachment | `10.0.50.6/32` |
 | PE1 | Provider edge | `10.0.52.1/32` |
 | PE2 | Provider edge | `10.0.52.2/32` |
 
@@ -58,11 +58,8 @@ Build the routed and label-switched foundation for the ISP lab. Six P routers fo
 |---|---|---|---|---|---|
 | PE1–P1 | `10.0.1.0/30` | PE1 Gi0/0 | `10.0.1.1/30` | P1 Gi0/3 | `10.0.1.2/30` |
 | PE1–P3 | `10.0.1.4/30` | PE1 Gi0/1 | `10.0.1.5/30` | P3 Gi0/3 | `10.0.1.6/30` |
-| PE2–P2 | `10.0.1.8/30` | PE2 Gi0/0 | `10.0.1.9/30` | P2 Gi0/3 | `10.0.1.10/30` |
-| PE2–P4 | `10.0.1.12/30` | PE2 Gi0/1 | `10.0.1.13/30` | P4 Gi0/3 | `10.0.1.14/30` |
-
-> [!WARNING]
-> The source diagram reuses P2 Gi0/3 and P4 Gi0/3. Assign unused interfaces to the PE2 links, such as P2 Gi0/5 and P4 Gi0/5, or update the design with another valid choice. Reflect the correction in both Draw.io and EVE-NG before configuration.
+| PE2–P5 | `10.0.1.8/30` | PE2 Gi0/0 | `10.0.1.9/30` | P5 Gi0/3 | `10.0.1.10/30` |
+| PE2–P6 | `10.0.1.12/30` | PE2 Gi0/1 | `10.0.1.13/30` | P6 Gi0/3 | `10.0.1.14/30` |
 
 ## Technologies and Protocols
 
@@ -176,7 +173,6 @@ show ip cef 10.0.52.2 detail
 
 | Symptom | Checks |
 |---|---|
-| Interface cannot be assigned | Resolve the duplicate P2/P4 Gi0/3 assignments |
 | Direct ping fails | Check cabling, IP mask, interface state, and peer address |
 | OSPF neighbor is missing | Compare area, timers, network type, authentication, and MTU |
 | Loopback route is missing | Check the OSPF network statement and passive-interface design |
@@ -186,7 +182,6 @@ show ip cef 10.0.52.2 detail
 
 ## Completion Checklist
 
-- [ ] Diagram interface conflicts resolved
 - [ ] All interface addresses configured
 - [ ] All direct-neighbor pings successful
 - [ ] All expected OSPF adjacencies established

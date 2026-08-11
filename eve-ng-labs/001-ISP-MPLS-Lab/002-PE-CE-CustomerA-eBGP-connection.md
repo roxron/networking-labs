@@ -243,7 +243,6 @@ The customer prefix should not appear in the P-router IGP table during this task
 
 - [ ] CE-A added to Draw.io
 - [ ] CE-A added and cabled in EVE-NG
-- [ ] Interface conflicts checked
 - [ ] PE-to-CE subnet documented
 - [ ] Customer A prefix documented
 - [ ] Provider and customer AS numbers documented
