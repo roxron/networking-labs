@@ -16,6 +16,7 @@ The **Added PE3** page in [ISP-MPLS-Lab-Diagram.drawio](./ISP-MPLS-Lab-Diagram.d
 
 - [Task 001](./001-base-objectives.md) completed
 - [Task 002](./002-PE-to-PE-iBGP-CEtest-VRF.md) completed
+- The PE3 EVE-NG topology: [001-ISP-MPLS-Lab_added-PE3.unl](./lab_files/001-ISP-MPLS-Lab_added-PE3.unl)
 - Existing IS-IS, LDP, MPLS, iBGP VPNv4, and CEtest operation verified
 - PE1 CEtest network `192.168.0.0/24` reachable from PE2
 - PE2 CEtest network `192.168.1.0/24` reachable from PE1
@@ -23,7 +24,7 @@ The **Added PE3** page in [ISP-MPLS-Lab-Diagram.drawio](./ISP-MPLS-Lab-Diagram.d
 - P2 Gi0/5 and P5 Gi0/4 available for the new links
 
 > [!NOTE]
-> The current `001-ISP-MPLS-Lab.unl` export contains P1–P6, PE1, and PE2, but not PE3. Add PE3 and its two links in EVE-NG during this task, then export an updated `.unl` file so the downloadable lab matches the **Added PE3** diagram page.
+> The `lab_files` directory preserves two topology milestones. The base file contains P1–P6, PE1, and PE2. The `_added-PE3` file contains PE3 and both new links and should be used for this task.
 
 ## Topology Change
 

@@ -12,6 +12,7 @@ This task validates the MPLS VPN control plane and data plane before physical CE
 ## Prerequisites
 
 - [Task 001](./001-base-objectives.md) completed
+- The base EVE-NG topology: [001-ISP-MPLS-Lab.unl](./lab_files/001-ISP-MPLS-Lab.unl)
 - PE1 Loopback0 `10.0.52.1/32` reachable from PE2
 - PE2 Loopback0 `10.0.52.2/32` reachable from PE1
 - IS-IS routes installed for both PE loopbacks

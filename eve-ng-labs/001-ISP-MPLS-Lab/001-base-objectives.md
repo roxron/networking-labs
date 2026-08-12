@@ -6,6 +6,7 @@ Build the routed and label-switched foundation for the ISP lab. Six P routers fo
 
 ## Prerequisites
 
+- The base EVE-NG topology: [001-ISP-MPLS-Lab.unl](./lab_files/001-ISP-MPLS-Lab.unl)
 - An EVE-NG topology matching [ISP-MPLS-Lab-Diagram.drawio](./ISP-MPLS-Lab-Diagram.drawio)
 - Router images that support IPv4 routing, IS-IS, MPLS, and LDP
 - Console access to P1–P6, PE1, and PE2

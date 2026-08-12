@@ -4,11 +4,14 @@
 
 This is an expandable EVE-NG service-provider lab. It begins with a redundant MPLS underlay and grows through small, numbered exercises. Each exercise introduces a networking technology, adds a service, connects a customer, or extends an existing customer network.
 
-Import [001-ISP-MPLS-Lab.unl](./001-ISP-MPLS-Lab.unl) into EVE-NG to deploy the lab topology.
+Import the EVE-NG lab file that corresponds to the task you want to practice:
+
+- [001-ISP-MPLS-Lab.unl](./lab_files/001-ISP-MPLS-Lab.unl) contains the original eight-router topology used by Tasks 001 and 002.
+- [001-ISP-MPLS-Lab_added-PE3.unl](./lab_files/001-ISP-MPLS-Lab_added-PE3.unl) contains the nine-router topology with PE3 and its two provider links for Task 003.
 
 The lab currently contains:
 
-- An importable EVE-NG topology: [001-ISP-MPLS-Lab.unl](./001-ISP-MPLS-Lab.unl)
+- Versioned EVE-NG topology files in [lab_files](./lab_files/)
 - Six provider core routers: P1 through P6
 - Three provider-edge routers after Task 003: PE1, PE2, and PE3
 - Seventeen point-to-point provider links after Task 003
@@ -16,6 +19,15 @@ The lab currently contains:
 - PE1 dual-homed to P1/P3, PE2 dual-homed to P5/P6, and PE3 dual-homed to P2/P5 after Task 003
 
 The visual topology design is maintained in [ISP-MPLS-Lab-Diagram.drawio](./ISP-MPLS-Lab-Diagram.drawio).
+
+## EVE-NG Lab Files
+
+| Lab File | Nodes | Links | Intended Tasks |
+|---|---:|---:|---|
+| [001-ISP-MPLS-Lab.unl](./lab_files/001-ISP-MPLS-Lab.unl) | 8: P1–P6, PE1, PE2 | 15 | Tasks 001 and 002 |
+| [001-ISP-MPLS-Lab_added-PE3.unl](./lab_files/001-ISP-MPLS-Lab_added-PE3.unl) | 9: P1–P6, PE1–PE3 | 17 | Task 003 and later tasks |
+
+The files represent topology milestones. Retaining earlier exports makes it possible to begin with the original core and practice each expansion independently.
 
 ## Learning Path
 
