@@ -38,6 +38,7 @@ The numbered Markdown files are intended to be completed in order. Each task sho
 | 001 | Build and verify the routed MPLS provider underlay | Ready | [001-base-objectives.md](./001-base-objectives.md) |
 | 002 | Establish PE-to-PE iBGP and build the CEtest VRF | Ready | [002-PE-to-PE-iBGP-CEtest-VRF.md](./002-PE-to-PE-iBGP-CEtest-VRF.md) |
 | 003 | Add PE3 to the MPLS core, iBGP mesh, and CEtest VPN | Ready | [003-add-PE3-MPLS-iBGP-CEtest-VRF.md](./003-add-PE3-MPLS-iBGP-CEtest-VRF.md) |
+| 004 | Add redundant VPNv4 route reflectors and retire the PE full mesh | Ready | [004-add-redundant-VPNv4-route-reflectors.md](./004-add-redundant-VPNv4-route-reflectors.md) |
 
 Future exercises can add topics such as:
 
@@ -93,8 +94,9 @@ Examples:
 001-base-objectives.md
 002-PE-to-PE-iBGP-CEtest-VRF.md
 003-add-PE3-MPLS-iBGP-CEtest-VRF.md
-004-CustomerA-PE-CE-eBGP.md
-005-CustomerA-second-site.md
+004-add-redundant-VPNv4-route-reflectors.md
+005-CustomerA-PE-CE-eBGP.md
+006-CustomerA-second-site.md
 ```
 
 Each new task document should contain:
