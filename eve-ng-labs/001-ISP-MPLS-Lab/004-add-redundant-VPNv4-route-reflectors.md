@@ -20,6 +20,7 @@ The migration is deliberately make-before-break:
 - [Task 001](./001-base-objectives.md) completed
 - [Task 002](./002-PE-to-PE-iBGP-CEtest-VRF.md) completed
 - [Task 003](./003-add-PE3-MPLS-iBGP-CEtest-VRF.md) completed
+- The route-reflector EVE-NG topology: [001-ISP-MPLS-Lab_Added-RR-nodes.unl](./lab_files/001-ISP-MPLS-Lab_Added-RR-nodes.unl)
 - PE1, PE2, and PE3 operating in a full iBGP mesh in AS `65000`
 - Every PE advertising its CEtest `/24` through VPNv4
 - All three CEtest prefixes reachable from every PE
@@ -27,7 +28,7 @@ The migration is deliberately make-before-break:
 - Two router images added as RR101 and RR102
 
 > [!NOTE]
-> The current files in `lab_files` do not yet contain RR101 or RR102. Add both nodes and their links in EVE-NG according to the **Added Route Reflectors** diagram page, then export a new topology milestone.
+> The `Added-RR-nodes` export contains P1–P6, PE1–PE3, RR101, and RR102 with 19 point-to-point networks. Use this topology milestone for Task 004.
 
 ## Topology Change
 
@@ -893,5 +894,5 @@ Repeat all CEtest pings and investigate the RR sessions while the direct mesh ca
 - [ ] RR101 failure test successful
 - [ ] RR102 failure test successful
 - [ ] P routers remain BGP-free
-- [ ] Updated EVE-NG topology exported to `lab_files`
+- [ ] Route-reflector EVE-NG topology imported from `lab_files`
 - [ ] Final configurations saved

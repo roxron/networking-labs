@@ -8,6 +8,7 @@ Import the EVE-NG lab file that corresponds to the task you want to practice:
 
 - [001-ISP-MPLS-Lab.unl](./lab_files/001-ISP-MPLS-Lab.unl) contains the original eight-router topology used by Tasks 001 and 002.
 - [001-ISP-MPLS-Lab_added-PE3.unl](./lab_files/001-ISP-MPLS-Lab_added-PE3.unl) contains the nine-router topology with PE3 and its two provider links for Task 003.
+- [001-ISP-MPLS-Lab_Added-RR-nodes.unl](./lab_files/001-ISP-MPLS-Lab_Added-RR-nodes.unl) contains PE3 plus RR101 and RR102 for Task 004.
 
 The lab currently contains:
 
@@ -25,7 +26,8 @@ The visual topology design is maintained in [ISP-MPLS-Lab-Diagram.drawio](./ISP-
 | Lab File | Nodes | Links | Intended Tasks |
 |---|---:|---:|---|
 | [001-ISP-MPLS-Lab.unl](./lab_files/001-ISP-MPLS-Lab.unl) | 8: P1–P6, PE1, PE2 | 15 | Tasks 001 and 002 |
-| [001-ISP-MPLS-Lab_added-PE3.unl](./lab_files/001-ISP-MPLS-Lab_added-PE3.unl) | 9: P1–P6, PE1–PE3 | 17 | Task 003 and later tasks |
+| [001-ISP-MPLS-Lab_added-PE3.unl](./lab_files/001-ISP-MPLS-Lab_added-PE3.unl) | 9: P1–P6, PE1–PE3 | 17 | Task 003 |
+| [001-ISP-MPLS-Lab_Added-RR-nodes.unl](./lab_files/001-ISP-MPLS-Lab_Added-RR-nodes.unl) | 11: P1–P6, PE1–PE3, RR101, RR102 | 19 | Task 004 and later tasks |
 
 The files represent topology milestones. Retaining earlier exports makes it possible to begin with the original core and practice each expansion independently.
 
