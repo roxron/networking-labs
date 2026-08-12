@@ -1647,7 +1647,7 @@
         <mxCell id="meLr3qmAW4Jnc1VsxDMq-0" parent="2gXn47Cy3jKVIf8G08bO-1" style="sketch=0;points=[[0.5,0,0],[1,0.5,0],[0.5,1,0],[0,0.5,0],[0.145,0.145,0],[0.8555,0.145,0],[0.855,0.8555,0],[0.145,0.855,0]];verticalLabelPosition=top;html=1;verticalAlign=bottom;aspect=fixed;align=center;pointerEvents=1;shape=mxgraph.cisco19.rect;prIcon=router;fillColor=#FAFAFA;strokeColor=#005073;" value="RR101" vertex="1">
           <mxGeometry height="50" width="50" x="630" y="350" as="geometry" />
         </mxCell>
-        <mxCell id="meLr3qmAW4Jnc1VsxDMq-1" parent="2gXn47Cy3jKVIf8G08bO-1" style="sketch=0;points=[[0.5,0,0],[1,0.5,0],[0.5,1,0],[0,0.5,0],[0.145,0.145,0],[0.8555,0.145,0],[0.855,0.8555,0],[0.145,0.855,0]];verticalLabelPosition=top;html=1;verticalAlign=bottom;aspect=fixed;align=center;pointerEvents=1;shape=mxgraph.cisco19.rect;prIcon=router;fillColor=#FAFAFA;strokeColor=#005073;" value="RR102" vertex="1">
+        <mxCell id="meLr3qmAW4Jnc1VsxDMq-1" parent="2gXn47Cy3jKVIf8G08bO-1" style="sketch=0;points=[[0.5,0,0],[1,0.5,0],[0.5,1,0],[0,0.5,0],[0.145,0.145,0],[0.8555,0.145,0],[0.855,0.8555,0],[0.145,0.855,0]];verticalLabelPosition=bottom;html=1;verticalAlign=top;aspect=fixed;align=center;pointerEvents=1;shape=mxgraph.cisco19.rect;prIcon=router;fillColor=#FAFAFA;strokeColor=#005073;" value="RR102" vertex="1">
           <mxGeometry height="50" width="50" x="640" y="970" as="geometry" />
         </mxCell>
         <mxCell id="rr101-p2-link" edge="1" parent="2gXn47Cy3jKVIf8G08bO-1" source="meLr3qmAW4Jnc1VsxDMq-0" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;endArrow=none;endFill=0;strokeWidth=2;" target="2gXn47Cy3jKVIf8G08bO-3">
@@ -1678,7 +1678,7 @@
           <mxGeometry height="30" width="140" x="585" y="310" as="geometry" />
         </mxCell>
         <mxCell id="rr102-loopback0" parent="2gXn47Cy3jKVIf8G08bO-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="lo0: 10.0.52.102/32" vertex="1">
-          <mxGeometry height="30" width="140" x="595" y="1020" as="geometry" />
+          <mxGeometry height="30" width="140" x="595" y="1060" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
