@@ -10,10 +10,10 @@ The lab currently contains:
 
 - An importable EVE-NG topology: [001-ISP-MPLS-Lab.unl](./001-ISP-MPLS-Lab.unl)
 - Six provider core routers: P1 through P6
-- Two provider-edge routers: PE1 and PE2
-- Fifteen point-to-point provider links
+- Three provider-edge routers after Task 003: PE1, PE2, and PE3
+- Seventeen point-to-point provider links after Task 003
 - Dedicated `/32` loopbacks for router IDs and MPLS label distribution
-- PE1 dual-homed to P1/P3 and PE2 dual-homed to P5/P6
+- PE1 dual-homed to P1/P3, PE2 dual-homed to P5/P6, and PE3 dual-homed to P2/P5 after Task 003
 
 The visual topology design is maintained in [ISP-MPLS-Lab-Diagram.drawio](./ISP-MPLS-Lab-Diagram.drawio).
 
@@ -25,6 +25,7 @@ The numbered Markdown files are intended to be completed in order. Each task sho
 |---:|---|---|---|
 | 001 | Build and verify the routed MPLS provider underlay | Ready | [001-base-objectives.md](./001-base-objectives.md) |
 | 002 | Establish PE-to-PE iBGP and build the CEtest VRF | Ready | [002-PE-to-PE-iBGP-CEtest-VRF.md](./002-PE-to-PE-iBGP-CEtest-VRF.md) |
+| 003 | Add PE3 to the MPLS core, iBGP mesh, and CEtest VPN | Ready | [003-add-PE3-MPLS-iBGP-CEtest-VRF.md](./003-add-PE3-MPLS-iBGP-CEtest-VRF.md) |
 
 Future exercises can add topics such as:
 
@@ -79,8 +80,9 @@ Examples:
 ```text
 001-base-objectives.md
 002-PE-to-PE-iBGP-CEtest-VRF.md
-003-CustomerA-second-site.md
-004-MP-BGP-VPNv4.md
+003-add-PE3-MPLS-iBGP-CEtest-VRF.md
+004-CustomerA-PE-CE-eBGP.md
+005-CustomerA-second-site.md
 ```
 
 Each new task document should contain:
