@@ -235,7 +235,9 @@ set interfaces ge-0/0/1 unit 0 family inet address 10.0.1.13/30
 set interfaces ge-0/0/1 unit 0 family iso
 ```
 
-### Base Verification
+### Base Verification on Every Router
+
+Run these commands on P1–P6, PE1, and PE2:
 
 ```junos
 show interfaces terse | match "ge-|lo0"
@@ -244,12 +246,20 @@ show route protocol direct
 show configuration interfaces | display set
 ```
 
-Ping every directly connected neighbor before continuing. For example:
+Ping every directly connected neighbor before continuing:
 
-```junos
-ping 10.0.0.2 rapid count 5
-ping 10.0.1.2 rapid count 5
-```
+| Router | Direct-neighbor addresses to ping |
+|---|---|
+| P1 | `10.0.0.2`, `10.0.0.6`, `10.0.0.18`, `10.0.1.1` |
+| P2 | `10.0.0.1`, `10.0.0.10`, `10.0.0.22`, `10.0.0.26`, `10.0.0.30` |
+| P3 | `10.0.0.14`, `10.0.0.5`, `10.0.0.21`, `10.0.1.5` |
+| P4 | `10.0.0.13`, `10.0.0.9`, `10.0.0.17`, `10.0.0.34`, `10.0.0.38` |
+| P5 | `10.0.0.25`, `10.0.0.37`, `10.0.0.42`, `10.0.1.9` |
+| P6 | `10.0.0.33`, `10.0.0.29`, `10.0.0.41`, `10.0.1.13` |
+| PE1 | `10.0.1.2`, `10.0.1.6` |
+| PE2 | `10.0.1.10`, `10.0.1.14` |
+
+Use `ping <address> rapid count 5` for every address in the router's row.
 
 If a link fails, compare its address/mask and EVE-NG endpoints, then inspect:
 
@@ -265,37 +275,18 @@ vMX interfaces are enabled by default unless `disable` is configured. Remove an 
 
 The NET is already configured under `lo0.0 family iso`. On each router, disable Level 1 globally, make the loopback passive, and enable point-to-point IS-IS on every provider-facing unit.
 
-### Common pattern
-
-```junos
-set protocols isis level 1 disable
-set protocols isis interface lo0.0 passive
-set protocols isis interface ge-0/0/x.0 point-to-point
-```
-
-Apply the following interface lists:
-
-| Router | IS-IS interfaces |
-|---|---|
-| P1 | `lo0.0`, `ge-0/0/0.0`–`ge-0/0/3.0` |
-| P2 | `lo0.0`, `ge-0/0/0.0`–`ge-0/0/4.0` |
-| P3 | `lo0.0`, `ge-0/0/0.0`–`ge-0/0/3.0` |
-| P4 | `lo0.0`, `ge-0/0/0.0`–`ge-0/0/4.0` |
-| P5 | `lo0.0`, `ge-0/0/0.0`–`ge-0/0/3.0` |
-| P6 | `lo0.0`, `ge-0/0/0.0`–`ge-0/0/3.0` |
-| PE1 | `lo0.0`, `ge-0/0/0.0`, `ge-0/0/1.0` |
-| PE2 | `lo0.0`, `ge-0/0/0.0`, `ge-0/0/1.0` |
-
-Example for PE1:
+### P1 IS-IS Configuration
 
 ```junos
 set protocols isis level 1 disable
 set protocols isis interface lo0.0 passive
 set protocols isis interface ge-0/0/0.0 point-to-point
 set protocols isis interface ge-0/0/1.0 point-to-point
+set protocols isis interface ge-0/0/2.0 point-to-point
+set protocols isis interface ge-0/0/3.0 point-to-point
 ```
 
-Example for P2:
+### P2 IS-IS Configuration
 
 ```junos
 set protocols isis level 1 disable
@@ -307,7 +298,72 @@ set protocols isis interface ge-0/0/3.0 point-to-point
 set protocols isis interface ge-0/0/4.0 point-to-point
 ```
 
-Commit and verify:
+### P3 IS-IS Configuration
+
+```junos
+set protocols isis level 1 disable
+set protocols isis interface lo0.0 passive
+set protocols isis interface ge-0/0/0.0 point-to-point
+set protocols isis interface ge-0/0/1.0 point-to-point
+set protocols isis interface ge-0/0/2.0 point-to-point
+set protocols isis interface ge-0/0/3.0 point-to-point
+```
+
+### P4 IS-IS Configuration
+
+```junos
+set protocols isis level 1 disable
+set protocols isis interface lo0.0 passive
+set protocols isis interface ge-0/0/0.0 point-to-point
+set protocols isis interface ge-0/0/1.0 point-to-point
+set protocols isis interface ge-0/0/2.0 point-to-point
+set protocols isis interface ge-0/0/3.0 point-to-point
+set protocols isis interface ge-0/0/4.0 point-to-point
+```
+
+### P5 IS-IS Configuration
+
+```junos
+set protocols isis level 1 disable
+set protocols isis interface lo0.0 passive
+set protocols isis interface ge-0/0/0.0 point-to-point
+set protocols isis interface ge-0/0/1.0 point-to-point
+set protocols isis interface ge-0/0/2.0 point-to-point
+set protocols isis interface ge-0/0/3.0 point-to-point
+```
+
+### P6 IS-IS Configuration
+
+```junos
+set protocols isis level 1 disable
+set protocols isis interface lo0.0 passive
+set protocols isis interface ge-0/0/0.0 point-to-point
+set protocols isis interface ge-0/0/1.0 point-to-point
+set protocols isis interface ge-0/0/2.0 point-to-point
+set protocols isis interface ge-0/0/3.0 point-to-point
+```
+
+### PE1 IS-IS Configuration
+
+```junos
+set protocols isis level 1 disable
+set protocols isis interface lo0.0 passive
+set protocols isis interface ge-0/0/0.0 point-to-point
+set protocols isis interface ge-0/0/1.0 point-to-point
+```
+
+### PE2 IS-IS Configuration
+
+```junos
+set protocols isis level 1 disable
+set protocols isis interface lo0.0 passive
+set protocols isis interface ge-0/0/0.0 point-to-point
+set protocols isis interface ge-0/0/1.0 point-to-point
+```
+
+### IS-IS Verification on Every Router
+
+Commit each router, then run the following on P1–P6, PE1, and PE2:
 
 ```junos
 show isis adjacency
@@ -319,7 +375,16 @@ show route 10.0.52.1/32 exact
 show route 10.0.52.2/32 exact
 ```
 
-Expected adjacency counts are P1=4, P2=5, P3=4, P4=5, P5=4, P6=4, PE1=2, and PE2=2.
+| Router | Expected adjacencies | Expected neighbors |
+|---|---:|---|
+| P1 | 4 | P2, P3, P4, PE1 |
+| P2 | 5 | P1, P3, P4, P5, P6 |
+| P3 | 4 | P1, P2, P4, PE1 |
+| P4 | 5 | P1, P2, P3, P5, P6 |
+| P5 | 4 | P2, P4, P6, PE2 |
+| P6 | 4 | P2, P4, P5, PE2 |
+| PE1 | 2 | P1, P3 |
+| PE2 | 2 | P5, P6 |
 
 Troubleshoot with:
 
@@ -336,30 +401,25 @@ Both ends require `family iso`, the same Level 2 capability, and matching point-
 
 Enable `family mpls`, MPLS, and LDP on each provider-facing interface. Do not enable them on `lo0.0`; LDP uses the router ID as its transport address.
 
-### Common pattern
-
-```junos
-set interfaces ge-0/0/x unit 0 family mpls
-set protocols mpls interface ge-0/0/x.0
-set protocols ldp transport-address router-id
-set protocols ldp interface ge-0/0/x.0
-```
-
-Use the same physical interface lists as the active IS-IS links. Configure `transport-address router-id` once per router.
-
-Example for PE1:
+### P1 MPLS and LDP Configuration
 
 ```junos
 set interfaces ge-0/0/0 unit 0 family mpls
 set interfaces ge-0/0/1 unit 0 family mpls
+set interfaces ge-0/0/2 unit 0 family mpls
+set interfaces ge-0/0/3 unit 0 family mpls
 set protocols mpls interface ge-0/0/0.0
 set protocols mpls interface ge-0/0/1.0
+set protocols mpls interface ge-0/0/2.0
+set protocols mpls interface ge-0/0/3.0
 set protocols ldp transport-address router-id
 set protocols ldp interface ge-0/0/0.0
 set protocols ldp interface ge-0/0/1.0
+set protocols ldp interface ge-0/0/2.0
+set protocols ldp interface ge-0/0/3.0
 ```
 
-Example for P2:
+### P2 MPLS and LDP Configuration
 
 ```junos
 set interfaces ge-0/0/0 unit 0 family mpls
@@ -380,7 +440,108 @@ set protocols ldp interface ge-0/0/3.0
 set protocols ldp interface ge-0/0/4.0
 ```
 
-Commit and verify:
+### P3 MPLS and LDP Configuration
+
+```junos
+set interfaces ge-0/0/0 unit 0 family mpls
+set interfaces ge-0/0/1 unit 0 family mpls
+set interfaces ge-0/0/2 unit 0 family mpls
+set interfaces ge-0/0/3 unit 0 family mpls
+set protocols mpls interface ge-0/0/0.0
+set protocols mpls interface ge-0/0/1.0
+set protocols mpls interface ge-0/0/2.0
+set protocols mpls interface ge-0/0/3.0
+set protocols ldp transport-address router-id
+set protocols ldp interface ge-0/0/0.0
+set protocols ldp interface ge-0/0/1.0
+set protocols ldp interface ge-0/0/2.0
+set protocols ldp interface ge-0/0/3.0
+```
+
+### P4 MPLS and LDP Configuration
+
+```junos
+set interfaces ge-0/0/0 unit 0 family mpls
+set interfaces ge-0/0/1 unit 0 family mpls
+set interfaces ge-0/0/2 unit 0 family mpls
+set interfaces ge-0/0/3 unit 0 family mpls
+set interfaces ge-0/0/4 unit 0 family mpls
+set protocols mpls interface ge-0/0/0.0
+set protocols mpls interface ge-0/0/1.0
+set protocols mpls interface ge-0/0/2.0
+set protocols mpls interface ge-0/0/3.0
+set protocols mpls interface ge-0/0/4.0
+set protocols ldp transport-address router-id
+set protocols ldp interface ge-0/0/0.0
+set protocols ldp interface ge-0/0/1.0
+set protocols ldp interface ge-0/0/2.0
+set protocols ldp interface ge-0/0/3.0
+set protocols ldp interface ge-0/0/4.0
+```
+
+### P5 MPLS and LDP Configuration
+
+```junos
+set interfaces ge-0/0/0 unit 0 family mpls
+set interfaces ge-0/0/1 unit 0 family mpls
+set interfaces ge-0/0/2 unit 0 family mpls
+set interfaces ge-0/0/3 unit 0 family mpls
+set protocols mpls interface ge-0/0/0.0
+set protocols mpls interface ge-0/0/1.0
+set protocols mpls interface ge-0/0/2.0
+set protocols mpls interface ge-0/0/3.0
+set protocols ldp transport-address router-id
+set protocols ldp interface ge-0/0/0.0
+set protocols ldp interface ge-0/0/1.0
+set protocols ldp interface ge-0/0/2.0
+set protocols ldp interface ge-0/0/3.0
+```
+
+### P6 MPLS and LDP Configuration
+
+```junos
+set interfaces ge-0/0/0 unit 0 family mpls
+set interfaces ge-0/0/1 unit 0 family mpls
+set interfaces ge-0/0/2 unit 0 family mpls
+set interfaces ge-0/0/3 unit 0 family mpls
+set protocols mpls interface ge-0/0/0.0
+set protocols mpls interface ge-0/0/1.0
+set protocols mpls interface ge-0/0/2.0
+set protocols mpls interface ge-0/0/3.0
+set protocols ldp transport-address router-id
+set protocols ldp interface ge-0/0/0.0
+set protocols ldp interface ge-0/0/1.0
+set protocols ldp interface ge-0/0/2.0
+set protocols ldp interface ge-0/0/3.0
+```
+
+### PE1 MPLS and LDP Configuration
+
+```junos
+set interfaces ge-0/0/0 unit 0 family mpls
+set interfaces ge-0/0/1 unit 0 family mpls
+set protocols mpls interface ge-0/0/0.0
+set protocols mpls interface ge-0/0/1.0
+set protocols ldp transport-address router-id
+set protocols ldp interface ge-0/0/0.0
+set protocols ldp interface ge-0/0/1.0
+```
+
+### PE2 MPLS and LDP Configuration
+
+```junos
+set interfaces ge-0/0/0 unit 0 family mpls
+set interfaces ge-0/0/1 unit 0 family mpls
+set protocols mpls interface ge-0/0/0.0
+set protocols mpls interface ge-0/0/1.0
+set protocols ldp transport-address router-id
+set protocols ldp interface ge-0/0/0.0
+set protocols ldp interface ge-0/0/1.0
+```
+
+### MPLS and LDP Verification on Every Router
+
+Commit each router, then run the following on P1–P6, PE1, and PE2:
 
 ```junos
 show ldp neighbor
@@ -392,7 +553,7 @@ show mpls interface
 show route forwarding-table family mpls
 ```
 
-The direct LDP-neighbor counts should match the IS-IS adjacency counts. Remote loopbacks should appear in `inet.3` with LDP next hops.
+The direct LDP-neighbor counts should match the IS-IS adjacency counts listed above. Remote loopbacks should appear in `inet.3` with LDP next hops.
 
 ### LSP tests
 
@@ -416,11 +577,27 @@ If LDP is down while IS-IS is up, confirm `family mpls`, `protocols mpls interfa
 
 ## 4. Test Resiliency
 
+Perform a separate failure test from each router so every node is covered. Test only one row at a time and restore it before continuing.
+
+| Router | Interface to disable | Failed link |
+|---|---|---|
+| P1 | `ge-0/0/0` | P1–P2 |
+| P2 | `ge-0/0/1` | P2–P4 |
+| P3 | `ge-0/0/0` | P3–P4 |
+| P4 | `ge-0/0/2` | P4–P1 |
+| P5 | `ge-0/0/2` | P5–P6 |
+| P6 | `ge-0/0/1` | P6–P2 |
+| PE1 | `ge-0/0/0` | PE1–P1; traffic should use P3 |
+| PE2 | `ge-0/0/0` | PE2–P5; traffic should use P6 |
+
+For each row:
+
 1. Start a repeated sourced ping between PE loopbacks.
-2. Choose one core interface and record the current route and LDP next hop.
-3. In configuration mode, enter `set interfaces ge-0/0/x disable` and commit.
+2. Record the current route, IS-IS next hop, and LDP next hop.
+3. Enter `set interfaces <interface> disable`, run `show | compare`, and commit.
 4. Observe IS-IS convergence, `inet.3`, `mpls.0`, and ping loss.
-5. Restore the link with `delete interfaces ge-0/0/x disable` and commit.
+5. Restore the link with `delete interfaces <interface> disable` and commit.
+6. Confirm the adjacency, LDP session, and preferred path return.
 
 Never disable both links from the same PE during a single-link test.
 
