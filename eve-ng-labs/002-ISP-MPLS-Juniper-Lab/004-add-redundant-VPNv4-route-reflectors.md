@@ -1,898 +1,432 @@
-# Task 004 — Add Redundant VPNv4 Route Reflectors
+# Task 004 — Add Redundant `inet-vpn` Route Reflectors
 
 ## Purpose
 
-Add RR101 and RR102 as redundant route reflectors in provider AS `65000`, migrate PE1–PE3 from a full-mesh iBGP design to route-reflector clients, and preserve CEtest VPN service throughout the change.
-
-The migration is deliberately make-before-break:
-
-1. Build and verify both RR underlays.
-2. Enable IS-IS, MPLS, and LDP.
-3. Establish new iBGP and VPNv4 sessions without removing any PE-to-PE session.
-4. Prove that both RRs learn and reflect all CEtest routes.
-5. Prove each PE retains routes and forwarding when its direct PE sessions are administratively disabled.
-6. Restore the direct sessions and review the evidence.
-7. Remove direct PE-to-PE sessions one PE at a time.
-8. Validate the final redundant RR topology.
+Add RR101 and RR102 as redundant route reflectors in AS `65000`, migrate PE1–PE3 from a full-mesh iBGP design to route-reflector clients, and preserve CEtest service with a make-before-break procedure.
 
 ## Prerequisites
 
-- [Task 001](./001-base-objectives.md) completed
-- [Task 002](./002-PE-to-PE-iBGP-CEtest-VRF.md) completed
-- [Task 003](./003-add-PE3-MPLS-iBGP-CEtest-VRF.md) completed
-- The route-reflector EVE-NG topology: [001-ISP-MPLS-Lab_Added-RR-nodes.unl](./lab_files/001-ISP-MPLS-Lab_Added-RR-nodes.unl)
-- PE1, PE2, and PE3 operating in a full iBGP mesh in AS `65000`
-- Every PE advertising its CEtest `/24` through VPNv4
-- All three CEtest prefixes reachable from every PE
-- P2 Gi0/6 and P4 Gi0/5 available
-- Two router images added as RR101 and RR102
-
-> [!NOTE]
-> The `Added-RR-nodes` export contains P1–P6, PE1–PE3, RR101, and RR102 with 19 point-to-point networks. Use this topology milestone for Task 004.
+- Tasks [001](./001-base-objectives.md), [002](./002-PE-to-PE-iBGP-CEtest-VRF.md), and [003](./003-add-PE3-MPLS-iBGP-CEtest-VRF.md) completed
+- PE1–PE3 in a working `inet-vpn` full mesh
+- All three CEtest `/24` routes reachable from every PE
+- P2 `ge-0/0/6` and P4 `ge-0/0/5` available
+- Two new vMX nodes named RR101 and RR102
+- The `.unl` milestone is pending: `lab_files/002-ISP-MPLS-Juniper-Lab_added-RR-nodes.unl`
 
 ## Topology Change
 
 ```text
-                     RR101                         RR102
-              Lo0 10.0.52.101/32           Lo0 10.0.52.102/32
-                    G0/0                           G0/0
-               10.0.1.25                     10.0.1.29
-                      |                              |
-             10.0.1.24/30                  10.0.1.28/30
-                      |                              |
-               10.0.1.26                     10.0.1.30
-                  P2 G0/6                        P4 G0/5
-                      \                            /
-                       +------ MPLS core --------+
+                    RR101                              RR102
+             lo0.0 10.0.52.101/32              lo0.0 10.0.52.102/32
+           ge-0/0/0 10.0.1.25                 ge-0/0/0 10.0.1.29
+                      |                                  |
+               10.0.1.24/30                      10.0.1.28/30
+                      |                                  |
+      P2 ge-0/0/6 10.0.1.26          P4 ge-0/0/5 10.0.1.30
+                       \                                /
+                        +--------- MPLS core ----------+
 
-              RR101 <---------- iBGP ----------> PE1, PE2, PE3
-              RR102 <---------- iBGP ----------> PE1, PE2, PE3
+       PE1, PE2, and PE3 are clients of both route reflectors
 ```
-
-RR101 and RR102 are independent redundant route reflectors. Every PE is a client of both RRs. The RRs do not need to be clients of each other because each receives every PE route directly. No RR-to-RR session is required in this design.
-
-## Devices and Roles
-
-| Device | Change in This Task |
-|---|---|
-| RR101 | New VPNv4 route reflector connected to P2 |
-| RR102 | New VPNv4 route reflector connected to P4 |
-| P2 | Adds Gi0/6 toward RR101 |
-| P4 | Adds Gi0/5 toward RR102 |
-| PE1 | Becomes a client of RR101 and RR102; direct PE sessions are later removed |
-| PE2 | Becomes a client of RR101 and RR102; direct PE sessions are later removed |
-| PE3 | Becomes a client of RR101 and RR102; direct PE sessions are later removed |
-| Other P routers | No configuration change; continue as MPLS transit routers |
-
-## Addressing and Protocol Parameters
 
 | Parameter | RR101 | RR102 |
 |---|---|---|
-| Loopback0 | `10.0.52.101/32` | `10.0.52.102/32` |
-| Physical interface | Gi0/0 | Gi0/0 |
-| Physical address | `10.0.1.25/30` | `10.0.1.29/30` |
-| Attached P router | P2 Gi0/6 | P4 Gi0/5 |
-| P-router address | `10.0.1.26/30` | `10.0.1.30/30` |
-| Link subnet | `10.0.1.24/30` | `10.0.1.28/30` |
-| IS-IS NET | `49.0001.C000.0000.0101.00` | `49.0001.C000.0000.0102.00` |
-| LDP router ID | `10.0.52.101` | `10.0.52.102` |
-| BGP AS | `65000` | `65000` |
-| BGP router ID | `10.0.52.101` | `10.0.52.102` |
+| `lo0.0` | `10.0.52.101/32` | `10.0.52.102/32` |
+| RR interface | `ge-0/0/0`, `10.0.1.25/30` | `ge-0/0/0`, `10.0.1.29/30` |
+| P interface | P2 `ge-0/0/6`, `10.0.1.26/30` | P4 `ge-0/0/5`, `10.0.1.30/30` |
+| ISO NET | `49.0001.c000.0000.0101.00` | `49.0001.c000.0000.0102.00` |
+| AS | `65000` | `65000` |
 | Cluster ID | `10.0.52.101` | `10.0.52.102` |
 
-> [!NOTE]
-> The diagram specifies the RR names, physical addressing, and loopbacks. This task assigns unique IS-IS NETs using a dedicated `C000` system-ID family, consistent with the existing `A000` P-router and `B000` PE-router convention.
+Each RR receives every PE route directly, so an RR-to-RR session is not required. The RRs participate in IS-IS/LDP for consistent provider-node reachability, but they do not carry customer traffic in the intended topology.
 
-## BGP Migration States
+## Migration States
 
-| State | PE-to-PE Sessions | PE-to-RR Sessions | Purpose |
+| State | Direct PE sessions | PE-to-RR sessions | Purpose |
 |---|---:|---:|---|
-| Initial | 3 undirected sessions | 0 | Existing three-PE full mesh |
-| Parallel | 3 | 6 | Introduce both RRs without removing the working path |
-| Validation | Temporarily disabled per PE | 6 | Prove routes and traffic work through the RRs |
-| Final | 0 | 6 | Redundant route-reflector design |
-
-## Technologies and Protocols
-
-- IPv4 point-to-point addressing
-- IS-IS Level 2 with wide metrics
-- MPLS forwarding and LDP
-- Loopback-sourced iBGP in AS `65000`
-- MP-BGP VPNv4
-- BGP route reflection
-- Originator ID and cluster list loop prevention
-- Redundant route-reflector clients
-- Make-before-break control-plane migration
+| Initial | 3 | 0 | Existing full mesh |
+| Parallel | 3 | 6 | Introduce both RRs safely |
+| Validation | Temporarily deactivated per PE | 6 | Prove RR-only learning |
+| Final | 0 | 6 | Redundant reflected topology |
 
 ## Objectives
 
-1. Configure RR101, RR102, and their attached P-router interfaces.
-2. Add both RRs to IS-IS Level 2.
-3. Establish MPLS and LDP on both RR links.
-4. Verify labeled reachability between every PE and both RR loopbacks.
-5. Configure RR101 and RR102 in provider AS `65000`.
-6. Establish IPv4 iBGP and VPNv4 sessions from every PE to both RRs.
-7. Configure PE1–PE3 as VPNv4 route-reflector clients.
-8. Verify both RRs receive all three CEtest VPNv4 routes.
-9. Verify every PE receives reflected routes while the old full mesh remains active.
-10. Test RR-only operation before deleting any PE-to-PE neighbor.
-11. Remove the direct PE full mesh in controlled stages.
-12. Verify redundant service operation after either RR fails.
+1. Add both RRs to IPv4, IS-IS, MPLS, and LDP.
+2. Establish `inet-vpn` iBGP from every PE to both RRs.
+3. Reflect all three CEtest routes from both clusters.
+4. Prove RR-only learning before deleting direct PE sessions.
+5. Retire the full mesh and test either RR failing.
 
-## Configuration Tasks
+## 1. Capture the Baseline
 
-### 1. Capture the Pre-Migration Baseline
+On each PE:
 
-Save configurations and record the existing control and data plane on PE1, PE2, and PE3:
-
-```cisco
-show ip bgp summary
-show bgp vpnv4 unicast all summary
-show bgp vpnv4 unicast all
-show bgp vpnv4 unicast all labels
-show ip route vrf CEtest
+```junos
+show bgp summary
+show route table bgp.l3vpn.0
+show route table CEtest.inet.0
 ```
 
-Run the existing CEtest tests:
+Run all six directed CEtest pings from Task 003. Do not migrate unless every peer and ping is working.
 
-PE1:
+## 2. Configure Interfaces
 
-```cisco
-ping vrf CEtest 192.168.1.1 source 192.168.0.1
-ping vrf CEtest 192.168.2.1 source 192.168.0.1
+### RR101
+
+```junos
+set system host-name RR101
+set routing-options router-id 10.0.52.101
+set interfaces lo0 unit 0 description "Router ID"
+set interfaces lo0 unit 0 family inet address 10.0.52.101/32
+set interfaces lo0 unit 0 family iso address 49.0001.c000.0000.0101.00
+set interfaces ge-0/0/0 description "Link to P2 ge-0/0/6"
+set interfaces ge-0/0/0 unit 0 family inet address 10.0.1.25/30
+set interfaces ge-0/0/0 unit 0 family iso
 ```
 
-PE2:
+### P2 addition
 
-```cisco
-ping vrf CEtest 192.168.0.1 source 192.168.1.1
-ping vrf CEtest 192.168.2.1 source 192.168.1.1
+```junos
+set interfaces ge-0/0/6 description "Link to RR101 ge-0/0/0"
+set interfaces ge-0/0/6 unit 0 family inet address 10.0.1.26/30
+set interfaces ge-0/0/6 unit 0 family iso
 ```
 
-PE3:
+### RR102
 
-```cisco
-ping vrf CEtest 192.168.0.1 source 192.168.2.1
-ping vrf CEtest 192.168.1.1 source 192.168.2.1
+```junos
+set system host-name RR102
+set routing-options router-id 10.0.52.102
+set interfaces lo0 unit 0 description "Router ID"
+set interfaces lo0 unit 0 family inet address 10.0.52.102/32
+set interfaces lo0 unit 0 family iso address 49.0001.c000.0000.0102.00
+set interfaces ge-0/0/0 description "Link to P4 ge-0/0/5"
+set interfaces ge-0/0/0 unit 0 family inet address 10.0.1.29/30
+set interfaces ge-0/0/0 unit 0 family iso
 ```
 
-Do not begin the migration unless all sessions and all six directed VRF pings succeed.
+### P4 addition
 
-### 2. Configure Base Interfaces
-
-#### RR101
-
-```cisco
-hostname RR101
-!
-interface Loopback0
- description Router ID
- ip address 10.0.52.101 255.255.255.255
-!
-interface GigabitEthernet0/0
- description Link to P2 G0/6
- ip address 10.0.1.25 255.255.255.252
- no shutdown
+```junos
+set interfaces ge-0/0/5 description "Link to RR102 ge-0/0/0"
+set interfaces ge-0/0/5 unit 0 family inet address 10.0.1.30/30
+set interfaces ge-0/0/5 unit 0 family iso
 ```
 
-#### P2 Addition
+Commit and verify direct pings in both directions:
 
-```cisco
-interface GigabitEthernet0/6
- description Link to RR101 G0/0
- ip address 10.0.1.26 255.255.255.252
- no shutdown
+```junos
+show interfaces terse | match "ge-|lo0"
+show route protocol direct
 ```
 
-#### RR102
+- RR101 ↔ P2: `10.0.1.25` / `10.0.1.26`
+- RR102 ↔ P4: `10.0.1.29` / `10.0.1.30`
 
-```cisco
-hostname RR102
-!
-interface Loopback0
- description Router ID
- ip address 10.0.52.102 255.255.255.255
-!
-interface GigabitEthernet0/0
- description Link to P4 G0/5
- ip address 10.0.1.29 255.255.255.252
- no shutdown
-```
-
-#### P4 Addition
-
-```cisco
-interface GigabitEthernet0/5
- description Link to RR102 G0/0
- ip address 10.0.1.30 255.255.255.252
- no shutdown
-```
-
-#### Interface Verification
-
-Run on RR101, RR102, P2, and P4:
-
-```cisco
-show ip interface brief | exclude unassigned
-show interfaces description | include up
-show ip route connected
-show interfaces stats | exclude disabled
-```
-
-Verify both links in both directions:
+## 3. Add the RRs to IS-IS
 
 RR101:
 
-```cisco
-ping 10.0.1.26
+```junos
+set protocols isis level 1 disable
+set protocols isis interface lo0.0 passive
+set protocols isis interface ge-0/0/0.0 point-to-point
 ```
 
 P2:
 
-```cisco
-ping 10.0.1.25
+```junos
+set protocols isis interface ge-0/0/6.0 point-to-point
 ```
 
 RR102:
 
-```cisco
-ping 10.0.1.30
+```junos
+set protocols isis level 1 disable
+set protocols isis interface lo0.0 passive
+set protocols isis interface ge-0/0/0.0 point-to-point
 ```
 
 P4:
 
-```cisco
-ping 10.0.1.29
+```junos
+set protocols isis interface ge-0/0/5.0 point-to-point
 ```
 
-### 3. Add RR101 and RR102 to IS-IS
+Commit and verify:
 
-#### RR101
-
-```cisco
-router isis CORE
- net 49.0001.C000.0000.0101.00
- is-type level-2-only
- metric-style wide
- log-adjacency-changes
- passive-interface Loopback0
-!
-interface Loopback0
- ip router isis CORE
-!
-interface GigabitEthernet0/0
- ip router isis CORE
- isis network point-to-point
-```
-
-#### P2 Addition
-
-```cisco
-interface GigabitEthernet0/6
- ip router isis CORE
- isis network point-to-point
-```
-
-#### RR102
-
-```cisco
-router isis CORE
- net 49.0001.C000.0000.0102.00
- is-type level-2-only
- metric-style wide
- log-adjacency-changes
- passive-interface Loopback0
-!
-interface Loopback0
- ip router isis CORE
-!
-interface GigabitEthernet0/0
- ip router isis CORE
- isis network point-to-point
-```
-
-#### P4 Addition
-
-```cisco
-interface GigabitEthernet0/5
- ip router isis CORE
- isis network point-to-point
-```
-
-#### IS-IS Verification
-
-```cisco
-show clns protocol
-show clns interface
-show isis neighbors
-show isis neighbors detail
+```junos
+show isis adjacency
 show isis database
-show isis topology
-show ip route isis
+show route protocol isis
 ```
 
-Expected new adjacencies:
+Every PE must learn both RR `/32` loopbacks, and each RR must learn all three PE loopbacks.
 
-| Router | New Neighbor | Updated Total |
-|---|---|---:|
-| RR101 | P2 | 1 |
-| P2 | RR101 | 7 |
-| RR102 | P4 | 1 |
-| P4 | RR102 | 6 |
+## 4. Enable MPLS and LDP
 
-Verify both RR loopbacks from every PE:
+RR101:
 
-```cisco
-ping 10.0.52.101 source Loopback0
-ping 10.0.52.102 source Loopback0
-show ip route 10.0.52.101
-show ip route 10.0.52.102
+```junos
+set interfaces ge-0/0/0 unit 0 family mpls
+set protocols mpls interface ge-0/0/0.0
+set protocols ldp transport-address router-id
+set protocols ldp interface ge-0/0/0.0
 ```
 
-### 4. Enable MPLS and LDP
+P2:
 
-#### RR101
-
-```cisco
-mpls ip
-mpls label protocol ldp
-mpls ldp router-id Loopback0 force
-!
-interface GigabitEthernet0/0
- mpls ip
+```junos
+set interfaces ge-0/0/6 unit 0 family mpls
+set protocols mpls interface ge-0/0/6.0
+set protocols ldp interface ge-0/0/6.0
 ```
 
-#### P2 Addition
+RR102:
 
-```cisco
-interface GigabitEthernet0/6
- mpls ip
+```junos
+set interfaces ge-0/0/0 unit 0 family mpls
+set protocols mpls interface ge-0/0/0.0
+set protocols ldp transport-address router-id
+set protocols ldp interface ge-0/0/0.0
 ```
 
-#### RR102
+P4:
 
-```cisco
-mpls ip
-mpls label protocol ldp
-mpls ldp router-id Loopback0 force
-!
-interface GigabitEthernet0/0
- mpls ip
+```junos
+set interfaces ge-0/0/5 unit 0 family mpls
+set protocols mpls interface ge-0/0/5.0
+set protocols ldp interface ge-0/0/5.0
 ```
 
-#### P4 Addition
+Verify:
 
-```cisco
-interface GigabitEthernet0/5
- mpls ip
+```junos
+show ldp neighbor
+show ldp session
+show route table inet.3
+show route table mpls.0
 ```
 
-#### MPLS and LDP Verification
+From each PE:
 
-Use only MPLS- and LDP-specific commands:
-
-```cisco
-show mpls interfaces
-show mpls ldp parameters
-show mpls ldp discovery
-show mpls ldp neighbor
-show mpls ldp neighbor detail
-show mpls ldp bindings
-show mpls forwarding-table
+```junos
+ping mpls ldp 10.0.52.101/32
+ping mpls ldp 10.0.52.102/32
 ```
 
-Expected new LDP sessions:
+## 5. Configure the Route Reflectors
 
-| Router | New LDP Peer | Updated Total |
-|---|---|---:|
-| RR101 | P2 | 1 |
-| P2 | RR101 | 7 |
-| RR102 | P4 | 1 |
-| P4 | RR102 | 6 |
+On Junos, the `cluster` statement on a BGP group makes that group a route-reflector client group. The two unique cluster IDs provide independent reflection paths.
 
-Run from PE1, PE2, and PE3:
+### RR101
 
-```cisco
-ping mpls ipv4 10.0.52.101/32
-ping mpls ipv4 10.0.52.102/32
+```junos
+set routing-options autonomous-system 65000
+set protocols bgp group PE-CLIENTS type internal
+set protocols bgp group PE-CLIENTS local-address 10.0.52.101
+set protocols bgp group PE-CLIENTS family inet-vpn unicast
+set protocols bgp group PE-CLIENTS cluster 10.0.52.101
+set protocols bgp group PE-CLIENTS neighbor 10.0.52.1 description "PE1 inet-vpn client"
+set protocols bgp group PE-CLIENTS neighbor 10.0.52.2 description "PE2 inet-vpn client"
+set protocols bgp group PE-CLIENTS neighbor 10.0.52.3 description "PE3 inet-vpn client"
 ```
 
-Run from RR101 and RR102:
+### RR102
 
-```cisco
-ping mpls ipv4 10.0.52.1/32
-ping mpls ipv4 10.0.52.2/32
-ping mpls ipv4 10.0.52.3/32
+```junos
+set routing-options autonomous-system 65000
+set protocols bgp group PE-CLIENTS type internal
+set protocols bgp group PE-CLIENTS local-address 10.0.52.102
+set protocols bgp group PE-CLIENTS family inet-vpn unicast
+set protocols bgp group PE-CLIENTS cluster 10.0.52.102
+set protocols bgp group PE-CLIENTS neighbor 10.0.52.1 description "PE1 inet-vpn client"
+set protocols bgp group PE-CLIENTS neighbor 10.0.52.2 description "PE2 inet-vpn client"
+set protocols bgp group PE-CLIENTS neighbor 10.0.52.3 description "PE3 inet-vpn client"
 ```
 
-All MPLS LSP pings must succeed before BGP onboarding.
+Commit only after `commit check` succeeds.
 
-### 5. Configure the Route Reflectors
+## 6. Add Both RRs to Every PE
 
-The RRs carry no customer VRFs. They reflect labeled VPNv4 routes and preserve the originating PE as the BGP next hop.
+Use one client-side group on each PE. The RRs contain the `cluster` statements; the clients do not.
 
-#### RR101
+### PE1
 
-```cisco
-router bgp 65000
- bgp router-id 10.0.52.101
- bgp cluster-id 10.0.52.101
- bgp log-neighbor-changes
- neighbor 10.0.52.1 remote-as 65000
- neighbor 10.0.52.1 description PE1 VPNv4 client
- neighbor 10.0.52.1 update-source Loopback0
- neighbor 10.0.52.2 remote-as 65000
- neighbor 10.0.52.2 description PE2 VPNv4 client
- neighbor 10.0.52.2 update-source Loopback0
- neighbor 10.0.52.3 remote-as 65000
- neighbor 10.0.52.3 description PE3 VPNv4 client
- neighbor 10.0.52.3 update-source Loopback0
- !
- address-family ipv4 unicast
-  neighbor 10.0.52.1 activate
-  neighbor 10.0.52.1 route-reflector-client
-  neighbor 10.0.52.2 activate
-  neighbor 10.0.52.2 route-reflector-client
-  neighbor 10.0.52.3 activate
-  neighbor 10.0.52.3 route-reflector-client
- exit-address-family
- !
- address-family vpnv4
-  neighbor 10.0.52.1 activate
-  neighbor 10.0.52.1 send-community extended
-  neighbor 10.0.52.1 route-reflector-client
-  neighbor 10.0.52.2 activate
-  neighbor 10.0.52.2 send-community extended
-  neighbor 10.0.52.2 route-reflector-client
-  neighbor 10.0.52.3 activate
-  neighbor 10.0.52.3 send-community extended
-  neighbor 10.0.52.3 route-reflector-client
- exit-address-family
+```junos
+set protocols bgp group VPN-RR type internal
+set protocols bgp group VPN-RR local-address 10.0.52.1
+set protocols bgp group VPN-RR family inet-vpn unicast
+set protocols bgp group VPN-RR neighbor 10.0.52.101 description "inet-vpn to RR101"
+set protocols bgp group VPN-RR neighbor 10.0.52.102 description "inet-vpn to RR102"
 ```
 
-#### RR102
+### PE2
 
-```cisco
-router bgp 65000
- bgp router-id 10.0.52.102
- bgp cluster-id 10.0.52.102
- bgp log-neighbor-changes
- neighbor 10.0.52.1 remote-as 65000
- neighbor 10.0.52.1 description PE1 VPNv4 client
- neighbor 10.0.52.1 update-source Loopback0
- neighbor 10.0.52.2 remote-as 65000
- neighbor 10.0.52.2 description PE2 VPNv4 client
- neighbor 10.0.52.2 update-source Loopback0
- neighbor 10.0.52.3 remote-as 65000
- neighbor 10.0.52.3 description PE3 VPNv4 client
- neighbor 10.0.52.3 update-source Loopback0
- !
- address-family ipv4 unicast
-  neighbor 10.0.52.1 activate
-  neighbor 10.0.52.1 route-reflector-client
-  neighbor 10.0.52.2 activate
-  neighbor 10.0.52.2 route-reflector-client
-  neighbor 10.0.52.3 activate
-  neighbor 10.0.52.3 route-reflector-client
- exit-address-family
- !
- address-family vpnv4
-  neighbor 10.0.52.1 activate
-  neighbor 10.0.52.1 send-community extended
-  neighbor 10.0.52.1 route-reflector-client
-  neighbor 10.0.52.2 activate
-  neighbor 10.0.52.2 send-community extended
-  neighbor 10.0.52.2 route-reflector-client
-  neighbor 10.0.52.3 activate
-  neighbor 10.0.52.3 send-community extended
-  neighbor 10.0.52.3 route-reflector-client
- exit-address-family
+```junos
+set protocols bgp group VPN-RR type internal
+set protocols bgp group VPN-RR local-address 10.0.52.2
+set protocols bgp group VPN-RR family inet-vpn unicast
+set protocols bgp group VPN-RR neighbor 10.0.52.101 description "inet-vpn to RR101"
+set protocols bgp group VPN-RR neighbor 10.0.52.102 description "inet-vpn to RR102"
 ```
 
-### 6. Add Both RRs to Every PE
+### PE3
 
-Do not remove or shut down any existing PE neighbor in this step.
-
-#### PE1 Addition
-
-```cisco
-router bgp 65000
- neighbor 10.0.52.101 remote-as 65000
- neighbor 10.0.52.101 description iBGP to RR101 Loopback0
- neighbor 10.0.52.101 update-source Loopback0
- neighbor 10.0.52.102 remote-as 65000
- neighbor 10.0.52.102 description iBGP to RR102 Loopback0
- neighbor 10.0.52.102 update-source Loopback0
- !
- address-family ipv4 unicast
-  neighbor 10.0.52.101 activate
-  neighbor 10.0.52.102 activate
- exit-address-family
- !
- address-family vpnv4
-  neighbor 10.0.52.101 activate
-  neighbor 10.0.52.101 send-community extended
-  neighbor 10.0.52.102 activate
-  neighbor 10.0.52.102 send-community extended
- exit-address-family
+```junos
+set protocols bgp group VPN-RR type internal
+set protocols bgp group VPN-RR local-address 10.0.52.3
+set protocols bgp group VPN-RR family inet-vpn unicast
+set protocols bgp group VPN-RR neighbor 10.0.52.101 description "inet-vpn to RR101"
+set protocols bgp group VPN-RR neighbor 10.0.52.102 description "inet-vpn to RR102"
 ```
 
-#### PE2 Addition
+Commit and retain the direct `PE-FULL-MESH` group during validation.
 
-```cisco
-router bgp 65000
- neighbor 10.0.52.101 remote-as 65000
- neighbor 10.0.52.101 description iBGP to RR101 Loopback0
- neighbor 10.0.52.101 update-source Loopback0
- neighbor 10.0.52.102 remote-as 65000
- neighbor 10.0.52.102 description iBGP to RR102 Loopback0
- neighbor 10.0.52.102 update-source Loopback0
- !
- address-family ipv4 unicast
-  neighbor 10.0.52.101 activate
-  neighbor 10.0.52.102 activate
- exit-address-family
- !
- address-family vpnv4
-  neighbor 10.0.52.101 activate
-  neighbor 10.0.52.101 send-community extended
-  neighbor 10.0.52.102 activate
-  neighbor 10.0.52.102 send-community extended
- exit-address-family
+## 7. Verify the Parallel State
+
+On both RRs:
+
+```junos
+show bgp summary
+show bgp group PE-CLIENTS
+show route table bgp.l3vpn.0
+show route receive-protocol bgp 10.0.52.1 table bgp.l3vpn.0
+show route advertising-protocol bgp 10.0.52.2 table bgp.l3vpn.0
 ```
 
-#### PE3 Addition
-
-```cisco
-router bgp 65000
- neighbor 10.0.52.101 remote-as 65000
- neighbor 10.0.52.101 description iBGP to RR101 Loopback0
- neighbor 10.0.52.101 update-source Loopback0
- neighbor 10.0.52.102 remote-as 65000
- neighbor 10.0.52.102 description iBGP to RR102 Loopback0
- neighbor 10.0.52.102 update-source Loopback0
- !
- address-family ipv4 unicast
-  neighbor 10.0.52.101 activate
-  neighbor 10.0.52.102 activate
- exit-address-family
- !
- address-family vpnv4
-  neighbor 10.0.52.101 activate
-  neighbor 10.0.52.101 send-community extended
-  neighbor 10.0.52.102 activate
-  neighbor 10.0.52.102 send-community extended
- exit-address-family
-```
-
-### 7. Verify the Parallel BGP State
-
-At this stage, each PE has four iBGP peers: two other PEs and two RRs. Each RR has three PE clients.
-
-Run on all PEs and both RRs:
-
-```cisco
-show ip bgp summary
-show bgp vpnv4 unicast all summary
-show bgp vpnv4 unicast all neighbors
-show tcp brief | include 10.0.52.
-```
-
-Run on RR101 and RR102:
-
-```cisco
-show bgp vpnv4 unicast all
-show bgp vpnv4 unicast all labels
-show bgp vpnv4 unicast all neighbors 10.0.52.1 advertised-routes
-show bgp vpnv4 unicast all neighbors 10.0.52.2 advertised-routes
-show bgp vpnv4 unicast all neighbors 10.0.52.3 advertised-routes
-```
-
-Each RR must:
-
-- Have three established VPNv4 client sessions.
-- Learn `192.168.0.0/24`, `192.168.1.0/24`, and `192.168.2.0/24` with their RDs and VPN labels.
-- Preserve RT `65000:100`.
-- Advertise each client-originated route to the other two clients.
-
-On each PE, confirm both RR sessions are established and all CEtest routes remain installed:
-
-```cisco
-show bgp vpnv4 unicast all summary
-show bgp vpnv4 unicast all
-show ip route vrf CEtest
-show bgp ipv4 unicast vrf CEtest
-```
-
-The BGP best path may remain the direct PE-learned path while the full mesh exists. This is acceptable. The next step proves that reflected alternatives work before direct sessions are removed.
-
-### 8. Prove RR-Only Learning Before Removing the Full Mesh
-
-Test one PE at a time. Administratively shut only its direct PE neighbors, validate RR-learned routes and forwarding, and then restore the sessions before testing the next PE. Do not test multiple PEs simultaneously.
-
-#### Test PE1
-
-```cisco
-router bgp 65000
- neighbor 10.0.52.2 shutdown
- neighbor 10.0.52.3 shutdown
-```
-
-Verify PE1:
-
-```cisco
-show bgp vpnv4 unicast all summary
-show bgp vpnv4 unicast all
-show ip route vrf CEtest
-ping vrf CEtest 192.168.1.1 source 192.168.0.1
-ping vrf CEtest 192.168.2.1 source 192.168.0.1
-```
-
-PE1 must retain established sessions to both RRs, learn both remote routes, and pass both pings. Restore the direct peers:
-
-```cisco
-router bgp 65000
- no neighbor 10.0.52.2 shutdown
- no neighbor 10.0.52.3 shutdown
-```
-
-Wait for both direct sessions to reestablish before continuing.
-
-#### Test PE2
-
-```cisco
-router bgp 65000
- neighbor 10.0.52.1 shutdown
- neighbor 10.0.52.3 shutdown
-```
-
-Verify PE2:
-
-```cisco
-show bgp vpnv4 unicast all summary
-show bgp vpnv4 unicast all
-show ip route vrf CEtest
-ping vrf CEtest 192.168.0.1 source 192.168.1.1
-ping vrf CEtest 192.168.2.1 source 192.168.1.1
-```
-
-Restore the direct peers:
-
-```cisco
-router bgp 65000
- no neighbor 10.0.52.1 shutdown
- no neighbor 10.0.52.3 shutdown
-```
-
-#### Test PE3
-
-```cisco
-router bgp 65000
- neighbor 10.0.52.1 shutdown
- neighbor 10.0.52.2 shutdown
-```
-
-Verify PE3:
-
-```cisco
-show bgp vpnv4 unicast all summary
-show bgp vpnv4 unicast all
-show ip route vrf CEtest
-ping vrf CEtest 192.168.0.1 source 192.168.2.1
-ping vrf CEtest 192.168.1.1 source 192.168.2.1
-```
-
-Restore the direct peers:
-
-```cisco
-router bgp 65000
- no neighbor 10.0.52.1 shutdown
- no neighbor 10.0.52.2 shutdown
-```
-
-### 9. Migration Go/No-Go Checkpoint
-
-Proceed only if all conditions are true:
-
-- [ ] Both RRs have three established PE client sessions.
-- [ ] Both RRs contain all three CEtest VPNv4 routes.
-- [ ] Every PE has two established RR sessions.
-- [ ] Every PE passed its isolated RR-only learning test.
-- [ ] All six directed CEtest pings succeeded during the tests.
-- [ ] No P router learned a CEtest prefix.
-- [ ] Current configurations are saved or backed up.
-
-If any condition fails, keep the direct PE full mesh and troubleshoot the RR path. Do not proceed to neighbor removal.
-
-### 10. Remove the Direct PE Full Mesh
-
-Remove direct PE neighbors one router at a time. After each PE, validate its RR sessions, routes, and pings before proceeding.
-
-#### Remove Direct Peers from PE1
-
-```cisco
-router bgp 65000
- no neighbor 10.0.52.2
- no neighbor 10.0.52.3
-```
-
-Validate PE1:
-
-```cisco
-show bgp vpnv4 unicast all summary
-show ip route vrf CEtest
-ping vrf CEtest 192.168.1.1 source 192.168.0.1
-ping vrf CEtest 192.168.2.1 source 192.168.0.1
-```
-
-#### Remove Direct Peers from PE2
-
-```cisco
-router bgp 65000
- no neighbor 10.0.52.1
- no neighbor 10.0.52.3
-```
-
-Validate PE2:
-
-```cisco
-show bgp vpnv4 unicast all summary
-show ip route vrf CEtest
-ping vrf CEtest 192.168.0.1 source 192.168.1.1
-ping vrf CEtest 192.168.2.1 source 192.168.1.1
-```
-
-#### Remove Direct Peers from PE3
-
-```cisco
-router bgp 65000
- no neighbor 10.0.52.1
- no neighbor 10.0.52.2
-```
-
-Validate PE3:
-
-```cisco
-show bgp vpnv4 unicast all summary
-show ip route vrf CEtest
-ping vrf CEtest 192.168.0.1 source 192.168.2.1
-ping vrf CEtest 192.168.1.1 source 192.168.2.1
-```
-
-> [!IMPORTANT]
-> `no neighbor <address>` removes that neighbor from every address family. This is intentional because direct PE-to-PE IPv4 and VPNv4 sessions are both being retired. The RR neighbors must remain configured.
-
-### 11. Verify the Final Route-Reflector Topology
+Each RR must have three established peers and learn one CEtest VPN route originated by each PE.
 
 On each PE:
 
-```cisco
-show ip bgp summary
-show bgp vpnv4 unicast all summary
-show bgp vpnv4 unicast all
-show bgp vpnv4 unicast all labels
-show ip route vrf CEtest
-show bgp ipv4 unicast vrf CEtest
+```junos
+show bgp summary
+show route table CEtest.inet.0
+show route table bgp.l3vpn.0 extensive
 ```
 
-Expected PE neighbor state:
+Each PE should temporarily have four established peers: two PEs and two RRs. Multiple paths may exist for the same VPN NLRI; only the best usable route is active.
 
-| PE | Remaining iBGP Peers |
-|---|---|
-| PE1 | RR101 `10.0.52.101`, RR102 `10.0.52.102` |
-| PE2 | RR101 `10.0.52.101`, RR102 `10.0.52.102` |
-| PE3 | RR101 `10.0.52.101`, RR102 `10.0.52.102` |
+## 8. Prove RR-Only Learning
 
-On each RR:
+Test one PE at a time. On the selected PE, deactivate its direct full-mesh group while keeping both RR sessions active:
 
-```cisco
-show bgp vpnv4 unicast all summary
-show bgp vpnv4 unicast all
-show bgp vpnv4 unicast all labels
+```junos
+deactivate protocols bgp group PE-FULL-MESH
+show | compare
+commit check
+commit
 ```
 
-Each RR must have exactly three PE clients and all three CEtest routes.
+Verify:
 
-### 12. Test Route-Reflector Redundancy
-
-Test only one RR failure at a time. On RR101:
-
-```cisco
-router bgp 65000
- shutdown
+```junos
+show bgp summary
+show route table CEtest.inet.0
+show route table CEtest.inet.0 protocol bgp extensive
 ```
 
-On every PE, verify the RR102 session, all CEtest routes, and inter-site pings remain operational. Restore RR101:
+Run that PE's two remote CEtest pings. Confirm the BGP route shows a cluster list containing either `10.0.52.101` or `10.0.52.102`.
 
-```cisco
-router bgp 65000
- no shutdown
+Restore the direct group before testing the next PE:
+
+```junos
+activate protocols bgp group PE-FULL-MESH
+commit
 ```
 
-Wait for all three RR101 client sessions to reestablish. Then repeat the test on RR102:
+Repeat on PE1, PE2, and PE3. Stop the migration if any remote route or ping disappears.
 
-```cisco
-router bgp 65000
- shutdown
+## 9. Go/No-Go Checkpoint
+
+Proceed only if:
+
+- Both RRs have three established `inet-vpn` clients.
+- Each RR has all three CEtest VPN routes.
+- Each PE retains both remote routes with its direct group deactivated.
+- All six directed CEtest pings work using RR-only learning.
+- Each PE has been restored to the parallel state.
+
+## 10. Remove the Direct PE Full Mesh
+
+Remove the old group from one PE at a time. Review and commit each PE separately:
+
+```junos
+delete protocols bgp group PE-FULL-MESH
+show | compare
+commit check
+commit
 ```
 
-Restore RR102 after validation:
+After each commit, confirm two RR peers remain established, both remote CEtest routes remain, and the two remote pings succeed. Complete PE1, then PE2, then PE3.
 
-```cisco
-router bgp 65000
- no shutdown
+## 11. Verify the Final Topology
+
+Each PE:
+
+```junos
+show bgp summary
+show bgp group VPN-RR
+show route table CEtest.inet.0
+show route table bgp.l3vpn.0 extensive
 ```
 
-If the IOS image does not support BGP process `shutdown`, shut the three PE neighbors individually and restore them after the test.
+Each RR:
 
-## Expected Results
-
-- RR101 forms IS-IS and LDP adjacencies with P2.
-- RR102 forms IS-IS and LDP adjacencies with P4.
-- Every PE has labeled reachability to both RR loopbacks.
-- Both RRs establish IPv4 iBGP and VPNv4 sessions with PE1–PE3.
-- Both RRs learn and reflect all three CEtest VPNv4 routes.
-- Route reflection preserves each originating PE as the VPNv4 next hop.
-- Every PE passes the RR-only learning test before direct sessions are removed.
-- The direct PE full mesh is removed without losing CEtest reachability.
-- Final PEs have two redundant RR peers and no direct PE peers.
-- A single RR failure does not remove remote CEtest routes or interrupt tested forwarding.
-- P routers remain BGP-free and contain no CEtest routes.
-
-## Rollback Procedure
-
-If service fails after direct PE sessions are removed, restore the original full mesh on the affected PEs using the neighbor configurations from Task 003. At minimum, restore the reciprocal neighbor on both endpoints, activate it under IPv4 unicast and VPNv4, and enable extended communities under VPNv4.
-
-After rollback:
-
-```cisco
-show bgp vpnv4 unicast all summary
-show ip route vrf CEtest
+```junos
+show bgp summary
+show bgp group PE-CLIENTS
+show route table bgp.l3vpn.0 extensive
 ```
 
-Repeat all CEtest pings and investigate the RR sessions while the direct mesh carries service.
+Expected final state:
 
-## Troubleshooting Notes
+- Every PE has exactly two BGP peers: RR101 and RR102.
+- Every RR has exactly three BGP peers: PE1, PE2, and PE3.
+- No PE-to-PE session remains.
+- All CEtest routes and all six directed pings remain working.
 
-| Symptom | Likely Cause | Corrective Action |
-|---|---|---|
-| RR physical link is down | Incorrect cable, interface, address, or shutdown state | Verify diagram endpoints, `/30` addresses, and `no shutdown` |
-| RR IS-IS adjacency is absent | Missing IS-IS interface command or network-type mismatch | Verify `ip router isis CORE` and point-to-point mode on both ends |
-| RR loopback is unreachable | Loopback not advertised by IS-IS | Enable IS-IS on Loopback0 and keep it passive |
-| RR LDP session is absent | MPLS missing on one link endpoint | Verify global and interface `mpls ip`, LDP ID, and IGP reachability |
-| PE-to-RR BGP is `Active` | Loopback reachability, AS, or update source is incorrect | Verify sourced ping, AS `65000`, and Loopback0 update source |
-| RR learns routes but does not reflect them | Client command missing under VPNv4 | Configure `route-reflector-client` for every PE under VPNv4 |
-| Reflected routes lack route targets | Extended communities are not sent | Configure `send-community extended` on PE and RR VPNv4 neighbors |
-| PE receives only its local CEtest route | Both RR paths absent or rejected | Inspect RR advertised routes, originator ID, cluster list, and PE sessions |
-| Route is present but VRF ping fails | VPN next hop or label is unresolved | Check PE-loopback IS-IS route, LDP binding, VPN label, and VRF CEF |
-| Routes disappear during direct-peer test | RR onboarding is incomplete | Restore direct peers and fix RR learning before migration |
-| One RR failure removes routes | PE has only one functioning RR or alternate path is not installed | Restore the failed RR, then verify both sessions and reflected paths |
-| RR contains a CEtest VRF | RR was configured as a service PE unnecessarily | Remove the VRF; RRs reflect VPNv4 routes without importing them |
-| P router learns a CEtest route | Customer route leaked into IS-IS | Remove redistribution and preserve the BGP-free core |
+## 12. Test RR Redundancy
+
+Deactivate one RR neighbor at a time on a selected PE:
+
+```junos
+deactivate protocols bgp group VPN-RR neighbor 10.0.52.101
+commit
+show bgp summary
+show route table CEtest.inet.0
+```
+
+Run both remote CEtest pings, then restore it:
+
+```junos
+activate protocols bgp group VPN-RR neighbor 10.0.52.101
+commit
+```
+
+Repeat for `10.0.52.102`. Never deactivate both RR neighbors simultaneously during this test.
+
+## Rollback
+
+If the final design fails, restore the original full-mesh neighbors using the Task 003 `PE-FULL-MESH` commands on all three PEs. Commit, verify the three direct sessions and all CEtest routes, then troubleshoot the RR groups without removing the restored path.
+
+## Troubleshooting
+
+- For a PE-to-RR session failure, verify IS-IS reachability, AS `65000`, `local-address`, and `family inet-vpn` on both sides.
+- If an RR receives but does not reflect routes, verify the `cluster` statement is on `PE-CLIENTS`.
+- If a PE rejects a reflected route, inspect originator ID and cluster list with `show route table bgp.l3vpn.0 extensive`.
+- If routes exist but CEtest does not import them, compare `target:65000:100` and the routing-instance configuration.
+- If traffic fails with correct routes, verify PE-to-PE LDP transport in `inet.3` and `mpls.0`; RRs are control-plane nodes and are not the intended customer data path.
+- Use `show log messages | match RPD_BGP` for BGP events.
 
 ## Completion Checklist
 
-- [ ] RR101 and RR102 added to EVE-NG
-- [ ] RR101–P2 and RR102–P4 links configured and verified
-- [ ] Unique RR Loopback0 addresses configured
-- [ ] Unique IS-IS NETs configured
-- [ ] RR IS-IS Level 2 adjacencies operational
-- [ ] Both RR loopbacks reachable from every PE
-- [ ] MPLS enabled globally and on both new links
-- [ ] RR LDP adjacencies operational
-- [ ] MPLS LSP pings succeed between all PEs and both RRs
-- [ ] RR101 configured with three VPNv4 clients
-- [ ] RR102 configured with three VPNv4 clients
-- [ ] Every PE has sessions to both RRs
-- [ ] Both RRs contain all three CEtest VPNv4 routes
-- [ ] Every PE passed a controlled RR-only route-learning test
-- [ ] Migration go/no-go checklist completed
-- [ ] Direct PE-to-PE neighbors removed in stages
-- [ ] Final PEs have only RR101 and RR102 as provider iBGP peers
-- [ ] All CEtest routes installed on every PE
-- [ ] All six directed CEtest pings successful
-- [ ] RR101 failure test successful
-- [ ] RR102 failure test successful
-- [ ] P routers remain BGP-free
-- [ ] Route-reflector EVE-NG topology imported from `lab_files`
-- [ ] Final configurations saved
+- [ ] RR101 and RR102 have correct interfaces, loopbacks, and ISO NETs.
+- [ ] Both RRs are reachable through IS-IS and LDP.
+- [ ] Each RR has three established `inet-vpn` clients.
+- [ ] Each PE has two established RR sessions.
+- [ ] RR-only operation was proven on each PE before deletion.
+- [ ] Direct `PE-FULL-MESH` groups were removed from all PEs.
+- [ ] All three CEtest routes remain present on every PE.
+- [ ] All six directed CEtest pings succeed.
+- [ ] Either RR can be deactivated without service loss.
