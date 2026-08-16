@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<lab name="002-ISP-MPLS-Juniper-Lab" version="0" scripttimeout="300" countdown="0" linkwidth="1" lock="0" grid="1" sat="-1">
+  <topology>
+    <nodes>
+      <node id="1" name="P1" type="qemu" template="vmx" image="vmx-14.1R4.8-domestic" console="telnet" cpu="1" cpulimit="1" ram="2048" ethernet="16" uuid="0250bdcf-14a3-4e23-b00b-ac15a21d73f2" firstmac="50:00:00:01:00:00" qemu_options="-machine type=pc,accel=kvm -serial mon:stdio -nographic" qemu_version="2.12.0" qemu_arch="x86_64" qemu_nic="virtio-net-pci" delay="0" sat="-1" icon="Juniper-2D-Router-S.svg" width="0" config="0" left="498" top="288">
+        <interface id="2" name="em2 / ge-0/0/0" type="ethernet" network_id="2" vid="1" labelpos="0.5" stub="0" width="1" curviness="10" beziercurviness="150" round="0" midpoint="0.5" srcpos="0.15" dstpos="0.85"/>
+        <interface id="3" name="em3 / ge-0/0/1" type="ethernet" network_id="3" vid="1" labelpos="0.5" stub="0" width="1" curviness="10" beziercurviness="150" round="0" midpoint="0.5" srcpos="0.15" dstpos="0.85"/>
+        <interface id="4" name="em4 / ge-0/0/2" type="ethernet" network_id="4" vid="1" labelpos="0.5" stub="0" width="1" curviness="10" beziercurviness="150" round="0" midpoint="0.5" srcpos="0.15" dstpos="0.85"/>
+        <interface id="5" name="em5 / ge-0/0/3" type="ethernet" network_id="12" vid="1" labelpos="0.5" stub="0" width="1" curviness="10" beziercurviness="150" round="0" midpoint="0.5" srcpos="0.15" dstpos="0.85"/>
+      </node>
+      <node id="2" name="P2" type="qemu" template="vmx" image="vmx-14.1R4.8-domestic" console="telnet" cpu="1" cpulimit="1" ram="2048" ethernet="16" uuid="262a03e7-3788-4993-8b68-f6ee0124b88f" firstmac="50:00:00:02:00:00" qemu_options="-machine type=pc,accel=kvm -serial mon:stdio -nographic" qemu_version="2.12.0" qemu_arch="x86_64" qemu_nic="virtio-net-pci" delay="0" sat="-1" icon="Juniper-2D-Router-S.svg" width="0" config="0" left="731" top="287">
+        <interface id="2" name="em2 / ge-0/0/0" type="ethernet" network_id="2" vid="1" labelpos="0.5" stub="0" width="1" curviness="10" beziercurviness="150" round="0" midpoint="0.5" srcpos="0.15" dstpos="0.85"/>
+        <interface id="3" name="em3 / ge-0/0/1" type="ethernet" network_id="5" vid="1" labelpos="0.5" stub="0" width="1" curviness="10" beziercurviness="150" round="0" midpoint="0.5" srcpos="0.15" dstpos="0.85"/>
+        <interface id="4" name="em4 / ge-0/0/2" type="ethernet" network_id="6" vid="1" labelpos="0.5" stub="0" width="1" curviness="10" beziercurviness="150" round="0" midpoint="0.5" srcpos="0.15" dstpos="0.85"/>
+        <interface id="5" name="em5 / ge-0/0/3" type="ethernet" network_id="7" vid="1" labelpos="0.5" stub="0" width="1" curviness="10" beziercurviness="150" round="0" midpoint="0.5" srcpos="0.15" dstpos="0.85"/>
+        <interface id="6" name="em6 / ge-0/0/4" type="ethernet" network_id="9" vid="1" labelpos="0.5" stub="0" width="1" curviness="10" beziercurviness="150" round="0" midpoint="0.5" srcpos="0.15" dstpos="0.85"/>
+      </node>
+      <node id="3" name="P3" type="qemu" template="vmx" image="vmx-14.1R4.8-domestic" console="telnet" cpu="1" cpulimit="1" ram="2048" ethernet="16" uuid="6591d4d9-f737-45f0-8cc4-d788f67c11c3" firstmac="50:00:00:03:00:00" qemu_options="-machine type=pc,accel=kvm -serial mon:stdio -nographic" qemu_version="2.12.0" qemu_arch="x86_64" qemu_nic="virtio-net-pci" delay="0" sat="-1" icon="Juniper-2D-Router-S.svg" width="0" config="0" left="501" top="502">
+        <interface id="2" name="em2 / ge-0/0/0" type="ethernet" network_id="1" vid="1" labelpos="0.5" stub="0" width="1" curviness="10" beziercurviness="150" round="0" midpoint="0.5" srcpos="0.15" dstpos="0.85"/>
+        <interface id="3" name="em3 / ge-0/0/1" type="ethernet" network_id="3" vid="1" labelpos="0.5" stub="0" width="1" curviness="10" beziercurviness="150" round="0" midpoint="0.5" srcpos="0.15" dstpos="0.85"/>
+        <interface id="4" name="em4 / ge-0/0/2" type="ethernet" network_id="6" vid="1" labelpos="0.5" stub="0" width="1" curviness="10" beziercurviness="150" round="0" midpoint="0.5" srcpos="0.15" dstpos="0.85"/>
+        <interface id="5" name="em5 / ge-0/0/3" type="ethernet" network_id="13" vid="1" labelpos="0.5" stub="0" width="1" curviness="10" beziercurviness="150" round="0" midpoint="0.5" srcpos="0.15" dstpos="0.85"/>
+      </node>
+      <node id="4" name="P4" type="qemu" template="vmx" image="vmx-14.1R4.8-domestic" console="telnet" cpu="1" cpulimit="1" ram="2048" ethernet="16" uuid="9c543bba-77b7-4cca-a842-d38a024504ee" firstmac="50:00:00:04:00:00" qemu_options="-machine type=pc,accel=kvm -serial mon:stdio -nographic" qemu_version="2.12.0" qemu_arch="x86_64" qemu_nic="virtio-net-pci" delay="0" sat="-1" icon="Juniper-2D-Router-S.svg" width="0" config="0" left="734" top="505">
+        <interface id="2" name="em2 / ge-0/0/0" type="ethernet" network_id="1" vid="1" labelpos="0.5" stub="0" width="1" curviness="10" beziercurviness="150" round="0" midpoint="0.5" srcpos="0.15" dstpos="0.85"/>
+        <interface id="3" name="em3 / ge-0/0/1" type="ethernet" network_id="5" vid="1" labelpos="0.5" stub="0" width="1" curviness="10" beziercurviness="150" round="0" midpoint="0.5" srcpos="0.15" dstpos="0.85"/>
+        <interface id="4" name="em4 / ge-0/0/2" type="ethernet" network_id="4" vid="1" labelpos="0.5" stub="0" width="1" curviness="10" beziercurviness="150" round="0" midpoint="0.5" srcpos="0.15" dstpos="0.85"/>
+        <interface id="5" name="em5 / ge-0/0/3" type="ethernet" network_id="8" vid="1" labelpos="0.5" stub="0" width="1" curviness="10" beziercurviness="150" round="0" midpoint="0.5" srcpos="0.15" dstpos="0.85"/>
+        <interface id="6" name="em6 / ge-0/0/4" type="ethernet" network_id="10" vid="1" labelpos="0.5" stub="0" width="1" curviness="10" beziercurviness="150" round="0" midpoint="0.5" srcpos="0.15" dstpos="0.85"/>
+      </node>
+      <node id="5" name="P5" type="qemu" template="vmx" image="vmx-14.1R4.8-domestic" console="telnet" cpu="1" cpulimit="1" ram="2048" ethernet="16" uuid="016a6faf-8e38-458b-9a8e-771dfb465112" firstmac="50:00:00:05:00:00" qemu_options="-machine type=pc,accel=kvm -serial mon:stdio -nographic" qemu_version="2.12.0" qemu_arch="x86_64" qemu_nic="virtio-net-pci" delay="0" sat="-1" icon="Juniper-2D-Router-S.svg" width="0" config="0" left="974" top="292">
+        <interface id="2" name="em2 / ge-0/0/0" type="ethernet" network_id="7" vid="1" labelpos="0.5" stub="0" width="1" curviness="10" beziercurviness="150" round="0" midpoint="0.5" srcpos="0.15" dstpos="0.85"/>
+        <interface id="3" name="em3 / ge-0/0/1" type="ethernet" network_id="10" vid="1" labelpos="0.5" stub="0" width="1" curviness="10" beziercurviness="150" round="0" midpoint="0.5" srcpos="0.15" dstpos="0.85"/>
+        <interface id="4" name="em4 / ge-0/0/2" type="ethernet" network_id="11" vid="1" labelpos="0.5" stub="0" width="1" curviness="10" beziercurviness="150" round="0" midpoint="0.5" srcpos="0.15" dstpos="0.85"/>
+        <interface id="5" name="em5 / ge-0/0/3" type="ethernet" network_id="14" vid="1" labelpos="0.5" stub="0" width="1" curviness="10" beziercurviness="150" round="0" midpoint="0.5" srcpos="0.15" dstpos="0.85"/>
+      </node>
+      <node id="6" name="P6" type="qemu" template="vmx" image="vmx-14.1R4.8-domestic" console="telnet" cpu="1" cpulimit="1" ram="2048" ethernet="16" uuid="cf6da3fa-9421-488b-bbd1-70fe674dc878" firstmac="50:00:00:06:00:00" qemu_options="-machine type=pc,accel=kvm -serial mon:stdio -nographic" qemu_version="2.12.0" qemu_arch="x86_64" qemu_nic="virtio-net-pci" delay="0" sat="-1" icon="Juniper-2D-Router-S.svg" width="0" config="0" left="973" top="505">
+        <interface id="2" name="em2 / ge-0/0/0" type="ethernet" network_id="8" vid="1" labelpos="0.5" stub="0" width="1" curviness="10" beziercurviness="150" round="0" midpoint="0.5" srcpos="0.15" dstpos="0.85"/>
+        <interface id="3" name="em3 / ge-0/0/1" type="ethernet" network_id="9" vid="1" labelpos="0.5" stub="0" width="1" curviness="10" beziercurviness="150" round="0" midpoint="0.5" srcpos="0.15" dstpos="0.85"/>
+        <interface id="4" name="em4 / ge-0/0/2" type="ethernet" network_id="11" vid="1" labelpos="0.5" stub="0" width="1" curviness="10" beziercurviness="150" round="0" midpoint="0.5" srcpos="0.15" dstpos="0.85"/>
+        <interface id="5" name="em5 / ge-0/0/3" type="ethernet" network_id="15" vid="1" labelpos="0.5" stub="0" width="1" curviness="10" beziercurviness="150" round="0" midpoint="0.5" srcpos="0.15" dstpos="0.85"/>
+      </node>
+      <node id="7" name="PE1" type="qemu" template="vmx" image="vmx-14.1R4.8-domestic" console="telnet" cpu="1" cpulimit="1" ram="2048" ethernet="16" uuid="dc1c78dd-fc81-45b1-a77a-046f654122b2" firstmac="50:00:00:07:00:00" qemu_options="-machine type=pc,accel=kvm -serial mon:stdio -nographic" qemu_version="2.12.0" qemu_arch="x86_64" qemu_nic="virtio-net-pci" delay="0" sat="1" icon="Juniper-2D-Router-S.svg" width="0" config="0" left="256" top="492">
+        <interface id="2" name="em2 / ge-0/0/0" type="ethernet" network_id="12" vid="1" labelpos="0.5" stub="0" width="1" curviness="10" beziercurviness="150" round="0" midpoint="0.5" srcpos="0.15" dstpos="0.85"/>
+        <interface id="3" name="em3 / ge-0/0/1" type="ethernet" network_id="13" vid="1" labelpos="0.5" stub="0" width="1" curviness="10" beziercurviness="150" round="0" midpoint="0.5" srcpos="0.15" dstpos="0.85"/>
+      </node>
+      <node id="8" name="PE2" type="qemu" template="vmx" image="vmx-14.1R4.8-domestic" console="telnet" cpu="1" cpulimit="1" ram="2048" ethernet="16" uuid="7fff636a-231d-4ece-a6f4-bc792f244675" firstmac="50:00:00:08:00:00" qemu_options="-machine type=pc,accel=kvm -serial mon:stdio -nographic" qemu_version="2.12.0" qemu_arch="x86_64" qemu_nic="virtio-net-pci" delay="0" sat="1" icon="Juniper-2D-Router-S.svg" width="0" config="0" left="1295" top="506">
+        <interface id="2" name="em2 / ge-0/0/0" type="ethernet" network_id="14" vid="1" labelpos="0.5" stub="0" width="1" curviness="10" beziercurviness="150" round="0" midpoint="0.5" srcpos="0.15" dstpos="0.85"/>
+        <interface id="3" name="em3 / ge-0/0/1" type="ethernet" network_id="15" vid="1" labelpos="0.5" stub="0" width="1" curviness="10" beziercurviness="150" round="0" midpoint="0.5" srcpos="0.15" dstpos="0.85"/>
+      </node>
+    </nodes>
+    <networks>
+      <network id="2" smart="0" vlan8021ad="0" type="bridge" name="Net-P1iface2" left="0" top="0" style="Solid" linkstyle="Straight" color="" label="" visibility="0" icon="lan.png" width="0"/>
+      <network id="1" smart="0" vlan8021ad="0" type="bridge" name="Net-P3iface2" left="0" top="0" style="Solid" linkstyle="Straight" color="" label="" visibility="0" icon="lan.png" width="0"/>
+      <network id="3" smart="0" vlan8021ad="0" type="bridge" name="Net-P1iface3" left="0" top="0" style="Solid" linkstyle="Straight" color="" label="" visibility="0" icon="lan.png" width="0"/>
+      <network id="5" smart="0" vlan8021ad="0" type="bridge" name="Net-P2iface3" left="0" top="0" style="Solid" linkstyle="Straight" color="" label="" visibility="0" icon="lan.png" width="0"/>
+      <network id="4" smart="0" vlan8021ad="0" type="bridge" name="Net-P1iface4" left="0" top="0" style="Solid" linkstyle="Straight" color="" label="" visibility="0" icon="lan.png" width="0"/>
+      <network id="6" smart="0" vlan8021ad="0" type="bridge" name="Net-P2iface4" left="0" top="0" style="Solid" linkstyle="Straight" color="" label="" visibility="0" icon="lan.png" width="0"/>
+      <network id="7" smart="0" vlan8021ad="0" type="bridge" name="Net-P2iface5" left="0" top="0" style="Solid" linkstyle="Straight" color="" label="" visibility="0" icon="lan.png" width="0"/>
+      <network id="8" smart="0" vlan8021ad="0" type="bridge" name="Net-P4iface5" left="0" top="0" style="Solid" linkstyle="Straight" color="" label="" visibility="0" icon="lan.png" width="0"/>
+      <network id="9" smart="0" vlan8021ad="0" type="bridge" name="Net-P2iface6" left="0" top="0" style="Solid" linkstyle="Straight" color="" label="" visibility="0" icon="lan.png" width="0"/>
+      <network id="10" smart="0" vlan8021ad="0" type="bridge" name="Net-P4iface6" left="0" top="0" style="Solid" linkstyle="Straight" color="" label="" visibility="0" icon="lan.png" width="0"/>
+      <network id="11" smart="0" vlan8021ad="0" type="bridge" name="Net-P5iface4" left="0" top="0" style="Solid" linkstyle="Straight" color="" label="" visibility="0" icon="lan.png" width="0"/>
+      <network id="12" smart="0" vlan8021ad="0" type="bridge" name="Net-P1iface5" left="0" top="0" style="Solid" linkstyle="Straight" color="" label="" visibility="0" icon="lan.png" width="0"/>
+      <network id="13" smart="0" vlan8021ad="0" type="bridge" name="Net-P3iface5" left="0" top="0" style="Solid" linkstyle="Straight" color="" label="" visibility="0" icon="lan.png" width="0"/>
+      <network id="14" smart="0" vlan8021ad="0" type="bridge" name="Net-P5iface5" left="0" top="0" style="Solid" linkstyle="Straight" color="" label="" visibility="0" icon="lan.png" width="0"/>
+      <network id="15" smart="0" vlan8021ad="0" type="bridge" name="Net-P6iface5" left="0" top="0" style="Solid" linkstyle="Straight" color="" label="" visibility="0" icon="lan.png" width="0"/>
+    </networks>
+  </topology>
+</lab>
