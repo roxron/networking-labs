@@ -1,0 +1,59 @@
+# 11 POP2b
+
+> Imported source note. Provenance: `NetEngineer_Journal/CONFG_TEMPLATES/BGP COnfedirationLAB/11 POP2b`  
+> Original source context: CONFG_TEMPLATES / BGP COnfedirationLAB. Content is preserved as historical study material; validate commands against the target platform and release.
+
+```text
+hostname POP2b
+!
+int g0/0
+ip address 80.0.2.58 255.255.255.252
+no shutdown
+!
+int g0/1
+ip address 80.0.2.62 255.255.255.252
+no shutdown
+!
+int g0/2
+ip address 80.0.2.26 255.255.255.252
+no shutdown
+!
+int g0/3
+ip address 80.0.2.30 255.255.255.252
+no shutdown
+!
+!
+int lo 100
+ip address 80.0.0.132 255.255.255.255
+description BGP PEERING
+!
+!
+!
+router ospf 100
+ router-id 0.0.2.22
+ auto-cost reference-bandwidth 1000
+ network 80.0.0.132 0.0.0.0 area 2
+ network 80.0.2.24 0.0.0.3 area 2
+ network 80.0.2.28 0.0.0.3 area 2
+ network 80.0.2.56 0.0.0.3 area 2
+ network 80.0.2.60 0.0.0.3 area 2
+!
+!
+!
+router bgp 64601
+ bgp router-id 80.0.0.132
+ bgp log-neighbor-changes
+ bgp confederation identifier 400
+ bgp confederation peers 64600 
+ neighbor IBGP peer-group
+ neighbor IBGP remote-as 64601
+ neighbor IBGP password cisco
+ neighbor IBGP update-source Loopback100
+ neighbor IBGP next-hop-self
+ neighbor IBGP soft-reconfiguration inbound
+ neighbor 80.0.0.103 peer-group IBGP
+ neighbor 80.0.0.104 peer-group IBGP
+ neighbor 80.0.0.121 peer-group IBGP
+ neighbor 80.0.0.122 peer-group IBGP
+ neighbor 80.0.0.131 peer-group IBGP
+```
