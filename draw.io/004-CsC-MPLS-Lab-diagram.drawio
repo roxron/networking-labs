@@ -2344,7 +2344,7 @@
     </mxGraphModel>
   </diagram>
   <diagram name="CsC Carrier IPv4" id="FRrINSOZuR8-OWz8pyiM">
-    <mxGraphModel dx="3343" dy="1966" grid="1" gridSize="11" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" background="light-dark(#B3B3B3,#121212)" math="0" shadow="0">
+    <mxGraphModel dx="3112" dy="1932" grid="1" gridSize="11" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" background="light-dark(#B3B3B3,#121212)" math="0" shadow="0">
       <root>
         <mxCell id="kbxlMjnqreUR2ZlnKIwB-0" />
         <mxCell id="kbxlMjnqreUR2ZlnKIwB-1" parent="kbxlMjnqreUR2ZlnKIwB-0" />
