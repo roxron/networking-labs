@@ -7,7 +7,16 @@ This page is based exclusively on the **ISP101 IPv4** page in `005-CsC-MPLS-Lab-
 - A label such as `G0/7.225 .1 vrf` means address host octet `.1` on that endpoint and `vrf forwarding` using the VRF object attached to the link.
 - An endpoint labeled `GRT` remains in the global routing table and receives no `vrf forwarding` command.
 - P-to-P ISP101 links are VRF links. Their link VRF is applied to both P-router endpoints.
-- VRFs `ISP1011` and `ISP1012` are defined on P routers. VRF `ISP101` is defined on ISP101 PE and RR routers. CsC routers receive none of these definition stanzas.
+- VRFs `ISP1011` and `ISP1012` are defined on P routers to separate shared infrastructure. ISP101 PE, RR, and CsC routers have no VRF definitions in this base configuration; customer VRFs will be added separately when required.
+
+## Infrastructure relationship
+
+P1 through P6 are shared physical routers that also serve the CsC MPLS backbone. From ISP101's perspective, the same six P routers provide two isolated logical backbone views:
+
+- **ISP101 Site1:** VRF `ISP1011`, attached to the CsC MPLS backbone through CsC-PE15 and CsC-PE16.
+- **ISP101 Site2:** VRF `ISP1012`, attached to the CsC MPLS backbone through CsC-PE19 and CsC-PE20.
+
+ISP101-PE123 provides the Site1-facing connections to CsC-PE15 and CsC-PE16. ISP101-PE225 provides the Site2-facing connections to CsC-PE19 and CsC-PE20. The CsC-facing PE interfaces use VRF `ISP101`; this is the CsC provider's routing instance for ISP101 and is distinct from the `ISP1011`/`ISP1012` infrastructure VRFs on P1–P6.
 
 ## Router/link inventory
 
@@ -33,10 +42,10 @@ This page is based exclusively on the **ISP101 IPv4** page in `005-CsC-MPLS-Lab-
 | P4–ISP101-PE202 | `10.101.14.4/30` | P4 Gi0/4.202 `.5` VRF ISP1011 | ISP101-PE202 Gi0/1.202 `.6` GRT | Via VLAN202-SW211 |
 | P3–ISP101-RR1 | `10.101.23.4/30` | P3 Gi0/5.231 `.5` VRF ISP1012 | ISP101-RR1 Gi0/0.231 `.6` GRT | Via VLAN231-SW211 |
 | P4–ISP101-RR1 | `10.101.24.4/30` | P4 Gi0/5.231 `.5` VRF ISP1012 | ISP101-RR1 Gi0/1.231 `.6` GRT | Via VLAN231-SW210 |
-| ISP101-PE123–CsC-PE15 | `10.101.49.8/30` | ISP101-PE123 Gi0/2 `.9` GRT | CsC-PE15 Gi0/15 `.10` | CsC side VRF ISP101 |
-| ISP101-PE123–CsC-PE16 | `10.101.49.12/30` | ISP101-PE123 Gi0/3 `.13` GRT | CsC-PE16 Gi0/15 `.14` | CsC side VRF ISP101 |
-| ISP101-PE225–CsC-PE19 | `10.101.49.0/30` | ISP101-PE225 Gi0/2 `.1` GRT | CsC-PE19 Gi0/15 `.2` | CsC side VRF ISP101 |
-| ISP101-PE225–CsC-PE20 | `10.101.49.4/30` | ISP101-PE225 Gi0/3 `.5` GRT | CsC-PE20 Gi0/15 `.6` | CsC side VRF ISP101 |
+| ISP101-PE123–CsC-PE15 | `10.101.49.8/30` | ISP101-PE123 Gi0/2 `.9` GRT | CsC-PE15 Gi0/15 `.10` | Site1 attachment; CsC side VRF ISP101 |
+| ISP101-PE123–CsC-PE16 | `10.101.49.12/30` | ISP101-PE123 Gi0/3 `.13` GRT | CsC-PE16 Gi0/15 `.14` | Site1 attachment; CsC side VRF ISP101 |
+| ISP101-PE225–CsC-PE19 | `10.101.49.0/30` | ISP101-PE225 Gi0/2 `.1` GRT | CsC-PE19 Gi0/15 `.2` | Site2 attachment; CsC side VRF ISP101 |
+| ISP101-PE225–CsC-PE20 | `10.101.49.4/30` | ISP101-PE225 Gi0/3 `.5` GRT | CsC-PE20 Gi0/15 `.6` | Site2 attachment; CsC side VRF ISP101 |
 
 ## P-router configurations
 
@@ -487,17 +496,6 @@ interface GigabitEthernet0/9.20
 ```ios
 hostname ISP101-PE123
 !
-vrf definition ISP101
- rd 101:101
- route-target export 101:101
- route-target import 101:101
- !
- address-family ipv4
- exit-address-family
- !
- address-family ipv6
- exit-address-family
-!
 interface Loopback0
  description ISP101 RouterID
  ip address 10.101.3.123 255.255.255.255
@@ -530,17 +528,6 @@ interface GigabitEthernet0/3
 ```ios
 hostname ISP101-PE124
 !
-vrf definition ISP101
- rd 101:101
- route-target export 101:101
- route-target import 101:101
- !
- address-family ipv4
- exit-address-family
- !
- address-family ipv6
- exit-address-family
-!
 interface Loopback0
  description ISP101 RouterID
  ip address 10.101.3.124 255.255.255.255
@@ -562,17 +549,6 @@ interface GigabitEthernet0/1.124
 
 ```ios
 hostname ISP101-PE225
-!
-vrf definition ISP101
- rd 101:101
- route-target export 101:101
- route-target import 101:101
- !
- address-family ipv4
- exit-address-family
- !
- address-family ipv6
- exit-address-family
 !
 interface Loopback0
  description ISP101 RouterID
@@ -606,17 +582,6 @@ interface GigabitEthernet0/3
 ```ios
 hostname ISP101-PE202
 !
-vrf definition ISP101
- rd 101:101
- route-target export 101:101
- route-target import 101:101
- !
- address-family ipv4
- exit-address-family
- !
- address-family ipv6
- exit-address-family
-!
 interface Loopback0
  description ISP101 RouterID
  ip address 10.101.3.202 255.255.255.255
@@ -638,17 +603,6 @@ interface GigabitEthernet0/1.202
 
 ```ios
 hostname ISP101-RR1
-!
-vrf definition ISP101
- rd 101:101
- route-target export 101:101
- route-target import 101:101
- !
- address-family ipv4
- exit-address-family
- !
- address-family ipv6
- exit-address-family
 !
 interface Loopback0
  description ISP101 RouterID
@@ -720,4 +674,4 @@ interface GigabitEthernet0/15
 
 ## Configuration boundary
 
-The current draw.io link and loopback objects are internally consistent for these base interface configurations. ISP101 PE and RR routers define VRF `ISP101` with RD/RT `101:101`; P routers define `ISP1011` and `ISP1012`; CsC routers have no added VRF definitions.
+The current draw.io link and loopback objects are internally consistent for these base interface configurations. Only P routers define the infrastructure VRFs `ISP1011` and `ISP1012`. ISP101 PE, RR, and CsC routers have no VRF definitions here; future customer VRFs remain outside this base configuration.
