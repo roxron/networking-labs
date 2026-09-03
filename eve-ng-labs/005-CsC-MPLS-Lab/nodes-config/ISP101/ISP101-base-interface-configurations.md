@@ -8,7 +8,6 @@ This page is based exclusively on the **ISP101 IPv4** page in `005-CsC-MPLS-Lab-
 - An endpoint labeled `GRT` remains in the global routing table and receives no `vrf forwarding` command.
 - P-to-P ISP101 links are VRF links. Their link VRF is applied to both P-router endpoints.
 - VRF definition stanzas are intentionally **not** created.
-- `<AMBIGUOUS: ...>` records a literal diagram conflict; no replacement value is guessed.
 
 ## Router/link inventory
 
@@ -83,8 +82,9 @@ interface Loopback1011
  vrf forwarding ISP1011
  ip address 10.101.0.2 255.255.255.255
 !
-! AMBIGUOUS: the Site2 loopback label says "Lo1011: 10.101.5.2/32 vrf ISP1012".
-! It cannot coexist with the preceding Loopback1011 in a different VRF.
+interface Loopback1012
+ vrf forwarding ISP1012
+ ip address 10.101.5.2 255.255.255.255
 !
 interface GigabitEthernet0/1.10
  encapsulation dot1Q 10
@@ -115,12 +115,11 @@ interface GigabitEthernet0/0.124
 hostname P3
 !
 interface Loopback1011
- ! Diagram does not attach a VRF value to this label.
+ vrf forwarding ISP1011
  ip address 10.101.0.3 255.255.255.255
 !
 interface Loopback1012
- ! Literal diagram value: Lo1012 is assigned to ISP1011.
- vrf forwarding ISP1011
+ vrf forwarding ISP1012
  ip address 10.101.5.3 255.255.255.255
 !
 interface GigabitEthernet0/1.10
@@ -471,9 +470,6 @@ interface GigabitEthernet0/15
  no shutdown
 ```
 
-## Important diagram conflicts
+## Configuration boundary
 
-1. P2 Site2 loopback is labeled `Lo1011: 10.101.5.2/32 vrf ISP1012`, conflicting with P2's existing Lo1011 in ISP1011.
-2. P3 Lo1011 has no VRF text.
-3. P3's `Lo1012: 10.101.5.3/32` is explicitly labeled `vrf ISP1011`, which is preserved literally even though the loopback number and address pattern indicate Site2.
-4. VRF definitions, RDs, and route-targets are intentionally absent.
+The current draw.io link and loopback objects are internally consistent for these base interface configurations. VRF definitions, RDs, and route-targets remain intentionally absent.
