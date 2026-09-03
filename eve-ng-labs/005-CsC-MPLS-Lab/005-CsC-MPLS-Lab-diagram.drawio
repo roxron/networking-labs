@@ -4717,7 +4717,7 @@
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="ZwvT-MQXVyyIfuMDciDV-192" parent="ZwvT-MQXVyyIfuMDciDV-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;rotation=0;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Lo1011: 10.101.0.3/32&lt;/font&gt;" vertex="1">
+        <mxCell id="ZwvT-MQXVyyIfuMDciDV-192" parent="ZwvT-MQXVyyIfuMDciDV-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;rotation=0;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Lo1011: 10.101.0.3/32 vrf ISP1011&lt;/font&gt;" vertex="1">
           <mxGeometry height="15" width="146" x="-122.5" y="1110" as="geometry" />
         </mxCell>
         <mxCell id="ZwvT-MQXVyyIfuMDciDV-193" parent="ZwvT-MQXVyyIfuMDciDV-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;rotation=0;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Lo1011: 10.101.0.4/32&amp;nbsp;&lt;/font&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;vrf ISP1011&lt;/span&gt;" vertex="1">
@@ -5382,7 +5382,7 @@
         <mxCell id="SUOes0VafX8ZsRz_TAqU-49" parent="ZwvT-MQXVyyIfuMDciDV-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;rotation=0;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;IS-IS ISP1012:&amp;nbsp;&lt;/font&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;NET 49.0101.A200.0000.0003.00&lt;/font&gt;&lt;/div&gt;" vertex="1">
           <mxGeometry height="30" width="297" x="89" y="1089" as="geometry" />
         </mxCell>
-        <mxCell id="SUOes0VafX8ZsRz_TAqU-50" parent="ZwvT-MQXVyyIfuMDciDV-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;rotation=0;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Lo1012: 10.101.5.3/32&amp;nbsp;&lt;/font&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;vrf ISP1011&lt;/span&gt;" vertex="1">
+        <mxCell id="SUOes0VafX8ZsRz_TAqU-50" parent="ZwvT-MQXVyyIfuMDciDV-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;rotation=0;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Lo1012: 10.101.5.3/32&amp;nbsp;&lt;/font&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;vrf ISP1012&lt;/span&gt;" vertex="1">
           <mxGeometry height="15" width="253" x="125" y="1122" as="geometry" />
         </mxCell>
         <mxCell id="SUOes0VafX8ZsRz_TAqU-51" parent="ZwvT-MQXVyyIfuMDciDV-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;rotation=0;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;IS-IS ISP1012:&amp;nbsp;&lt;/font&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;NET 49.0101.A200.0000.0004.00&lt;/font&gt;&lt;/div&gt;" vertex="1">
@@ -5406,7 +5406,7 @@
         <mxCell id="SUOes0VafX8ZsRz_TAqU-57" parent="ZwvT-MQXVyyIfuMDciDV-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;rotation=0;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;IS-IS ISP1012:&amp;nbsp;&lt;/font&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;NET 49.0101.A200.0000.0002.00&lt;/font&gt;&lt;/div&gt;" vertex="1">
           <mxGeometry height="30" width="297" x="731.5" y="74" as="geometry" />
         </mxCell>
-        <mxCell id="SUOes0VafX8ZsRz_TAqU-58" parent="ZwvT-MQXVyyIfuMDciDV-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;rotation=0;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Lo1011: 10.101.5.2/32 vrf ISP1012&lt;/font&gt;" vertex="1">
+        <mxCell id="SUOes0VafX8ZsRz_TAqU-58" parent="ZwvT-MQXVyyIfuMDciDV-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;rotation=0;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Lo1012: 10.101.5.2/32 vrf ISP1012&lt;/font&gt;" vertex="1">
           <mxGeometry height="19" width="253" x="782" y="113" as="geometry" />
         </mxCell>
         <mxCell id="SUOes0VafX8ZsRz_TAqU-59" parent="ZwvT-MQXVyyIfuMDciDV-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;rotation=0;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;IS-IS ISP1012:&amp;nbsp;&lt;/font&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;NET 49.0101.A200.0000.0001.00&lt;/font&gt;&lt;/div&gt;" vertex="1">
