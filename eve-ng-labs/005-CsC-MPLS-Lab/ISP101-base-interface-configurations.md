@@ -4,7 +4,7 @@
 
 This page covers the **P routers, PE routers, and ISP101 route reflector** on the draw.io page **ISP101 IPv4**. Intermediate switches are intentionally ignored and treated as transparent Layer-2 transport.
 
-Sources are `004-CsC-MPLS-Lab-diagram.drawio` (logical interfaces, addressing and site membership) and `005-CsC-MPLS-Lab.unl` (PE physical interfaces across Layer-2 paths). Missing or conflicting values are marked `<AMBIGUOUS: ...>` and are not guessed.
+Sources are `005-CsC-MPLS-Lab-diagram.drawio` (logical interfaces, addressing and site membership) and `005-CsC-MPLS-Lab.unl` (PE physical interfaces across Layer-2 paths). Missing or conflicting values are marked `<AMBIGUOUS: ...>` and are not guessed.
 
 The draw.io legend assigns the first usable address to the dotted/core-facing endpoint and the last usable address to the remote endpoint. This is used only where the prefix association is clear.
 
