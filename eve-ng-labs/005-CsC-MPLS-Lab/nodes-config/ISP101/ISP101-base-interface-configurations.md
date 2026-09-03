@@ -2,7 +2,7 @@
 
 ## Interpretation rules
 
-This page is based on the **ISP101 IPv4** page in `005-CsC-MPLS-Lab-diagram.drawio`, correlated with `005-CsC-MPLS-Lab.unl` only to identify PE and RR physical interfaces behind the Layer-2 paths. Switches are not included.
+This page is based exclusively on the **ISP101 IPv4** page in `005-CsC-MPLS-Lab-diagram.drawio`. The EVE-NG `.unl` file is not used as a source. Switches are not included.
 
 - A label such as `G0/7.225 .1 vrf` means address host octet `.1` on that endpoint and `vrf forwarding` using the VRF object attached to the link.
 - An endpoint labeled `GRT` remains in the global routing table and receives no `vrf forwarding` command.
@@ -27,17 +27,17 @@ This page is based on the **ISP101 IPv4** page in `005-CsC-MPLS-Lab-diagram.draw
 | P1–ISP101-PE123 | `10.101.11.0/30` | P1 Gi0/0.123 `.2` GRT | ISP101-PE123 Gi0/0 `.1` | PE side VRF ISP1011 |
 | P2–ISP101-PE123 | `10.101.12.0/30` | P2 Gi0/1.123 `.2` GRT | ISP101-PE123 Gi0/1 `.1` | PE side VRF ISP1011 |
 | P2–ISP101-PE124 | `10.100.12.8/30` | P2 Gi0/0.124 `.10` GRT | ISP101-PE124 Gi0/1 `.9` | PE side VRF ISP1011 |
-| P4–ISP101-PE124 | `10.101.24.0/30` | P4 Gi0/1.124 `<missing>` GRT | ISP101-PE124 Gi0/0 `.1` | PE side VRF ISP1011 |
+| P4–ISP101-PE124 | `10.101.14.0/30` | P4 Gi0/1.124 `.2` GRT | ISP101-PE124 Gi0/0 `.1` | PE side VRF ISP1011; duplicates P4–ISP101-PE202 |
 | P3–ISP101-PE225 | `10.101.21.0/30` | P3 Gi0/0.225 `.2` GRT | ISP101-PE225 Gi0/0 `.1` | PE side VRF ISP1012 |
 | P3–ISP101-PE225 | `10.101.23.0/30` | P3 Gi0/1.225 `.2` GRT | ISP101-PE225 Gi0/1 `.1` | PE side VRF ISP1012 |
 | P3–ISP101-PE202 | `10.101.13.4/30` | P3 Gi0/0.202 `.6` GRT | ISP101-PE202 Gi0/0 `.5` | PE side VRF ISP1011 |
 | P4–ISP101-PE202 | `10.101.14.0/30` | P4 Gi0/1.202 `.2` GRT | ISP101-PE202 Gi0/1 `.1` | PE side VRF ISP1011 |
-| P3–ISP101-RR1 | `10.101.23.0/30` | P3 Gi0/0.231 `.2` GRT | ISP101-RR1 Gi0/0 `.1` | RR side VRF ISP1012; duplicates another prefix/address |
+| P3–ISP101-RR1 | `10.101.23.4/30` | P3 Gi0/0.231 `.6` GRT | ISP101-RR1 Gi0/0 `.5` | RR side VRF ISP1012 |
 | P4–ISP101-RR1 | `10.101.24.4/30` | P4 Gi0/1.231 `.6` GRT | ISP101-RR1 Gi0/1 `.5` | RR side VRF ISP1012 |
 | ISP101-PE123–CsC-PE15 | `10.101.49.8/30` | ISP101-PE123 Gi0/2 `.9` GRT | CsC-PE15 Gi0/15 `.10` | CsC side VRF ISP101 |
 | ISP101-PE123–CsC-PE16 | `10.101.49.12/30` | ISP101-PE123 Gi0/3 `.13` GRT | CsC-PE16 Gi0/15 `.14` | CsC side VRF ISP101 |
 | ISP101-PE225–CsC-PE19 | `10.101.49.0/30` | ISP101-PE225 Gi0/2 `.1` GRT | CsC-PE19 Gi0/15 `.2` | CsC side VRF ISP101 |
-| ISP101-PE225–CsC-PE20 | `10.101.49.4/30` | ISP101-PE225 Gi0/3 `.5` GRT | CsC-PE20 Gi0/15 `.6` | CsC side VRF ISP101; EVE says CsC-PE20 Gi0/2 |
+| ISP101-PE225–CsC-PE20 | `10.101.49.4/30` | ISP101-PE225 Gi0/3 `.5` GRT | CsC-PE20 Gi0/15 `.6` | CsC side VRF ISP101 |
 
 ## P-router configurations
 
@@ -152,9 +152,8 @@ interface GigabitEthernet0/0.202
 !
 interface GigabitEthernet0/0.231
  encapsulation dot1Q 231
- ip address 10.101.23.2 255.255.255.252
+ ip address 10.101.23.6 255.255.255.252
  no shutdown
- ! AMBIGUOUS: duplicates Gi0/1.225 address exactly, as drawn.
 ```
 
 ### P4
@@ -184,7 +183,7 @@ interface GigabitEthernet0/1.20
 !
 interface GigabitEthernet0/1.124
  encapsulation dot1Q 124
- ip address <AMBIGUOUS: endpoint host octet is absent from the link label>
+ ip address 10.101.14.2 255.255.255.252
  no shutdown
 !
 interface GigabitEthernet0/1.202
@@ -342,7 +341,7 @@ interface Loopback0
 interface GigabitEthernet0/0
  description Toward P4 Gi0/1.124
  vrf forwarding ISP1011
- ip address 10.101.24.1 255.255.255.252
+ ip address 10.101.14.1 255.255.255.252
  no shutdown
 !
 interface GigabitEthernet0/1
@@ -415,9 +414,8 @@ interface Loopback0
 interface GigabitEthernet0/0
  description Toward P3 Gi0/0.231
  vrf forwarding ISP1012
- ip address 10.101.23.1 255.255.255.252
+ ip address 10.101.23.5 255.255.255.252
  no shutdown
- ! AMBIGUOUS: duplicates ISP101-PE225 Gi0/1 exactly, as drawn.
 !
 interface GigabitEthernet0/1
  description Toward P4 Gi0/1.231
@@ -466,8 +464,7 @@ hostname CsC-PE20
 interface Loopback1012
  ip address 10.101.50.20 255.255.255.255
 !
-! AMBIGUOUS: draw.io says Gi0/15 .6; EVE-NG says this link is Gi0/2.
-interface <AMBIGUOUS: GigabitEthernet0/15 in draw.io or GigabitEthernet0/2 in EVE-NG>
+interface GigabitEthernet0/15
  description To ISP101-PE225 Gi0/3
  vrf forwarding ISP101
  ip address 10.101.49.6 255.255.255.252
@@ -476,9 +473,7 @@ interface <AMBIGUOUS: GigabitEthernet0/15 in draw.io or GigabitEthernet0/2 in EV
 
 ## Important diagram conflicts
 
-1. `10.101.23.0/30` with endpoint addresses `.1/.2` is used for both P3–ISP101-PE225 and P3–ISP101-RR1, creating duplicate addresses on separate interfaces.
-2. The P4 endpoint on `10.101.24.0/30` is labeled `G0/1.124 GRT` without a host octet. The opposite endpoint is explicitly `.1`; no P4 address was inferred.
-3. P2 Site2 loopback is labeled `Lo1011: 10.101.5.2/32 vrf ISP1012`, conflicting with P2's existing Lo1011 in ISP1011.
-4. P3 Lo1011 has no VRF text. P3's `Lo1012: 10.101.5.3/32` is explicitly labeled `vrf ISP1011`, which is preserved literally.
-5. CsC-PE20's direct-link interface differs: draw.io says Gi0/15, while EVE-NG says Gi0/2.
-6. VRF definitions, RDs, and route-targets are intentionally absent.
+1. `10.101.14.0/30` with endpoint addresses `.1/.2` is used for both P4–ISP101-PE124 and P4–ISP101-PE202, creating duplicate addresses on separate interfaces.
+2. P2 Site2 loopback is labeled `Lo1011: 10.101.5.2/32 vrf ISP1012`, conflicting with P2's existing Lo1011 in ISP1011.
+3. P3 Lo1011 has no VRF text. P3's `Lo1012: 10.101.5.3/32` is explicitly labeled `vrf ISP1011`, which is preserved literally.
+4. VRF definitions, RDs, and route-targets are intentionally absent.
