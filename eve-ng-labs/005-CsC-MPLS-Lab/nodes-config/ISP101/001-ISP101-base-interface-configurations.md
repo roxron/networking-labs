@@ -38,7 +38,7 @@ ISP101-PE123 provides the Site1-facing connections to CsC-PE15 and CsC-PE16. ISP
 | P4–ISP101-PE124 | `10.101.14.0/30` | P4 Gi0/6.124 `.1` VRF ISP1011 | ISP101-PE124 Gi0/0.124 `.2` GRT | Via VLAN124-SW213 |
 | P1–ISP101-PE225 | `10.101.21.0/30` | P1 Gi0/7.225 `.1` VRF ISP1012 | ISP101-PE225 Gi0/0.225 `.2` GRT | Via VLAN225-SW29 |
 | P3–ISP101-PE225 | `10.101.23.0/30` | P3 Gi0/7.225 `.1` VRF ISP1012 | ISP101-PE225 Gi0/1.225 `.2` GRT | Via VLAN225-SW212 |
-| P3–ISP101-PE202 | `10.101.23.8/30` (link object displays `10.101.23.9/30`) | P3 Gi0/4.202 `.9` VRF ISP1012 | ISP101-PE202 Gi0/0.202 `.10` GRT | Via VLAN202-SW211 |
+| P3–ISP101-PE202 | `10.101.23.8/30` | P3 Gi0/4.202 `.9` VRF ISP1012 | ISP101-PE202 Gi0/0.202 `.10` GRT | Via VLAN202-SW211 |
 | P4–ISP101-PE202 | `10.101.24.0/30` | P4 Gi0/4.202 `.1` VRF ISP1012 | ISP101-PE202 Gi0/1.202 `.2` GRT | Via VLAN202-SW211 |
 | P3–ISP101-RR1 | `10.101.23.4/30` | P3 Gi0/5.231 `.5` VRF ISP1012 | ISP101-RR1 Gi0/0.231 `.6` GRT | Via VLAN231-SW211 |
 | P4–ISP101-RR1 | `10.101.24.4/30` | P4 Gi0/5.231 `.5` VRF ISP1012 | ISP101-RR1 Gi0/1.231 `.6` GRT | Via VLAN231-SW210 |
@@ -678,4 +678,4 @@ interface GigabitEthernet0/15
 
 ## Configuration boundary
 
-The current draw.io link and loopback objects are internally consistent for these base interface configurations. The P3–PE202 link object displays host address `10.101.23.9/30`; its calculated network is `10.101.23.8/30`, with the explicitly labeled `.9` and `.10` endpoints. Only P routers define the infrastructure VRFs `ISP1011` and `ISP1012`. ISP101 PE, RR, and CsC routers have no VRF definitions here; future customer VRFs remain outside this base configuration.
+The current draw.io link and loopback objects are internally consistent for these base interface configurations. The P3–PE202 link network is `10.101.23.8/30`, with the explicitly labeled `.9` and `.10` endpoints. Only P routers define the infrastructure VRFs `ISP1011` and `ISP1012`. ISP101 PE, RR, and CsC routers have no VRF definitions here; future customer VRFs remain outside this base configuration.
