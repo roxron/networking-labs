@@ -693,10 +693,17 @@ vrf definition ISP102
  route-target import 102:102
  !
  address-family ipv4
+  route-target export 102:102
+  route-target import 102:102
+ exit-address-family
+ !
+ address-family ipv6
+  route-target export 102:102
+  route-target import 102:102
  exit-address-family
 !
-interface Loopback1021
- description ISP102 carrier VRF identity
+interface Loopback1020
+ description ISP102 RouterID
  vrf forwarding ISP102
  ip address 10.102.50.15 255.255.255.255
  no shutdown
@@ -720,10 +727,17 @@ vrf definition ISP102
  route-target import 102:102
  !
  address-family ipv4
+  route-target export 102:102
+  route-target import 102:102
+ exit-address-family
+ !
+ address-family ipv6
+  route-target export 102:102
+  route-target import 102:102
  exit-address-family
 !
-interface Loopback1021
- description ISP102 carrier VRF identity
+interface Loopback1020
+ description ISP102 RouterID
  vrf forwarding ISP102
  ip address 10.102.50.16 255.255.255.255
  no shutdown
@@ -747,10 +761,17 @@ vrf definition ISP102
  route-target import 102:102
  !
  address-family ipv4
+  route-target export 102:102
+  route-target import 102:102
+ exit-address-family
+ !
+ address-family ipv6
+  route-target export 102:102
+  route-target import 102:102
  exit-address-family
 !
-interface Loopback1022
- description ISP102 carrier VRF identity
+interface Loopback1020
+ description ISP102 RouterID
  vrf forwarding ISP102
  ip address 10.102.50.19 255.255.255.255
  no shutdown
@@ -774,10 +795,17 @@ vrf definition ISP102
  route-target import 102:102
  !
  address-family ipv4
+  route-target export 102:102
+  route-target import 102:102
+ exit-address-family
+ !
+ address-family ipv6
+  route-target export 102:102
+  route-target import 102:102
  exit-address-family
 !
-interface Loopback1022
- description ISP102 carrier VRF identity
+interface Loopback1020
+ description ISP102 RouterID
  vrf forwarding ISP102
  ip address 10.102.50.20 255.255.255.255
  no shutdown

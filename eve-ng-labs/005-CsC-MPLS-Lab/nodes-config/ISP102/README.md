@@ -15,6 +15,22 @@ Source: **ISP102 IPv4** in `005-CsC-MPLS-Lab-diagram.drawio`. Router configurati
 
 The new RR11 values and PE31 switch ports are design assignments added during this audit. They are not values observed on running equipment. Other diagram pages and ISP101 configurations were not changed by this task.
 
+## Confirmed CsC-PE15 configuration
+
+User-supplied running configuration supersedes the initial loopback assignment: CsC-PE15 uses Loopback1020, description `ISP102 RouterID`, VRF ISP102 and address 10.102.50.15/32. Its VRF retains RD 10.100.2.15:102 and RT 102:102 globally and explicitly under both IPv4 and IPv6 address families. The base configuration and diagram label reflect these values; other CsC PE assignments remain unchanged.
+
+## Confirmed CsC-PE16 configuration
+
+User-supplied running configuration supersedes the initial loopback assignment: CsC-PE16 uses Loopback1020, description `ISP102 RouterID`, VRF ISP102 and address 10.102.50.16/32. Its VRF retains RD 10.100.2.16:102 and RT 102:102 globally and explicitly under both IPv4 and IPv6 address families. The base configuration and diagram label reflect these values.
+
+## Confirmed CsC-PE19 configuration
+
+User-supplied running configuration supersedes the initial loopback assignment: CsC-PE19 uses Loopback1020, description `ISP102 RouterID`, VRF ISP102 and address 10.102.50.19/32. Its VRF retains RD 10.100.2.19:102 and RT 102:102 globally and explicitly under both IPv4 and IPv6 address families. The base configuration and diagram label reflect these values.
+
+## Confirmed CsC-PE20 configuration
+
+User-supplied running configuration supersedes the initial loopback assignment: CsC-PE20 uses Loopback1020, description `ISP102 RouterID`, VRF ISP102 and address 10.102.50.20/32. Its VRF retains RD 10.100.2.20:102 and RT 102:102 globally and explicitly under both IPv4 and IPv6 address families. The base configuration and diagram label reflect these values. All four CsC PEs now use Loopback1020 for ISP102; P-router loopbacks remain Loopback1021 / Loopback1022.
+
 ## Logical topology
 
 ```mermaid
