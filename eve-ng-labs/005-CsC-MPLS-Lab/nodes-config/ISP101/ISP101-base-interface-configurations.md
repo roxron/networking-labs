@@ -7,7 +7,7 @@ This page is based exclusively on the **ISP101 IPv4** page in `005-CsC-MPLS-Lab-
 - A label such as `G0/7.225 .1 vrf` means address host octet `.1` on that endpoint and `vrf forwarding` using the VRF object attached to the link.
 - An endpoint labeled `GRT` remains in the global routing table and receives no `vrf forwarding` command.
 - P-to-P ISP101 links are VRF links. Their link VRF is applied to both P-router endpoints.
-- VRF definition stanzas are intentionally **not** created.
+- VRF `ISP101` is defined on every non-CsC router. Definitions for `ISP1011` and `ISP1012` are not included.
 
 ## Router/link inventory
 
@@ -40,12 +40,20 @@ This page is based exclusively on the **ISP101 IPv4** page in `005-CsC-MPLS-Lab-
 
 ## P-router configurations
 
-No `ip vrf`/`vrf definition` stanza is included.
+Each P router includes the requested `ISP101` VRF definition. Separate definitions for interface VRFs `ISP1011` and `ISP1012` are not included.
 
 ### P1
 
 ```ios
 hostname P1
+!
+vrf definition ISP101
+ rd 101:101
+ route-target export 101:101
+ route-target import 101:101
+ !
+ address-family ipv4
+ exit-address-family
 !
 interface Loopback1011
  description ISP101 RouterID
@@ -91,6 +99,14 @@ interface GigabitEthernet0/7.225
 ```ios
 hostname P2
 !
+vrf definition ISP101
+ rd 101:101
+ route-target export 101:101
+ route-target import 101:101
+ !
+ address-family ipv4
+ exit-address-family
+!
 interface Loopback1011
  description ISP101 RouterID
  vrf forwarding ISP1011
@@ -134,6 +150,14 @@ interface GigabitEthernet0/6.124
 
 ```ios
 hostname P3
+!
+vrf definition ISP101
+ rd 101:101
+ route-target export 101:101
+ route-target import 101:101
+ !
+ address-family ipv4
+ exit-address-family
 !
 interface Loopback1011
  description ISP101 RouterID
@@ -186,6 +210,14 @@ interface GigabitEthernet0/5.231
 ```ios
 hostname P4
 !
+vrf definition ISP101
+ rd 101:101
+ route-target export 101:101
+ route-target import 101:101
+ !
+ address-family ipv4
+ exit-address-family
+!
 interface Loopback1011
  description ISP101 RouterID
  vrf forwarding ISP1011
@@ -236,6 +268,14 @@ interface GigabitEthernet0/5.231
 
 ```ios
 hostname P5
+!
+vrf definition ISP101
+ rd 101:101
+ route-target export 101:101
+ route-target import 101:101
+ !
+ address-family ipv4
+ exit-address-family
 !
 interface Loopback1011
  description ISP101 RouterID
@@ -294,6 +334,14 @@ interface GigabitEthernet0/9.20
 
 ```ios
 hostname P6
+!
+vrf definition ISP101
+ rd 101:101
+ route-target export 101:101
+ route-target import 101:101
+ !
+ address-family ipv4
+ exit-address-family
 !
 interface Loopback1011
  description ISP101 RouterID
@@ -355,6 +403,14 @@ interface GigabitEthernet0/9.20
 ```ios
 hostname ISP101-PE123
 !
+vrf definition ISP101
+ rd 101:101
+ route-target export 101:101
+ route-target import 101:101
+ !
+ address-family ipv4
+ exit-address-family
+!
 interface Loopback0
  description ISP101 RouterID
  ip address 10.101.3.123 255.255.255.255
@@ -387,6 +443,14 @@ interface GigabitEthernet0/3
 ```ios
 hostname ISP101-PE124
 !
+vrf definition ISP101
+ rd 101:101
+ route-target export 101:101
+ route-target import 101:101
+ !
+ address-family ipv4
+ exit-address-family
+!
 interface Loopback0
  description ISP101 RouterID
  ip address 10.101.3.124 255.255.255.255
@@ -408,6 +472,14 @@ interface GigabitEthernet0/1.124
 
 ```ios
 hostname ISP101-PE225
+!
+vrf definition ISP101
+ rd 101:101
+ route-target export 101:101
+ route-target import 101:101
+ !
+ address-family ipv4
+ exit-address-family
 !
 interface Loopback0
  description ISP101 RouterID
@@ -441,6 +513,14 @@ interface GigabitEthernet0/3
 ```ios
 hostname ISP101-PE202
 !
+vrf definition ISP101
+ rd 101:101
+ route-target export 101:101
+ route-target import 101:101
+ !
+ address-family ipv4
+ exit-address-family
+!
 interface Loopback0
  description ISP101 RouterID
  ip address 10.101.3.202 255.255.255.255
@@ -462,6 +542,14 @@ interface GigabitEthernet0/1.202
 
 ```ios
 hostname ISP101-RR1
+!
+vrf definition ISP101
+ rd 101:101
+ route-target export 101:101
+ route-target import 101:101
+ !
+ address-family ipv4
+ exit-address-family
 !
 interface Loopback0
  description ISP101 RouterID
@@ -533,4 +621,4 @@ interface GigabitEthernet0/15
 
 ## Configuration boundary
 
-The current draw.io link and loopback objects are internally consistent for these base interface configurations. VRF definitions, RDs, and route-targets remain intentionally absent.
+The current draw.io link and loopback objects are internally consistent for these base interface configurations. VRF `ISP101` uses RD and import/export route-target `101:101` on all non-CsC routers. Definitions for `ISP1011` and `ISP1012` remain outside this page.
