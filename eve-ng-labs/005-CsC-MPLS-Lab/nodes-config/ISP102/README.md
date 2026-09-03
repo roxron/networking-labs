@@ -62,7 +62,7 @@ P1–P6 are shared physical routers drawn twice to show isolated logical sites. 
 - Infrastructure RD/RTs are 102:1 and 102:2. Provider VRF ISP102 uses router-specific RDs and common RT 102:102. These follow the existing lab policy.
 - IPv4, level-2 IS-IS with wide metrics, and LDP follow the existing router configuration style.
 - RR11 is in Site1. PE28 exports its /32 across the CsC backbone along with both Site1 PE /32s. PE31 exports both Site2 PE /32s.
-- Customer VRFs and addresses are not shown for ISP102; no ISP101 CUSTOMER-A configuration is copied. VPNv4 sessions alone do not create customer service routes.
+- User-supplied CUSTOMER-B configuration is documented in file 006: PE29 uses RD 10.102.3.29:1002 and Loopback1002 192.168.0.29/32; PE30 uses RD 10.102.3.30:1002 and Loopback1002 192.168.0.30/32. Both import/export RT 1002:1002 and redistribute connected routes into BGP AS 102 under IPv4 VRF CUSTOMER-B.
 - The existing ISP100 core IS-IS, LDP and VPNv4 sessions are prerequisites; these files add the ISP102 carrier VRF and eBGP neighbors.
 - The saved EVE-NG `.unl` contains only ISP101 customer-carrier devices. It must be updated with ISP102 devices and cabling before these configurations can be exercised. This task does not alter the `.unl` or deploy configurations.
 

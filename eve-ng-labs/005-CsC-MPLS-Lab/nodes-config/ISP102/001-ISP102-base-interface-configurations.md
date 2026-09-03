@@ -2,7 +2,7 @@
 
 Source: **ISP102 IPv4** in `005-CsC-MPLS-Lab-diagram.drawio`, after the corrections in [README.md](README.md). Apply these as additions to existing shared-router configurations. Existing ISP100 and ISP101 services remain in their own routing contexts.
 
-P1–P6 use VRFs ISP1021 / ISP1022 and Loopback1021 / Loopback1022. ISP102 PE28, PE29, PE30, PE31 and RR11 use GRT. The four CsC PEs use provider VRF ISP102. IPv4 is configured here; no customer service addressing is specified by this diagram.
+P1–P6 use VRFs ISP1021 / ISP1022 and Loopback1021 / Loopback1022. ISP102 PE28, PE29, PE30, PE31 and RR11 use GRT. The four CsC PEs use provider VRF ISP102. IPv4 infrastructure is configured here. The additional user-supplied CUSTOMER-B VRFs and service loopbacks on PE29 and PE30 are documented in `006-ISP102-MP-BGP-VPNv4.md`.
 
 RD/RT policy follows the existing lab convention: infrastructure VRFs 102:1 and 102:2; provider VRF router-specific RD 10.100.2.<PE>:102 and common RT 102:102. These are configuration choices, not diagram labels.
 
