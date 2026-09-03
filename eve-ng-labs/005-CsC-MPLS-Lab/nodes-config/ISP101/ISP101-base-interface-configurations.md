@@ -26,12 +26,12 @@ This page is based exclusively on the **ISP101 IPv4** page in `005-CsC-MPLS-Lab-
 | P4–P6 Site2 | `10.101.2.16/30` | P4 Gi0/1.20 `.18` | P6 Gi0/9.20 `.17` | VRF ISP1012 both ends |
 | P1–ISP101-PE123 | `10.101.11.0/30` | P1 Gi0/0.123 `.2` GRT | ISP101-PE123 Gi0/0 `.1` | PE side VRF ISP1011 |
 | P2–ISP101-PE123 | `10.101.12.0/30` | P2 Gi0/1.123 `.2` GRT | ISP101-PE123 Gi0/1 `.1` | PE side VRF ISP1011 |
-| P2–ISP101-PE124 | `10.100.12.8/30` | P2 Gi0/0.124 `.10` GRT | ISP101-PE124 Gi0/1 `.9` | PE side VRF ISP1011 |
-| P4–ISP101-PE124 | `10.101.14.0/30` | P4 Gi0/1.124 `.2` GRT | ISP101-PE124 Gi0/0 `.1` | PE side VRF ISP1011; duplicates P4–ISP101-PE202 |
+| P2–ISP101-PE124 | `10.101.12.8/30` | P2 Gi0/0.124 `.10` GRT | ISP101-PE124 Gi0/1 `.9` | PE side VRF ISP1011 |
+| P4–ISP101-PE124 | `10.101.14.0/30` | P4 Gi0/1.124 `.2` GRT | ISP101-PE124 Gi0/0 `.1` | PE side VRF ISP1011 |
 | P3–ISP101-PE225 | `10.101.21.0/30` | P3 Gi0/0.225 `.2` GRT | ISP101-PE225 Gi0/0 `.1` | PE side VRF ISP1012 |
 | P3–ISP101-PE225 | `10.101.23.0/30` | P3 Gi0/1.225 `.2` GRT | ISP101-PE225 Gi0/1 `.1` | PE side VRF ISP1012 |
 | P3–ISP101-PE202 | `10.101.13.4/30` | P3 Gi0/0.202 `.6` GRT | ISP101-PE202 Gi0/0 `.5` | PE side VRF ISP1011 |
-| P4–ISP101-PE202 | `10.101.14.0/30` | P4 Gi0/1.202 `.2` GRT | ISP101-PE202 Gi0/1 `.1` | PE side VRF ISP1011 |
+| P4–ISP101-PE202 | `10.101.14.4/30` | P4 Gi0/1.202 `.6` GRT | ISP101-PE202 Gi0/1 `.5` | PE side VRF ISP1011 |
 | P3–ISP101-RR1 | `10.101.23.4/30` | P3 Gi0/0.231 `.6` GRT | ISP101-RR1 Gi0/0 `.5` | RR side VRF ISP1012 |
 | P4–ISP101-RR1 | `10.101.24.4/30` | P4 Gi0/1.231 `.6` GRT | ISP101-RR1 Gi0/1 `.5` | RR side VRF ISP1012 |
 | ISP101-PE123–CsC-PE15 | `10.101.49.8/30` | ISP101-PE123 Gi0/2 `.9` GRT | CsC-PE15 Gi0/15 `.10` | CsC side VRF ISP101 |
@@ -105,7 +105,7 @@ interface GigabitEthernet0/1.123
 !
 interface GigabitEthernet0/0.124
  encapsulation dot1Q 124
- ip address 10.100.12.10 255.255.255.252
+ ip address 10.101.12.10 255.255.255.252
  no shutdown
 ```
 
@@ -188,7 +188,7 @@ interface GigabitEthernet0/1.124
 !
 interface GigabitEthernet0/1.202
  encapsulation dot1Q 202
- ip address 10.101.14.2 255.255.255.252
+ ip address 10.101.14.6 255.255.255.252
  no shutdown
 !
 interface GigabitEthernet0/1.231
@@ -347,7 +347,7 @@ interface GigabitEthernet0/0
 interface GigabitEthernet0/1
  description Toward P2 Gi0/0.124
  vrf forwarding ISP1011
- ip address 10.100.12.9 255.255.255.252
+ ip address 10.101.12.9 255.255.255.252
  no shutdown
 ```
 
@@ -399,7 +399,7 @@ interface GigabitEthernet0/0
 interface GigabitEthernet0/1
  description Toward P4 Gi0/1.202
  vrf forwarding ISP1011
- ip address 10.101.14.1 255.255.255.252
+ ip address 10.101.14.5 255.255.255.252
  no shutdown
 ```
 
@@ -473,7 +473,7 @@ interface GigabitEthernet0/15
 
 ## Important diagram conflicts
 
-1. `10.101.14.0/30` with endpoint addresses `.1/.2` is used for both P4–ISP101-PE124 and P4–ISP101-PE202, creating duplicate addresses on separate interfaces.
-2. P2 Site2 loopback is labeled `Lo1011: 10.101.5.2/32 vrf ISP1012`, conflicting with P2's existing Lo1011 in ISP1011.
-3. P3 Lo1011 has no VRF text. P3's `Lo1012: 10.101.5.3/32` is explicitly labeled `vrf ISP1011`, which is preserved literally.
+1. P2 Site2 loopback is labeled `Lo1011: 10.101.5.2/32 vrf ISP1012`, conflicting with P2's existing Lo1011 in ISP1011.
+2. P3 Lo1011 has no VRF text.
+3. P3's `Lo1012: 10.101.5.3/32` is explicitly labeled `vrf ISP1011`, which is preserved literally even though the loopback number and address pattern indicate Site2.
 4. VRF definitions, RDs, and route-targets are intentionally absent.
