@@ -22,12 +22,12 @@ ISP101-PE123 provides the Site1-facing connections to CsC-PE15 and CsC-PE16. ISP
 
 | Link | Prefix | Endpoint A | Endpoint B | Routing context |
 |---|---|---|---|---|
-| P5–P6 Site1 | `10.101.1.0/30` | P5 Gi0/1.10 `.1` | P6 Gi0/0.10 `.2` | VRF ISP1011 both ends |
+| P5–P6 Site1 | `10.101.1.0/30` | P5 Gi0/1.10 `.1` | P6 Gi0/1.10 `.2` | VRF ISP1011 both ends |
 | P1–P5 Site1 | `10.101.1.4/30` | P1 Gi0/1.10 `.6` | P5 Gi0/5.10 `.5` | VRF ISP1011 both ends |
 | P2–P5 Site1 | `10.101.1.8/30` | P2 Gi0/1.10 `.10` | P5 Gi0/9.10 `.9` | VRF ISP1011 both ends |
 | P3–P6 Site1 | `10.101.1.12/30` | P3 Gi0/1.10 `.14` | P6 Gi0/5.10 `.13` | VRF ISP1011 both ends |
 | P4–P6 Site1 | `10.101.1.16/30` | P4 Gi0/1.10 `.18` | P6 Gi0/9.10 `.17` | VRF ISP1011 both ends |
-| P5–P6 Site2 | `10.101.2.0/30` | P5 Gi0/1.20 `.1` | P6 Gi0/0.20 `.2` | VRF ISP1012 both ends |
+| P5–P6 Site2 | `10.101.2.0/30` | P5 Gi0/1.20 `.1` | P6 Gi0/1.20 `.2` | VRF ISP1012 both ends |
 | P1–P5 Site2 | `10.101.2.4/30` | P1 Gi0/1.20 `.6` | P5 Gi0/5.20 `.5` | VRF ISP1012 both ends |
 | P2–P5 Site2 | `10.101.2.8/30` | P2 Gi0/1.20 `.10` | P5 Gi0/9.20 `.9` | VRF ISP1012 both ends |
 | P3–P6 Site2 | `10.101.2.12/30` | P3 Gi0/1.20 `.14` | P6 Gi0/5.20 `.13` | VRF ISP1012 both ends |
@@ -367,14 +367,14 @@ interface Loopback1012
  ip address 10.101.5.5 255.255.255.255
 !
 interface GigabitEthernet0/1.10
- description Link to P6 int g0/0.10
+ description Link to P6 int g0/1.10
  encapsulation dot1Q 10
  vrf forwarding ISP1011
  ip address 10.101.1.1 255.255.255.252
  no shutdown
 !
 interface GigabitEthernet0/1.20
- description Link to P6 int g0/0.20
+ description Link to P6 int g0/1.20
  encapsulation dot1Q 20
  vrf forwarding ISP1012
  ip address 10.101.2.1 255.255.255.252
@@ -446,14 +446,14 @@ interface Loopback1012
  vrf forwarding ISP1012
  ip address 10.101.5.6 255.255.255.255
 !
-interface GigabitEthernet0/0.10
+interface GigabitEthernet0/1.10
  description Link to P5 int g0/1.10
  encapsulation dot1Q 10
  vrf forwarding ISP1011
  ip address 10.101.1.2 255.255.255.252
  no shutdown
 !
-interface GigabitEthernet0/0.20
+interface GigabitEthernet0/1.20
  description Link to P5 int g0/1.20
  encapsulation dot1Q 20
  vrf forwarding ISP1012
