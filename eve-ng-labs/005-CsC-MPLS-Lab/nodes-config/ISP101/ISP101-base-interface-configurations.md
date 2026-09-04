@@ -38,8 +38,8 @@ ISP101-PE123 provides the Site1-facing connections to CsC-PE15 and CsC-PE16. ISP
 | P4–ISP101-PE124 | `10.101.14.0/30` | P4 Gi0/6.124 `.1` VRF ISP1011 | ISP101-PE124 Gi0/0.124 `.2` GRT | Via VLAN124-SW213 |
 | P1–ISP101-PE225 | `10.101.21.0/30` | P1 Gi0/7.225 `.1` VRF ISP1012 | ISP101-PE225 Gi0/0.225 `.2` GRT | Via VLAN225-SW29 |
 | P3–ISP101-PE225 | `10.101.23.0/30` | P3 Gi0/7.225 `.1` VRF ISP1012 | ISP101-PE225 Gi0/1.225 `.2` GRT | Via VLAN225-SW212 |
-| P3–ISP101-PE202 | `10.101.13.4/30` | P3 Gi0/4.202 `.5` VRF ISP1011 | ISP101-PE202 Gi0/0.202 `.6` GRT | Via VLAN202-SW211 |
-| P4–ISP101-PE202 | `10.101.14.4/30` | P4 Gi0/4.202 `.5` VRF ISP1011 | ISP101-PE202 Gi0/1.202 `.6` GRT | Via VLAN202-SW211 |
+| P3–ISP101-PE202 | `10.101.23.8/30` (link object displays `10.101.23.9/30`) | P3 Gi0/4.202 `.9` VRF ISP1012 | ISP101-PE202 Gi0/0.202 `.10` GRT | Via VLAN202-SW211 |
+| P4–ISP101-PE202 | `10.101.24.0/30` | P4 Gi0/4.202 `.1` VRF ISP1012 | ISP101-PE202 Gi0/1.202 `.2` GRT | Via VLAN202-SW211 |
 | P3–ISP101-RR1 | `10.101.23.4/30` | P3 Gi0/5.231 `.5` VRF ISP1012 | ISP101-RR1 Gi0/0.231 `.6` GRT | Via VLAN231-SW211 |
 | P4–ISP101-RR1 | `10.101.24.4/30` | P4 Gi0/5.231 `.5` VRF ISP1012 | ISP101-RR1 Gi0/1.231 `.6` GRT | Via VLAN231-SW210 |
 | ISP101-PE123–CsC-PE15 | `10.101.49.8/30` | ISP101-PE123 Gi0/2 `.9` GRT | CsC-PE15 Gi0/15 `.10` | Site1 attachment; CsC side VRF ISP101 |
@@ -244,8 +244,8 @@ interface GigabitEthernet0/7.225
 interface GigabitEthernet0/4.202
  description Link to ISP101-PE202 int g0/0.202 via VLAN202-SW211
  encapsulation dot1Q 202
- vrf forwarding ISP1011
- ip address 10.101.13.5 255.255.255.252
+ vrf forwarding ISP1012
+ ip address 10.101.23.9 255.255.255.252
  no shutdown
 !
 interface GigabitEthernet0/5.231
@@ -317,8 +317,8 @@ interface GigabitEthernet0/6.124
 interface GigabitEthernet0/4.202
  description Link to ISP101-PE202 int g0/1.202 via VLAN202-SW211
  encapsulation dot1Q 202
- vrf forwarding ISP1011
- ip address 10.101.14.5 255.255.255.252
+ vrf forwarding ISP1012
+ ip address 10.101.24.1 255.255.255.252
  no shutdown
 !
 interface GigabitEthernet0/5.231
@@ -589,13 +589,13 @@ interface Loopback0
 interface GigabitEthernet0/0.202
  description Link to P3 int g0/4.202 via VLAN202-SW211
  encapsulation dot1Q 202
- ip address 10.101.13.6 255.255.255.252
+ ip address 10.101.23.10 255.255.255.252
  no shutdown
 !
 interface GigabitEthernet0/1.202
  description Link to P4 int g0/4.202 via VLAN202-SW211
  encapsulation dot1Q 202
- ip address 10.101.14.6 255.255.255.252
+ ip address 10.101.24.2 255.255.255.252
  no shutdown
 ```
 
@@ -674,4 +674,4 @@ interface GigabitEthernet0/15
 
 ## Configuration boundary
 
-The current draw.io link and loopback objects are internally consistent for these base interface configurations. Only P routers define the infrastructure VRFs `ISP1011` and `ISP1012`. ISP101 PE, RR, and CsC routers have no VRF definitions here; future customer VRFs remain outside this base configuration.
+The current draw.io link and loopback objects are internally consistent for these base interface configurations. The P3–PE202 link object displays host address `10.101.23.9/30`; its calculated network is `10.101.23.8/30`, with the explicitly labeled `.9` and `.10` endpoints. Only P routers define the infrastructure VRFs `ISP1011` and `ISP1012`. ISP101 PE, RR, and CsC routers have no VRF definitions here; future customer VRFs remain outside this base configuration.
