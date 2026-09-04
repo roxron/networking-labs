@@ -34,8 +34,8 @@ ISP101-PE123 provides the Site1-facing connections to CsC-PE15 and CsC-PE16. ISP
 | P4–P6 Site2 | `10.101.2.16/30` | P4 Gi0/1.20 `.18` | P6 Gi0/9.20 `.17` | VRF ISP1012 both ends |
 | P1–ISP101-PE123 | `10.101.11.0/30` | P1 Gi0/4.123 `.1` VRF ISP1011 | ISP101-PE123 Gi0/0.123 `.2` GRT | Via VLAN123-SW27 |
 | P2–ISP101-PE123 | `10.101.12.0/30` | P2 Gi0/4.123 `.1` VRF ISP1011 | ISP101-PE123 Gi0/1.123 `.2` GRT | Via VLAN123-SW28 |
-| P2–ISP101-PE124 | `10.101.12.8/30` | P2 Gi0/6.124 `.9` VRF ISP1011 | ISP101-PE124 Gi0/0.124 `.10` GRT | Via VLAN124-SW214 |
-| P4–ISP101-PE124 | `10.101.14.0/30` | P4 Gi0/6.124 `.1` VRF ISP1011 | ISP101-PE124 Gi0/1.124 `.2` GRT | Via VLAN124-SW213 |
+| P2–ISP101-PE124 | `10.101.12.8/30` | P2 Gi0/6.124 `.9` VRF ISP1011 | ISP101-PE124 Gi0/1.124 `.10` GRT | Via VLAN124-SW214 |
+| P4–ISP101-PE124 | `10.101.14.0/30` | P4 Gi0/6.124 `.1` VRF ISP1011 | ISP101-PE124 Gi0/0.124 `.2` GRT | Via VLAN124-SW213 |
 | P1–ISP101-PE225 | `10.101.21.0/30` | P1 Gi0/7.225 `.1` VRF ISP1012 | ISP101-PE225 Gi0/0.225 `.2` GRT | Via VLAN225-SW29 |
 | P3–ISP101-PE225 | `10.101.23.0/30` | P3 Gi0/7.225 `.1` VRF ISP1012 | ISP101-PE225 Gi0/1.225 `.2` GRT | Via VLAN225-SW212 |
 | P3–ISP101-PE202 | `10.101.13.4/30` | P3 Gi0/4.202 `.5` VRF ISP1011 | ISP101-PE202 Gi0/0.202 `.6` GRT | Via VLAN202-SW211 |
@@ -533,15 +533,15 @@ interface Loopback0
  ip address 10.101.3.124 255.255.255.255
 !
 interface GigabitEthernet0/0.124
- description Link to P2 int g0/6.124 via VLAN124-SW214
- encapsulation dot1Q 124
- ip address 10.101.12.10 255.255.255.252
- no shutdown
-!
-interface GigabitEthernet0/1.124
  description Link to P4 int g0/6.124 via VLAN124-SW213
  encapsulation dot1Q 124
  ip address 10.101.14.2 255.255.255.252
+ no shutdown
+!
+interface GigabitEthernet0/1.124
+ description Link to P2 int g0/6.124 via VLAN124-SW214
+ encapsulation dot1Q 124
+ ip address 10.101.12.10 255.255.255.252
  no shutdown
 ```
 
