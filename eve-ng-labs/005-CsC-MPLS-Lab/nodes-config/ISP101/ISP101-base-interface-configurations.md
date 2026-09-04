@@ -625,8 +625,9 @@ interface GigabitEthernet0/1.231
 
 ```ios
 hostname CsC-PE15
-interface Loopback1011
+interface Loopback1010
  description ISP101 RouterID
+ vrf forwarding ISP101
  ip address 10.101.50.15 255.255.255.255
 interface GigabitEthernet0/15
  description Link to ISP101-PE123 int g0/2
@@ -637,8 +638,9 @@ interface GigabitEthernet0/15
 
 ```ios
 hostname CsC-PE16
-interface Loopback1011
+interface Loopback1010
  description ISP101 RouterID
+ vrf forwarding ISP101
  ip address 10.101.50.16 255.255.255.255
 interface GigabitEthernet0/15
  description Link to ISP101-PE123 int g0/3
@@ -649,8 +651,9 @@ interface GigabitEthernet0/15
 
 ```ios
 hostname CsC-PE19
-interface Loopback1012
+interface Loopback1010
  description ISP101 RouterID
+ vrf forwarding ISP101
  ip address 10.101.50.19 255.255.255.255
 interface GigabitEthernet0/15
  description Link to ISP101-PE225 int g0/2
@@ -661,8 +664,9 @@ interface GigabitEthernet0/15
 
 ```ios
 hostname CsC-PE20
-interface Loopback1012
+interface Loopback1010
  description ISP101 RouterID
+ vrf forwarding ISP101
  ip address 10.101.50.20 255.255.255.255
 !
 interface GigabitEthernet0/15
