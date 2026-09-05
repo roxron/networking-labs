@@ -4,7 +4,7 @@
 
 This page applies MPLS LDP to ISP101 Site2 as shown on the **ISP101 IPv4** draw.io page. Site2 uses VRF `ISP1012` on the shared P routers. ISP101-PE225, ISP101-PE202, and ISP101-RR1 use their global routing tables.
 
-The underlying IP and IS-IS configuration is documented separately in `ISP101-base-interface-configurations.md` and `ISP101-IGP-ISIS.md`.
+The underlying IP and IS-IS configuration is documented separately in `001-ISP101-base-interface-configurations.md` and `002-ISP101-IGP-ISIS.md`.
 
 The links from ISP101-PE225 to CsC-PE19 and CsC-PE20 are CsC attachment links and are not enabled for the ISP101 Site2 LDP domain in this page.
 
