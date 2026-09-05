@@ -1,5 +1,5 @@
 !
-! Last configuration change at 14:49:09 UTC Mon Aug 31 2026
+! Last configuration change at 15:15:24 UTC Sat Sep 5 2026
 !
 version 15.6
 service timestamps debug datetime msec
@@ -92,7 +92,7 @@ interface GigabitEthernet0/1
 !
 interface GigabitEthernet0/1.101
  no shutdown
- description Link to P4 int G0/4.101 via VLAN101-SW211
+ description Link to P4 int G0/4.101 via VLAN101-SW210
  encapsulation dot1Q 101
  ip address 10.100.14.10 255.255.255.252
  ip router isis CsC
