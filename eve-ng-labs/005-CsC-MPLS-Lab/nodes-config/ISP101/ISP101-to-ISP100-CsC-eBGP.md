@@ -31,6 +31,10 @@ Routing roles:
 - `send-label` negotiates labeled IPv4-unicast exchange over eBGP.
 - `mpls bgp forwarding` permits labeled BGP forwarding on each AS boundary interface.
 - `as-override` on the ISP100 CsC PEs prevents routes learned from the opposite ISP101 site from being rejected merely because AS `101` already appears in the AS path.
+- Each attached ISP101 PE originates its local site's IGP /32 loopbacks into BGP with explicit `network` statements.
+- Each attached ISP101 PE redistributes only the remote site's approved BGP /32 loopbacks into IS-IS. Prefix lists and route maps prevent ISP100 infrastructure, CsC attachment networks, and other unintended BGP routes from entering the ISP101 IGP.
+
+Each BGP `network` statement requires an exact `/32` route in the local routing table. Therefore, the site-local IS-IS adjacencies and loopback reachability must be established before all listed prefixes can be originated into BGP.
 
 ## Site1 configuration
 
@@ -54,6 +58,22 @@ interface GigabitEthernet0/3
  mpls bgp forwarding
  no shutdown
 !
+ip prefix-list ISP101-SITE2-LOOPBACKS seq 10 permit 10.101.3.202/32
+ip prefix-list ISP101-SITE2-LOOPBACKS seq 20 permit 10.101.3.225/32
+ip prefix-list ISP101-SITE2-LOOPBACKS seq 30 permit 10.101.4.1/32
+ip prefix-list ISP101-SITE2-LOOPBACKS seq 40 permit 10.101.5.1/32
+ip prefix-list ISP101-SITE2-LOOPBACKS seq 50 permit 10.101.5.2/32
+ip prefix-list ISP101-SITE2-LOOPBACKS seq 60 permit 10.101.5.3/32
+ip prefix-list ISP101-SITE2-LOOPBACKS seq 70 permit 10.101.5.4/32
+ip prefix-list ISP101-SITE2-LOOPBACKS seq 80 permit 10.101.5.5/32
+ip prefix-list ISP101-SITE2-LOOPBACKS seq 90 permit 10.101.5.6/32
+!
+route-map ISP101-SITE2-BGP-TO-ISIS permit 10
+ match ip address prefix-list ISP101-SITE2-LOOPBACKS
+!
+router isis ISP101
+ redistribute bgp 101 route-map ISP101-SITE2-BGP-TO-ISIS
+!
 router bgp 101
  bgp router-id 10.101.3.123
  bgp log-neighbor-changes
@@ -61,7 +81,14 @@ router bgp 101
  neighbor 10.101.49.14 remote-as 100
  !
  address-family ipv4
+  network 10.101.0.1 mask 255.255.255.255
+  network 10.101.0.2 mask 255.255.255.255
+  network 10.101.0.3 mask 255.255.255.255
+  network 10.101.0.4 mask 255.255.255.255
+  network 10.101.0.5 mask 255.255.255.255
+  network 10.101.0.6 mask 255.255.255.255
   network 10.101.3.123 mask 255.255.255.255
+  network 10.101.3.124 mask 255.255.255.255
   neighbor 10.101.49.10 activate
   neighbor 10.101.49.10 send-label
   neighbor 10.101.49.14 activate
@@ -171,6 +198,21 @@ interface GigabitEthernet0/3
  mpls bgp forwarding
  no shutdown
 !
+ip prefix-list ISP101-SITE1-LOOPBACKS seq 10 permit 10.101.0.1/32
+ip prefix-list ISP101-SITE1-LOOPBACKS seq 20 permit 10.101.0.2/32
+ip prefix-list ISP101-SITE1-LOOPBACKS seq 30 permit 10.101.0.3/32
+ip prefix-list ISP101-SITE1-LOOPBACKS seq 40 permit 10.101.0.4/32
+ip prefix-list ISP101-SITE1-LOOPBACKS seq 50 permit 10.101.0.5/32
+ip prefix-list ISP101-SITE1-LOOPBACKS seq 60 permit 10.101.0.6/32
+ip prefix-list ISP101-SITE1-LOOPBACKS seq 70 permit 10.101.3.123/32
+ip prefix-list ISP101-SITE1-LOOPBACKS seq 80 permit 10.101.3.124/32
+!
+route-map ISP101-SITE1-BGP-TO-ISIS permit 10
+ match ip address prefix-list ISP101-SITE1-LOOPBACKS
+!
+router isis ISP101
+ redistribute bgp 101 route-map ISP101-SITE1-BGP-TO-ISIS
+!
 router bgp 101
  bgp router-id 10.101.3.225
  bgp log-neighbor-changes
@@ -178,7 +220,15 @@ router bgp 101
  neighbor 10.101.49.6 remote-as 100
  !
  address-family ipv4
+  network 10.101.3.202 mask 255.255.255.255
   network 10.101.3.225 mask 255.255.255.255
+  network 10.101.4.1 mask 255.255.255.255
+  network 10.101.5.1 mask 255.255.255.255
+  network 10.101.5.2 mask 255.255.255.255
+  network 10.101.5.3 mask 255.255.255.255
+  network 10.101.5.4 mask 255.255.255.255
+  network 10.101.5.5 mask 255.255.255.255
+  network 10.101.5.6 mask 255.255.255.255
   neighbor 10.101.49.2 activate
   neighbor 10.101.49.2 send-label
   neighbor 10.101.49.6 activate
@@ -272,14 +322,25 @@ router bgp 100
 show ip bgp summary
 show ip bgp neighbors
 show ip bgp labels
+show ip prefix-list
+show route-map
 show mpls interfaces
 show mpls forwarding-table
+show ip route isis
 ```
 
 Expected eBGP neighbors:
 
 - ISP101-PE123: `10.101.49.10` and `10.101.49.14` in Established state.
 - ISP101-PE225: `10.101.49.2` and `10.101.49.6` in Established state.
+
+Route-exchange expectations:
+
+- ISP101-PE123 originates the eight Site1 /32s: P1–P6 Loopback1011 plus ISP101-PE123 and ISP101-PE124 Loopback0.
+- ISP101-PE225 originates the nine Site2 /32s: P1–P6 Loopback1012 plus ISP101-PE202, ISP101-PE225, and ISP101-RR1 Loopback0.
+- ISP101-PE123 injects only the nine permitted Site2 /32s from BGP into Site1 IS-IS.
+- ISP101-PE225 injects only the eight permitted Site1 /32s from BGP into Site2 IS-IS.
+- The prefix-list implicit deny blocks all other BGP prefixes from IS-IS redistribution.
 
 ### ISP100 CsC PE routers
 
