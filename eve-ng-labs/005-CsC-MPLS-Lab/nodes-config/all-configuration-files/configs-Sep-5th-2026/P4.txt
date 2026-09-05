@@ -1,0 +1,407 @@
+!
+! Last configuration change at 13:29:37 UTC Fri Sep 4 2026
+!
+version 15.6
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname P4
+!
+boot-start-marker
+boot-end-marker
+!
+!
+vrf definition ISP1011
+ rd 101:1
+ route-target export 101:1
+ route-target import 101:1
+ !
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+vrf definition ISP1012
+ rd 101:2
+ route-target export 101:2
+ route-target import 101:2
+ !
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+!
+no aaa new-model
+ethernet lmi ce
+!
+!
+!
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+ip cef
+no ipv6 cef
+!
+multilink bundle-name authenticated
+mpls label protocol ldp
+!
+!
+!
+!
+!
+redundancy
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ no shutdown
+ description RouterID
+ ip address 10.100.1.4 255.255.255.255
+ ip router isis CsC
+!
+interface Loopback1011
+ no shutdown
+ description ISP101 RouterID
+ vrf forwarding ISP1011
+ ip address 10.101.0.4 255.255.255.255
+!
+interface Loopback1012
+ no shutdown
+ description ISP101 RouterID
+ vrf forwarding ISP1012
+ ip address 10.101.5.4 255.255.255.255
+!
+interface GigabitEthernet0/0
+ no shutdown
+ description Link to P6 int 0/8
+ ip address 10.100.0.18 255.255.255.252
+ ip router isis CsC
+ duplex auto
+ speed auto
+ media-type rj45
+ mpls ip
+ isis network point-to-point
+!
+interface GigabitEthernet0/1
+ no shutdown
+ no ip address
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/1.10
+ no shutdown
+ description Link to P6 int g0/9.10
+ encapsulation dot1Q 10
+ vrf forwarding ISP1011
+ ip address 10.101.1.18 255.255.255.252
+!
+interface GigabitEthernet0/1.20
+ no shutdown
+ description Link to P6 int g0/9.20
+ encapsulation dot1Q 20
+ vrf forwarding ISP1012
+ ip address 10.101.2.18 255.255.255.252
+!
+interface GigabitEthernet0/2
+ no shutdown
+ no ip address
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/3
+ no shutdown
+ no ip address
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/4
+ no shutdown
+ no ip address
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/4.101
+ no shutdown
+ description Link to CsC-RR21 int g0/1.101 via VLAN101-SW210
+ encapsulation dot1Q 101
+ ip address 10.100.14.9 255.255.255.252
+ ip router isis CsC
+ mpls ip
+ isis network point-to-point
+!
+interface GigabitEthernet0/4.202
+ no shutdown
+ description Link to ISP101-PE202 int g0/1.202 via VLAN202-SW211
+ encapsulation dot1Q 202
+ vrf forwarding ISP1012
+ ip address 10.101.24.1 255.255.255.252
+!
+interface GigabitEthernet0/5
+ no shutdown
+ no ip address
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/5.100
+ no shutdown
+ description Link to CsC-RR22 int g0/1.100 via VLAN100-SW210
+ encapsulation dot1Q 100
+ ip address 10.100.14.13 255.255.255.252
+ ip router isis CsC
+ mpls ip
+ isis network point-to-point
+!
+interface GigabitEthernet0/5.231
+ no shutdown
+ description Link to ISP101-RR1 int g0/1.231 via VLAN231-SW210
+ encapsulation dot1Q 231
+ vrf forwarding ISP1012
+ ip address 10.101.24.5 255.255.255.252
+!
+interface GigabitEthernet0/6
+ no shutdown
+ no ip address
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/6.100
+ no shutdown
+ description Link to CsC-PE17 int g0/1.100 via VLAN100-SW213
+ encapsulation dot1Q 100
+ ip address 10.100.14.1 255.255.255.252
+ ip router isis CsC
+ mpls ip
+ isis network point-to-point
+!
+interface GigabitEthernet0/6.124
+ no shutdown
+ description Link to ISP101-PE124 int g0/1.124 via VLAN124-SW213
+ encapsulation dot1Q 124
+ vrf forwarding ISP1011
+ ip address 10.101.14.1 255.255.255.252
+!
+interface GigabitEthernet0/7
+ no shutdown
+ no ip address
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/7.101
+ no shutdown
+ description Link to CsC-PE18 int g0/1.101 via VLAN101-SW213
+ encapsulation dot1Q 101
+ ip address 10.100.14.5 255.255.255.252
+ ip router isis CsC
+ mpls ip
+ isis network point-to-point
+!
+interface GigabitEthernet0/8
+ no shutdown
+ no ip address
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/9
+ no shutdown
+ no ip address
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/10
+ no shutdown
+ no ip address
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/11
+ no shutdown
+ no ip address
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/12
+ no shutdown
+ no ip address
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/13
+ no shutdown
+ no ip address
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/14
+ no shutdown
+ no ip address
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/15
+ no shutdown
+ no ip address
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/15
+ no shutdown
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/15
+ no shutdown
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/15
+ no shutdown
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/15
+ no shutdown
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/15
+ no shutdown
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/15
+ no shutdown
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/15
+ no shutdown
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/15
+ no shutdown
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+router isis CsC
+ net 49.1111.a000.0000.0004.00
+ is-type level-2-only
+ metric-style wide
+ log-adjacency-changes
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+mpls ldp router-id Loopback0 force
+!
+control-plane
+!
+banner exec ^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
+banner incoming ^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
+banner login ^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
+!
+line con 0
+line aux 0
+line vty 0 4
+ login
+ transport input none
+!
+no scheduler allocate
+!
+end
