@@ -1,8 +1,8 @@
-# ISP101 MP-BGP VPNv4 configuration
+# ISP101 MP-BGP IPv4 and VPNv4 configuration
 
 ## Purpose and scope
 
-This page configures the ISP101 MP-BGP VPNv4 control plane in AS `101`. ISP101-RR1 is the route reflector, and the following four ISP101 PE routers are its VPNv4 clients:
+This page configures the ISP101 MP-BGP IPv4-unicast and VPNv4 control planes in AS `101`. ISP101-RR1 is the route reflector, and the following four ISP101 PE routers are its IPv4 and VPNv4 clients:
 
 - ISP101-PE123 — CsC-facing Site1 PE
 - ISP101-PE124 — customer-facing Site1 PE
@@ -11,7 +11,9 @@ This page configures the ISP101 MP-BGP VPNv4 control plane in AS `101`. ISP101-R
 
 The sessions use the Loopback0 addresses carried across the ISP101 IGP and MPLS/Carrier Supporting Carrier transport. P1–P6 do not participate in MP-BGP.
 
-This page covers the VPNv4 control plane only. Customer VRFs, customer address families, route distinguishers, and route targets on ISP101-PE124 and ISP101-PE202 will be configured separately.
+This page covers the global IPv4-unicast and VPNv4 MP-BGP sessions. Customer VRFs, per-VRF IPv4 address families, route distinguishers, and route targets on ISP101-PE124 and ISP101-PE202 will be configured separately.
+
+The IPv4 address family establishes the ISP101 global-unicast control plane through RR1. Activating a neighbor does not originate routes by itself; global IPv4 prefixes must still be introduced with an explicit `network` statement or a controlled redistribution policy. The PE123/PE225 CsC-facing IPv4 advertisements remain documented in `005-ISP101-to-ISP100-CsC-eBGP.md`.
 
 ## Router and policy inventory
 
@@ -40,8 +42,12 @@ router bgp 101
  no bgp default ipv4-unicast
  no bgp default route-target filter
  neighbor 10.101.4.1 remote-as 101
- neighbor 10.101.4.1 description VPNv4 iBGP to ISP101-RR1
+ neighbor 10.101.4.1 description IPv4 and VPNv4 iBGP to ISP101-RR1
  neighbor 10.101.4.1 update-source Loopback0
+ !
+ address-family ipv4
+  neighbor 10.101.4.1 activate
+ exit-address-family
  !
  address-family vpnv4
   neighbor 10.101.4.1 activate
@@ -59,8 +65,12 @@ router bgp 101
  bgp log-neighbor-changes
  no bgp default ipv4-unicast
  neighbor 10.101.4.1 remote-as 101
- neighbor 10.101.4.1 description VPNv4 iBGP to ISP101-RR1
+ neighbor 10.101.4.1 description IPv4 and VPNv4 iBGP to ISP101-RR1
  neighbor 10.101.4.1 update-source Loopback0
+ !
+ address-family ipv4
+  neighbor 10.101.4.1 activate
+ exit-address-family
  !
  address-family vpnv4
   neighbor 10.101.4.1 activate
@@ -79,8 +89,12 @@ router bgp 101
  no bgp default ipv4-unicast
  no bgp default route-target filter
  neighbor 10.101.4.1 remote-as 101
- neighbor 10.101.4.1 description VPNv4 iBGP to ISP101-RR1
+ neighbor 10.101.4.1 description IPv4 and VPNv4 iBGP to ISP101-RR1
  neighbor 10.101.4.1 update-source Loopback0
+ !
+ address-family ipv4
+  neighbor 10.101.4.1 activate
+ exit-address-family
  !
  address-family vpnv4
   neighbor 10.101.4.1 activate
@@ -98,8 +112,12 @@ router bgp 101
  bgp log-neighbor-changes
  no bgp default ipv4-unicast
  neighbor 10.101.4.1 remote-as 101
- neighbor 10.101.4.1 description VPNv4 iBGP to ISP101-RR1
+ neighbor 10.101.4.1 description IPv4 and VPNv4 iBGP to ISP101-RR1
  neighbor 10.101.4.1 update-source Loopback0
+ !
+ address-family ipv4
+  neighbor 10.101.4.1 activate
+ exit-address-family
  !
  address-family vpnv4
   neighbor 10.101.4.1 activate
@@ -109,7 +127,7 @@ router bgp 101
 
 ## ISP101-RR1
 
-ISP101-RR1 retains and reflects all VPNv4 routes even though it has no customer VRFs. All four PE neighbors are route-reflector clients under the VPNv4 address family.
+ISP101-RR1 retains and reflects all VPNv4 routes even though it has no customer VRFs. All four PE neighbors are route-reflector clients under both the IPv4 and VPNv4 address families.
 
 ```ios
 router bgp 101
@@ -118,17 +136,28 @@ router bgp 101
  no bgp default ipv4-unicast
  no bgp default route-target filter
  neighbor 10.101.3.123 remote-as 101
- neighbor 10.101.3.123 description VPNv4 iBGP to ISP101-PE123
+ neighbor 10.101.3.123 description IPv4 and VPNv4 iBGP to ISP101-PE123
  neighbor 10.101.3.123 update-source Loopback0
  neighbor 10.101.3.124 remote-as 101
- neighbor 10.101.3.124 description VPNv4 iBGP to ISP101-PE124
+ neighbor 10.101.3.124 description IPv4 and VPNv4 iBGP to ISP101-PE124
  neighbor 10.101.3.124 update-source Loopback0
  neighbor 10.101.3.202 remote-as 101
- neighbor 10.101.3.202 description VPNv4 iBGP to ISP101-PE202
+ neighbor 10.101.3.202 description IPv4 and VPNv4 iBGP to ISP101-PE202
  neighbor 10.101.3.202 update-source Loopback0
  neighbor 10.101.3.225 remote-as 101
- neighbor 10.101.3.225 description VPNv4 iBGP to ISP101-PE225
+ neighbor 10.101.3.225 description IPv4 and VPNv4 iBGP to ISP101-PE225
  neighbor 10.101.3.225 update-source Loopback0
+ !
+ address-family ipv4
+  neighbor 10.101.3.123 activate
+  neighbor 10.101.3.123 route-reflector-client
+  neighbor 10.101.3.124 activate
+  neighbor 10.101.3.124 route-reflector-client
+  neighbor 10.101.3.202 activate
+  neighbor 10.101.3.202 route-reflector-client
+  neighbor 10.101.3.225 activate
+  neighbor 10.101.3.225 route-reflector-client
+ exit-address-family
  !
  address-family vpnv4
   neighbor 10.101.3.123 activate
@@ -174,14 +203,17 @@ If PE123 and PE225 do not require operational visibility of all VPNv4 routes, om
 Run on every PE and on ISP101-RR1:
 
 ```ios
+show bgp ipv4 unicast summary
+show bgp ipv4 unicast neighbors
 show bgp vpnv4 unicast summary
 show bgp vpnv4 unicast neighbors
 ```
 
 Expected result:
 
-- Each PE has one established VPNv4 session with `10.101.4.1`.
-- ISP101-RR1 has four established VPNv4 sessions.
+- Each PE has IPv4 and VPNv4 sessions with `10.101.4.1` in Established state.
+- ISP101-RR1 has four established peers under both address families.
+- All four PE neighbors are route-reflector clients under both address families.
 - Extended-community exchange is enabled for every VPNv4 neighbor.
 
 ### VPNv4 route retention
