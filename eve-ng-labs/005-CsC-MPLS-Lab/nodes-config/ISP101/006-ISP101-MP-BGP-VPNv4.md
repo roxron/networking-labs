@@ -9,7 +9,7 @@ This page configures the ISP101 MP-BGP IPv4-unicast and VPNv4 control planes in 
 
 The sessions use the Loopback0 addresses carried across the ISP101 IGP and MPLS/Carrier Supporting Carrier transport. P1–P6 do not participate in MP-BGP.
 
-This page covers the global IPv4-unicast and VPNv4 MP-BGP sessions. Customer VRFs, per-VRF IPv4 address families, route distinguishers, and route targets on ISP101-PE124 and ISP101-PE202 will be configured separately.
+This page covers the global IPv4-unicast and VPNv4 MP-BGP sessions and the confirmed CUSTOMER-A VRF configuration on ISP101-PE124 and ISP101-PE202.
 
 The IPv4 address family establishes the ISP101 global-unicast control plane through RR1. Activating a neighbor does not originate routes by itself; global IPv4 prefixes must still be introduced with an explicit `network` statement or a controlled redistribution policy.
 
@@ -19,13 +19,13 @@ ISP101-PE123 and ISP101-PE225 are not MP-BGP clients. They provide labeled CsC t
 
 | Router | Role | BGP router ID and update source | Default RT filtering |
 |---|---|---|---|
-| ISP101-PE124 | Site1 customer-facing PE | Loopback0 `10.101.3.124` | Enabled; future customer VRFs select routes by RT |
-| ISP101-PE202 | Site2 customer-facing PE | Loopback0 `10.101.3.202` | Enabled; future customer VRFs select routes by RT |
+| ISP101-PE124 | Site1 customer-facing PE | Loopback0 `10.101.3.124` | Enabled; CUSTOMER-A imports by RT `1001:1001` |
+| ISP101-PE202 | Site2 customer-facing PE | Loopback0 `10.101.3.202` | Enabled; CUSTOMER-A imports by RT `1001:1001` |
 | ISP101-RR1 | VPNv4 route reflector | Loopback0 `10.101.4.1` | Disabled; retain and reflect all VPNv4 routes |
 
 `no bgp default route-target filter` disables the normal inbound VPNv4 route-target filtering behavior. It is used on ISP101-RR1 because the RR has no customer VRFs but must retain and reflect routes for every customer RT.
 
-ISP101-PE124 and ISP101-PE202 intentionally retain the default filter. Their future customer VRFs and import route targets will determine which VPNv4 routes are retained and imported.
+ISP101-PE124 and ISP101-PE202 intentionally retain the default filter. Their local CUSTOMER-A import route target determines which VPNv4 routes are retained and imported.
 
 Disabling the default RT filter does not import VPNv4 routes into GRT and does not create VRFs. It only permits the VPNv4 BGP table to retain routes without a locally matching import RT.
 
@@ -52,6 +52,30 @@ router bgp 101
  exit-address-family
 ```
 
+### CUSTOMER-A on ISP101-PE124
+
+```ios
+vrf definition CUSTOMER-A
+ rd 10.101.3.124:1001
+ route-target export 1001:1001
+ route-target import 1001:1001
+ !
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+interface Loopback1001
+ vrf forwarding CUSTOMER-A
+ ip address 192.168.0.124 255.255.255.255
+!
+router bgp 101
+ address-family ipv4 vrf CUSTOMER-A
+  redistribute connected
+ exit-address-family
+```
+
 ## ISP101-PE202
 
 ISP101-PE202 will terminate customer VRFs. Do not configure `no bgp default route-target filter` here; leave the default RT filter active.
@@ -72,6 +96,30 @@ router bgp 101
  address-family vpnv4
   neighbor 10.101.4.1 activate
   neighbor 10.101.4.1 send-community extended
+ exit-address-family
+```
+
+### CUSTOMER-A on ISP101-PE202
+
+```ios
+vrf definition CUSTOMER-A
+ rd 10.101.3.202:1001
+ route-target export 1001:1001
+ route-target import 1001:1001
+ !
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+interface Loopback1001
+ vrf forwarding CUSTOMER-A
+ ip address 192.168.0.202 255.255.255.255
+!
+router bgp 101
+ address-family ipv4 vrf CUSTOMER-A
+  redistribute connected
  exit-address-family
 ```
 
