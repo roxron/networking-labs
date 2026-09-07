@@ -5522,7 +5522,7 @@
     </mxGraphModel>
   </diagram>
   <diagram name="ISP101-v2 IPv4" id="-1LBUywbZkB5b3CPL6ka">
-    <mxGraphModel dx="2503" dy="1932" grid="1" gridSize="11" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" background="light-dark(#B3B3B3,#121212)" math="0" shadow="0">
+    <mxGraphModel dx="6360" dy="3873" grid="1" gridSize="11" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" background="light-dark(#B3B3B3,#121212)" math="0" shadow="0">
       <root>
         <mxCell id="HqkWZ6_WTM--j_-EiMgL-0" />
         <mxCell id="HqkWZ6_WTM--j_-EiMgL-1" parent="HqkWZ6_WTM--j_-EiMgL-0" />
