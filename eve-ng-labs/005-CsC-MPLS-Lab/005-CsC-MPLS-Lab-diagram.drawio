@@ -3951,7 +3951,7 @@
     </mxGraphModel>
   </diagram>
   <diagram name="ISP101 IPv4" id="JB8XqcLdwdzDBWy9zUDa">
-    <mxGraphModel grid="1" page="1" gridSize="11" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" background="light-dark(#B3B3B3,#121212)" math="0" shadow="0">
+    <mxGraphModel dx="2264" dy="2012" grid="1" gridSize="11" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" background="light-dark(#B3B3B3,#121212)" math="0" shadow="0">
       <root>
         <mxCell id="ZwvT-MQXVyyIfuMDciDV-0" />
         <mxCell id="ZwvT-MQXVyyIfuMDciDV-1" parent="ZwvT-MQXVyyIfuMDciDV-0" />
@@ -12391,7 +12391,7 @@
     </mxGraphModel>
   </diagram>
   <diagram name="InterAS " id="C3gY5slqFgRuqCTZz0Se">
-    <mxGraphModel dx="6035" dy="2280" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2500" pageHeight="2200" math="0" shadow="0">
+    <mxGraphModel dx="3914" dy="912" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2500" pageHeight="2200" math="0" shadow="0">
       <root>
         <mxCell id="reDQWiqczn2UDXbUuUZk-0" />
         <mxCell id="reDQWiqczn2UDXbUuUZk-1" parent="reDQWiqczn2UDXbUuUZk-0" />
@@ -12788,6 +12788,47 @@
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
+        <mxCell id="UpSqSoqoBsqjvmIT4e7e-0" edge="1" parent="reDQWiqczn2UDXbUuUZk-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;" target="reDQWiqczn2UDXbUuUZk-115">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-220" y="640" as="sourcePoint" />
+            <mxPoint x="1506.5" y="1313" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UpSqSoqoBsqjvmIT4e7e-3" connectable="0" parent="UpSqSoqoBsqjvmIT4e7e-0" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;b style=&quot;color: light-dark(rgb(0, 0, 0), rgb(153, 51, 255));&quot;&gt;InterAS Option A&amp;nbsp;&lt;/b&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry relative="1" x="-0.3284" y="-1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UpSqSoqoBsqjvmIT4e7e-6" connectable="0" parent="UpSqSoqoBsqjvmIT4e7e-0" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="G0/5&amp;nbsp; .2" vertex="1">
+          <mxGeometry relative="1" x="0.9594" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UpSqSoqoBsqjvmIT4e7e-7" connectable="0" parent="UpSqSoqoBsqjvmIT4e7e-0" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="VRF CUSTOMER-A" vertex="1">
+          <mxGeometry relative="1" x="0.924" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="v7vxlkJa7GhOazoo9fZe-0" connectable="0" parent="UpSqSoqoBsqjvmIT4e7e-0" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;font style=&quot;font-size: 13px;&quot;&gt;10.101.48.0/30&lt;/font&gt;" vertex="1">
+          <mxGeometry relative="1" x="-0.6237" y="-1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UpSqSoqoBsqjvmIT4e7e-2" edge="1" parent="reDQWiqczn2UDXbUuUZk-1" source="reDQWiqczn2UDXbUuUZk-111" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;strokeWidth=2;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-220" y="640" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UpSqSoqoBsqjvmIT4e7e-4" connectable="0" parent="UpSqSoqoBsqjvmIT4e7e-2" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="VRF CUSTOMER-A" vertex="1">
+          <mxGeometry relative="1" x="-0.665" y="2" as="geometry">
+            <mxPoint x="-66" y="41" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UpSqSoqoBsqjvmIT4e7e-5" connectable="0" parent="UpSqSoqoBsqjvmIT4e7e-2" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="G0/5 .1" vertex="1">
+          <mxGeometry relative="1" x="-0.7044" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
         <mxCell id="reDQWiqczn2UDXbUuUZk-111" parent="reDQWiqczn2UDXbUuUZk-1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#8C4FFF;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.router;labelPosition=center;" value="ISP101-PE124&lt;br&gt;&lt;span style=&quot;font-size:10px&quot;&gt;Customer-facing PE&lt;/span&gt;" vertex="1">
           <mxGeometry height="54" width="54" x="-120" y="510" as="geometry" />
         </mxCell>
@@ -12901,6 +12942,24 @@
         </mxCell>
         <mxCell id="reDQWiqczn2UDXbUuUZk-138" parent="reDQWiqczn2UDXbUuUZk-1" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=middle;spacingLeft=14;spacingRight=14;fontSize=13;strokeColor=#94A3B8;strokeWidth=1;fillColor=light-dark(#F8FAFC,#1E293B);fontColor=light-dark(#0F172A,#E2E8F0);" value="&lt;b&gt;Legend&lt;/b&gt;&amp;nbsp;&amp;nbsp; eBGP + label = IPv4 labeled-unicast eBGP (&lt;font face=&quot;Courier New&quot;&gt;send-label&lt;/font&gt;); MPLS label forwarding is enabled on each CsC-facing interface (&lt;font face=&quot;Courier New&quot;&gt;mpls bgp forwarding&lt;/font&gt;)." vertex="1">
           <mxGeometry height="54" width="1080" x="140" y="2075" as="geometry" />
+        </mxCell>
+        <mxCell id="v7vxlkJa7GhOazoo9fZe-2" parent="reDQWiqczn2UDXbUuUZk-1" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacing=10;fontSize=14;strokeColor=none;fillColor=none;fontColor=#6600CC;container=0;" value="&lt;b&gt;VRF CUSTOMER-A&lt;/b&gt;&lt;br&gt;RD 10.102.3.29:1001&lt;br&gt;route-target export 1001:1001&lt;br&gt;route-target import 1001:1001" vertex="1">
+          <mxGeometry height="100" width="220" x="-440" y="855" as="geometry" />
+        </mxCell>
+        <mxCell id="v7vxlkJa7GhOazoo9fZe-3" edge="1" parent="reDQWiqczn2UDXbUuUZk-1" source="v7vxlkJa7GhOazoo9fZe-2" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#6600CC;strokeWidth=1.5;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="reDQWiqczn2UDXbUuUZk-114" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-280" y="1030" as="sourcePoint" />
+            <mxPoint x="-280" y="1100" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="v7vxlkJa7GhOazoo9fZe-4" parent="reDQWiqczn2UDXbUuUZk-1" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;spacing=10;fontSize=14;strokeColor=none;fillColor=none;fontColor=#6600CC;container=0;" value="&lt;b&gt;VRF CUSTOMER-A&lt;/b&gt;&lt;br&gt;RD 10.102.3.30:1001&lt;br&gt;route-target export 1001:1001&lt;br&gt;route-target import 1001:1001" vertex="1">
+          <mxGeometry height="100" width="220" x="1640" y="1023" as="geometry" />
+        </mxCell>
+        <mxCell id="v7vxlkJa7GhOazoo9fZe-5" edge="1" parent="reDQWiqczn2UDXbUuUZk-1" source="v7vxlkJa7GhOazoo9fZe-4" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#6600CC;strokeWidth=1.5;exitX=0;exitY=1;exitDx=0;exitDy=0;" target="reDQWiqczn2UDXbUuUZk-115" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1670" y="1150" as="sourcePoint" />
+            <mxPoint x="1770" y="1178" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>
