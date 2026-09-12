@@ -190,22 +190,19 @@ show ip bgp labels
 
 ## VPNv4 route-target policy
 
-The initial Option B policy permits the service RTs currently shown in the lab:
+CUSTOMER-A, RT `1001:1001`, already uses the separate Inter-AS Option A paths. The Option B boundary must therefore reject CUSTOMER-A while permitting other VPNv4 services.
 
-- CUSTOMER-A: RT `1001:1001`
-- CUSTOMER-B: RT `1002:1002`
-
-Apply on ISP101-PE123 and ISP102-PE28:
+Apply this policy on ISP101-PE123 and ISP102-PE28:
 
 ```ios
 ip extcommunity-list standard INTERAS-OPTIONB-RT permit rt 1001:1001
-ip extcommunity-list standard INTERAS-OPTIONB-RT permit rt 1002:1002
 !
-route-map INTERAS-OPTIONB-VPNV4 permit 10
+route-map INTERAS-OPTIONB-VPNV4 deny 10
  match extcommunity INTERAS-OPTIONB-RT
+route-map INTERAS-OPTIONB-VPNV4 permit 1000
 ```
 
-The route map has an implicit deny. Add an explicit RT entry before extending another VPN across the Option B boundary.
+Sequence 10 matches and denies every VPNv4 route carrying RT `1001:1001`. Sequence 1000 permits routes that do not match the CUSTOMER-A RT. Applying the route map inbound and outbound ensures CUSTOMER-A remains exclusively on Option A and is neither advertised nor accepted over the Option B session.
 
 ## ISP101-PE123 ASBR interface and eBGP
 
