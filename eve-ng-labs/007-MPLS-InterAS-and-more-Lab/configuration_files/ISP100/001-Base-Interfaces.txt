@@ -1,0 +1,41 @@
+#ISP100P1
+hostname ISP100P1
+!
+interface lo0
+ description RouterID
+ ip address 10.100.10.1 255.255.255.255
+!
+interface g0/0
+ description Link to ISP100P2 int g0/0
+ ip address 10.100.0.1 255.255.255.252
+ no shutdown
+!
+interface g0/1
+ description Link to ISP100P3 int g0/1
+ ip address 10.100.0.5 255.255.255.252
+ no shutdown
+!
+interface g0/2
+ description Link to ISP100P4 int g0/2
+ ip address 10.100.0.9 255.255.255.252
+ no shutdown
+!
+interface g0/3
+ description Link to ISP100PE5 int g0/0
+ ip address 10.100.1.9 255.255.255.252
+ no shutdown
+!
+interface g0/4
+ description Link to ISP100PE6 int g0/0
+ ip address 10.100.1.13 255.255.255.252
+ no shutdown
+!
+interface g0/5
+ description Link to ISP100RR1 int g0/0
+ ip address 10.100.1.1 255.255.255.252
+ no shutdown
+!
+interface g0/6
+ description Link to ISP100RR2 int g0/0
+ ip address 10.100.1.5 255.255.255.252
+ no shutdown
