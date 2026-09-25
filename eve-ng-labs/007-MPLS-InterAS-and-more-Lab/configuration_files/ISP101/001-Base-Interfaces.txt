@@ -123,12 +123,12 @@ interface g0/1
 !
 interface g0/2
  description Link to ISP100PE7 int g0/2
- ip address 10.100.21.1 255.255.255.252
+ ip address 10.100.21.2 255.255.255.252
  no shutdown
 !
 interface g0/3
  description Link to ISP100PE8 int g0/3
- ip address 10.100.21.5 255.255.255.252
+ ip address 10.100.21.6 255.255.255.252
  no shutdown
 !
 
@@ -151,7 +151,7 @@ interface g0/1
 !
 interface g0/2
  description Link to ISP100PE8 int g0/2
- ip address 10.100.21.13 255.255.255.252
+ ip address 10.100.21.14 255.255.255.252
  no shutdown
 !
 interface g0/3

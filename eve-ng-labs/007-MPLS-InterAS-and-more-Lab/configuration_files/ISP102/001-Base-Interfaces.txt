@@ -11,23 +11,23 @@ interface g0/0
  no shutdown
 !
 interface g0/1
- description Link to ISP102PE25 int g0/0
- ip address 10.102.1.1 255.255.255.252
- no shutdown
-!
-interface g0/2
- description Link to ISP102PE26 int g0/0
- ip address 10.102.1.5 255.255.255.252
- no shutdown
-!
-interface g0/3
  description Link to ISP102PE21 int g0/0
  ip address 10.102.1.9 255.255.255.252
  no shutdown
 !
-interface g0/4
+interface g0/2
  description Link to ISP102PE22 int g0/0
  ip address 10.102.1.13 255.255.255.252
+ no shutdown
+!
+interface g0/3
+ description Link to ISP102PE25 int g0/0
+ ip address 10.102.1.1 255.255.255.252
+ no shutdown
+!
+interface g0/4
+ description Link to ISP102PE26 int g0/0
+ ip address 10.102.1.5 255.255.255.252
  no shutdown
 !
 interface g0/5
@@ -64,23 +64,23 @@ interface g0/0
  no shutdown
 !
 interface g0/1
- description Link to ISP102PE25 int g0/1
- ip address 10.102.2.1 255.255.255.252
- no shutdown
-!
-interface g0/2
- description Link to ISP102PE26 int g0/1
- ip address 10.102.2.5 255.255.255.252
- no shutdown
-!
-interface g0/3
  description Link to ISP102PE21 int g0/1
  ip address 10.102.2.9 255.255.255.252
  no shutdown
 !
-interface g0/4
+interface g0/2
  description Link to ISP102PE22 int g0/1
  ip address 10.102.2.13 255.255.255.252
+ no shutdown
+!
+interface g0/3
+ description Link to ISP102PE25 int g0/1
+ ip address 10.102.2.1 255.255.255.252
+ no shutdown
+!
+interface g0/4
+ description Link to ISP102PE26 int g0/1
+ ip address 10.102.2.5 255.255.255.252
  no shutdown
 !
 interface g0/5
@@ -112,23 +112,23 @@ interface lo0
  ip address 10.102.11.21 255.255.255.255
 !
 interface g0/0
- description Link to ISP102P1 int g0/3
+ description Link to ISP102P1 int g0/1
  ip address 10.102.1.10 255.255.255.252
  no shutdown
 !
 interface g0/1
- description Link to ISP102P2 int g0/3
+ description Link to ISP102P2 int g0/1
  ip address 10.102.2.10 255.255.255.252
  no shutdown
 !
 interface g0/2
  description Link to ISP100PE5 int g0/2
- ip address 10.100.20.1 255.255.255.252
+ ip address 10.100.20.2 255.255.255.252
  no shutdown
 !
 interface g0/3
  description Link to ISP100PE6 int g0/3
- ip address 10.100.20.9 255.255.255.252
+ ip address 10.100.20.10 255.255.255.252
  no shutdown
 !
 
@@ -140,23 +140,23 @@ interface lo0
  ip address 10.102.11.22 255.255.255.255
 !
 interface g0/0
- description Link to ISP102P1 int g0/4
+ description Link to ISP102P1 int g0/2
  ip address 10.102.1.14 255.255.255.252
  no shutdown
 !
 interface g0/1
- description Link to ISP102P2 int g0/4
+ description Link to ISP102P2 int g0/2
  ip address 10.102.2.14 255.255.255.252
  no shutdown
 !
 interface g0/2
  description Link to ISP100PE6 int g0/2
- ip address 10.100.20.13 255.255.255.252
+ ip address 10.100.20.14 255.255.255.252
  no shutdown
 !
 interface g0/3
  description Link to ISP100PE5 int g0/3
- ip address 10.100.20.5 255.255.255.252
+ ip address 10.100.20.6 255.255.255.252
  no shutdown
 !
 
@@ -168,12 +168,12 @@ interface lo0
  ip address 10.102.11.25 255.255.255.255
 !
 interface g0/0
- description Link to ISP102P1 int g0/1
+ description Link to ISP102P1 int g0/3
  ip address 10.102.1.2 255.255.255.252
  no shutdown
 !
 interface g0/1
- description Link to ISP102P2 int g0/1
+ description Link to ISP102P2 int g0/3
  ip address 10.102.2.2 255.255.255.252
  no shutdown
 !
@@ -186,12 +186,12 @@ interface lo0
  ip address 10.102.11.26 255.255.255.255
 !
 interface g0/0
- description Link to ISP102P1 int g0/2
+ description Link to ISP102P1 int g0/4
  ip address 10.102.1.6 255.255.255.252
  no shutdown
 !
 interface g0/1
- description Link to ISP102P2 int g0/2
+ description Link to ISP102P2 int g0/4
  ip address 10.102.2.6 255.255.255.252
  no shutdown
 !
