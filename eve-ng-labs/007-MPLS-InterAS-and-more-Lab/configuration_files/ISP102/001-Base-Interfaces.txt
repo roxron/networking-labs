@@ -1,0 +1,269 @@
+#ISP102P1
+hostname ISP102P1
+!
+interface lo0
+ description RouterID
+ ip address 10.102.10.1 255.255.255.255
+!
+interface g0/0
+ description Link to ISP102P2 int g0/0
+ ip address 10.102.0.1 255.255.255.252
+ no shutdown
+!
+interface g0/1
+ description Link to ISP102PE25 int g0/0
+ ip address 10.102.1.1 255.255.255.252
+ no shutdown
+!
+interface g0/2
+ description Link to ISP102PE26 int g0/0
+ ip address 10.102.1.5 255.255.255.252
+ no shutdown
+!
+interface g0/3
+ description Link to ISP102PE21 int g0/0
+ ip address 10.102.1.9 255.255.255.252
+ no shutdown
+!
+interface g0/4
+ description Link to ISP102PE22 int g0/0
+ ip address 10.102.1.13 255.255.255.252
+ no shutdown
+!
+interface g0/5
+ description Link to ISP102PE27 int g0/0
+ ip address 10.102.1.17 255.255.255.252
+ no shutdown
+!
+interface g0/6
+ description Link to ISP102PE28 int g0/0
+ ip address 10.102.1.21 255.255.255.252
+ no shutdown
+!
+interface g0/7
+ description Link to ISP102RR1 int g0/0
+ ip address 10.102.1.25 255.255.255.252
+ no shutdown
+!
+interface g0/8
+ description Link to ISP102RR2 int g0/0
+ ip address 10.102.1.29 255.255.255.252
+ no shutdown
+!
+
+#ISP102P2
+hostname ISP102P2
+!
+interface lo0
+ description RouterID
+ ip address 10.102.10.2 255.255.255.255
+!
+interface g0/0
+ description Link to ISP102P1 int g0/0
+ ip address 10.102.0.2 255.255.255.252
+ no shutdown
+!
+interface g0/1
+ description Link to ISP102PE25 int g0/1
+ ip address 10.102.2.1 255.255.255.252
+ no shutdown
+!
+interface g0/2
+ description Link to ISP102PE26 int g0/1
+ ip address 10.102.2.5 255.255.255.252
+ no shutdown
+!
+interface g0/3
+ description Link to ISP102PE21 int g0/1
+ ip address 10.102.2.9 255.255.255.252
+ no shutdown
+!
+interface g0/4
+ description Link to ISP102PE22 int g0/1
+ ip address 10.102.2.13 255.255.255.252
+ no shutdown
+!
+interface g0/5
+ description Link to ISP102PE27 int g0/1
+ ip address 10.102.2.17 255.255.255.252
+ no shutdown
+!
+interface g0/6
+ description Link to ISP102PE28 int g0/1
+ ip address 10.102.2.21 255.255.255.252
+ no shutdown
+!
+interface g0/7
+ description Link to ISP102RR1 int g0/1
+ ip address 10.102.2.25 255.255.255.252
+ no shutdown
+!
+interface g0/8
+ description Link to ISP102RR2 int g0/1
+ ip address 10.102.2.29 255.255.255.252
+ no shutdown
+!
+
+#ISP102PE21
+hostname ISP102PE21
+!
+interface lo0
+ description RouterID
+ ip address 10.102.11.21 255.255.255.255
+!
+interface g0/0
+ description Link to ISP102P1 int g0/3
+ ip address 10.102.1.10 255.255.255.252
+ no shutdown
+!
+interface g0/1
+ description Link to ISP102P2 int g0/3
+ ip address 10.102.2.10 255.255.255.252
+ no shutdown
+!
+interface g0/2
+ description Link to ISP100PE5 int g0/2
+ ip address 10.100.20.1 255.255.255.252
+ no shutdown
+!
+interface g0/3
+ description Link to ISP100PE6 int g0/3
+ ip address 10.100.20.9 255.255.255.252
+ no shutdown
+!
+
+#ISP102PE22
+hostname ISP102PE22
+!
+interface lo0
+ description RouterID
+ ip address 10.102.11.22 255.255.255.255
+!
+interface g0/0
+ description Link to ISP102P1 int g0/4
+ ip address 10.102.1.14 255.255.255.252
+ no shutdown
+!
+interface g0/1
+ description Link to ISP102P2 int g0/4
+ ip address 10.102.2.14 255.255.255.252
+ no shutdown
+!
+interface g0/2
+ description Link to ISP100PE6 int g0/2
+ ip address 10.100.20.13 255.255.255.252
+ no shutdown
+!
+interface g0/3
+ description Link to ISP100PE5 int g0/3
+ ip address 10.100.20.5 255.255.255.252
+ no shutdown
+!
+
+#ISP102PE25
+hostname ISP102PE25
+!
+interface lo0
+ description RouterID
+ ip address 10.102.11.25 255.255.255.255
+!
+interface g0/0
+ description Link to ISP102P1 int g0/1
+ ip address 10.102.1.2 255.255.255.252
+ no shutdown
+!
+interface g0/1
+ description Link to ISP102P2 int g0/1
+ ip address 10.102.2.2 255.255.255.252
+ no shutdown
+!
+
+#ISP102PE26
+hostname ISP102PE26
+!
+interface lo0
+ description RouterID
+ ip address 10.102.11.26 255.255.255.255
+!
+interface g0/0
+ description Link to ISP102P1 int g0/2
+ ip address 10.102.1.6 255.255.255.252
+ no shutdown
+!
+interface g0/1
+ description Link to ISP102P2 int g0/2
+ ip address 10.102.2.6 255.255.255.252
+ no shutdown
+!
+
+#ISP102PE27
+hostname ISP102PE27
+!
+interface lo0
+ description RouterID
+ ip address 10.102.11.27 255.255.255.255
+!
+interface g0/0
+ description Link to ISP102P1 int g0/5
+ ip address 10.102.1.18 255.255.255.252
+ no shutdown
+!
+interface g0/1
+ description Link to ISP102P2 int g0/5
+ ip address 10.102.2.18 255.255.255.252
+ no shutdown
+!
+
+#ISP102PE28
+hostname ISP102PE28
+!
+interface lo0
+ description RouterID
+ ip address 10.102.11.28 255.255.255.255
+!
+interface g0/0
+ description Link to ISP102P1 int g0/6
+ ip address 10.102.1.22 255.255.255.252
+ no shutdown
+!
+interface g0/1
+ description Link to ISP102P2 int g0/6
+ ip address 10.102.2.22 255.255.255.252
+ no shutdown
+!
+
+#ISP102RR1
+hostname ISP102RR1
+!
+interface lo0
+ description RouterID
+ ip address 10.102.12.1 255.255.255.255
+!
+interface g0/0
+ description Link to ISP102P1 int g0/7
+ ip address 10.102.1.26 255.255.255.252
+ no shutdown
+!
+interface g0/1
+ description Link to ISP102P2 int g0/7
+ ip address 10.102.2.26 255.255.255.252
+ no shutdown
+!
+
+#ISP102RR2
+hostname ISP102RR2
+!
+interface lo0
+ description RouterID
+ ip address 10.102.12.2 255.255.255.255
+!
+interface g0/0
+ description Link to ISP102P1 int g0/8
+ ip address 10.102.1.30 255.255.255.252
+ no shutdown
+!
+interface g0/1
+ description Link to ISP102P2 int g0/8
+ ip address 10.102.2.30 255.255.255.252
+ no shutdown
+!
