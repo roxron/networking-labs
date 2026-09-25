@@ -1,0 +1,255 @@
+#ISP101P1
+router isis ISP101
+ net 49.0101.A101.0000.0001.00
+ is-type level-2-only
+ metric-style wide
+ passive-interface lo0
+ log-adjacency-changes
+!
+interface lo0
+ ip router isis ISP101
+!
+interface g0/0
+ ip router isis ISP101
+ isis network point-to-point
+!
+interface g0/1
+ ip router isis ISP101
+ isis network point-to-point
+!
+interface g0/2
+ ip router isis ISP101
+ isis network point-to-point
+!
+interface g0/3
+ ip router isis ISP101
+ isis network point-to-point
+!
+interface g0/4
+ ip router isis ISP101
+ isis network point-to-point
+!
+interface g0/5
+ ip router isis ISP101
+ isis network point-to-point
+!
+interface g0/6
+ ip router isis ISP101
+ isis network point-to-point
+!
+interface g0/7
+ ip router isis ISP101
+ isis network point-to-point
+!
+interface g0/8
+ ip router isis ISP101
+ isis network point-to-point
+!
+
+#ISP101P2
+router isis ISP101
+ net 49.0101.A101.0000.0002.00
+ is-type level-2-only
+ metric-style wide
+ passive-interface lo0
+ log-adjacency-changes
+!
+interface lo0
+ ip router isis ISP101
+!
+interface g0/0
+ ip router isis ISP101
+ isis network point-to-point
+!
+interface g0/1
+ ip router isis ISP101
+ isis network point-to-point
+!
+interface g0/2
+ ip router isis ISP101
+ isis network point-to-point
+!
+interface g0/3
+ ip router isis ISP101
+ isis network point-to-point
+!
+interface g0/4
+ ip router isis ISP101
+ isis network point-to-point
+!
+interface g0/5
+ ip router isis ISP101
+ isis network point-to-point
+!
+interface g0/6
+ ip router isis ISP101
+ isis network point-to-point
+!
+interface g0/7
+ ip router isis ISP101
+ isis network point-to-point
+!
+interface g0/8
+ ip router isis ISP101
+ isis network point-to-point
+!
+
+#ISP101PE111
+router isis ISP101
+ net 49.0101.B101.0000.0111.00
+ is-type level-2-only
+ metric-style wide
+ passive-interface lo0
+ log-adjacency-changes
+!
+interface lo0
+ ip router isis ISP101
+!
+interface g0/0
+ ip router isis ISP101
+ isis network point-to-point
+!
+interface g0/1
+ ip router isis ISP101
+ isis network point-to-point
+!
+
+#ISP101PE112
+router isis ISP101
+ net 49.0101.B101.0000.0112.00
+ is-type level-2-only
+ metric-style wide
+ passive-interface lo0
+ log-adjacency-changes
+!
+interface lo0
+ ip router isis ISP101
+!
+interface g0/0
+ ip router isis ISP101
+ isis network point-to-point
+!
+interface g0/1
+ ip router isis ISP101
+ isis network point-to-point
+!
+
+#ISP101PE115
+router isis ISP101
+ net 49.0101.B101.0000.0115.00
+ is-type level-2-only
+ metric-style wide
+ passive-interface lo0
+ log-adjacency-changes
+!
+interface lo0
+ ip router isis ISP101
+!
+interface g0/0
+ ip router isis ISP101
+ isis network point-to-point
+!
+interface g0/1
+ ip router isis ISP101
+ isis network point-to-point
+!
+
+#ISP101PE116
+router isis ISP101
+ net 49.0101.B101.0000.0116.00
+ is-type level-2-only
+ metric-style wide
+ passive-interface lo0
+ log-adjacency-changes
+!
+interface lo0
+ ip router isis ISP101
+!
+interface g0/0
+ ip router isis ISP101
+ isis network point-to-point
+!
+interface g0/1
+ ip router isis ISP101
+ isis network point-to-point
+!
+
+#ISP101PE117
+router isis ISP101
+ net 49.0101.B101.0000.0117.00
+ is-type level-2-only
+ metric-style wide
+ passive-interface lo0
+ log-adjacency-changes
+!
+interface lo0
+ ip router isis ISP101
+!
+interface g0/0
+ ip router isis ISP101
+ isis network point-to-point
+!
+interface g0/1
+ ip router isis ISP101
+ isis network point-to-point
+!
+
+#ISP101PE118
+router isis ISP101
+ net 49.0101.B101.0000.0118.00
+ is-type level-2-only
+ metric-style wide
+ passive-interface lo0
+ log-adjacency-changes
+!
+interface lo0
+ ip router isis ISP101
+!
+interface g0/0
+ ip router isis ISP101
+ isis network point-to-point
+!
+interface g0/1
+ ip router isis ISP101
+ isis network point-to-point
+!
+
+#ISP101RR1
+router isis ISP101
+ net 49.0101.C101.0000.0001.00
+ is-type level-2-only
+ metric-style wide
+ passive-interface lo0
+ log-adjacency-changes
+!
+interface lo0
+ ip router isis ISP101
+!
+interface g0/0
+ ip router isis ISP101
+ isis network point-to-point
+!
+interface g0/1
+ ip router isis ISP101
+ isis network point-to-point
+!
+
+#ISP101RR2
+router isis ISP101
+ net 49.0101.C101.0000.0002.00
+ is-type level-2-only
+ metric-style wide
+ passive-interface lo0
+ log-adjacency-changes
+!
+interface lo0
+ ip router isis ISP101
+!
+interface g0/0
+ ip router isis ISP101
+ isis network point-to-point
+!
+interface g0/1
+ ip router isis ISP101
+ isis network point-to-point
+!
