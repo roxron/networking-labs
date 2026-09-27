@@ -1,0 +1,151 @@
+#ISP101P1
+mpls label protocol ldp
+mpls ldp router-id lo0 force
+!
+interface g0/0
+ mpls ip
+!
+interface g0/1
+ mpls ip
+!
+interface g0/2
+ mpls ip
+!
+interface g0/3
+ mpls ip
+!
+interface g0/4
+ mpls ip
+!
+interface g0/5
+ mpls ip
+!
+interface g0/6
+ mpls ip
+!
+interface g0/7
+ mpls ip
+!
+interface g0/8
+ mpls ip
+!
+
+#ISP101P2
+mpls label protocol ldp
+mpls ldp router-id lo0 force
+!
+interface g0/0
+ mpls ip
+!
+interface g0/1
+ mpls ip
+!
+interface g0/2
+ mpls ip
+!
+interface g0/3
+ mpls ip
+!
+interface g0/4
+ mpls ip
+!
+interface g0/5
+ mpls ip
+!
+interface g0/6
+ mpls ip
+!
+interface g0/7
+ mpls ip
+!
+interface g0/8
+ mpls ip
+!
+
+#ISP101PE111
+mpls label protocol ldp
+mpls ldp router-id lo0 force
+!
+interface g0/0
+ mpls ip
+!
+interface g0/1
+ mpls ip
+!
+
+#ISP101PE112
+mpls label protocol ldp
+mpls ldp router-id lo0 force
+!
+interface g0/0
+ mpls ip
+!
+interface g0/1
+ mpls ip
+!
+
+#ISP101PE115
+mpls label protocol ldp
+mpls ldp router-id lo0 force
+!
+interface g0/0
+ mpls ip
+!
+interface g0/1
+ mpls ip
+!
+
+#ISP101PE116
+mpls label protocol ldp
+mpls ldp router-id lo0 force
+!
+interface g0/0
+ mpls ip
+!
+interface g0/1
+ mpls ip
+!
+
+#ISP101PE117
+mpls label protocol ldp
+mpls ldp router-id lo0 force
+!
+interface g0/0
+ mpls ip
+!
+interface g0/1
+ mpls ip
+!
+
+#ISP101PE118
+mpls label protocol ldp
+mpls ldp router-id lo0 force
+!
+interface g0/0
+ mpls ip
+!
+interface g0/1
+ mpls ip
+!
+
+#ISP101RR1
+mpls label protocol ldp
+mpls ldp router-id lo0 force
+!
+interface g0/0
+ mpls ip
+!
+interface g0/1
+ mpls ip
+!
+
+#ISP101RR2
+mpls label protocol ldp
+mpls ldp router-id lo0 force
+!
+interface g0/0
+ mpls ip
+!
+interface g0/1
+ mpls ip
+!
