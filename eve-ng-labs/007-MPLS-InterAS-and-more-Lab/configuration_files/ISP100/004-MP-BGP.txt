@@ -1,0 +1,221 @@
+#ISP100PE5
+router bgp 100
+ bgp router-id 10.100.11.5
+ no bgp default ipv4-unicast
+ bgp log-neighbor-changes
+ neighbor 10.100.12.1 remote-as 100
+ neighbor 10.100.12.1 description ISP100RR1
+ neighbor 10.100.12.1 update-source lo0
+ neighbor 10.100.12.2 remote-as 100
+ neighbor 10.100.12.2 description ISP100RR2
+ neighbor 10.100.12.2 update-source lo0
+ !
+ address-family ipv4
+  neighbor 10.100.12.1 activate
+  neighbor 10.100.12.1 send-label
+  neighbor 10.100.12.2 activate
+  neighbor 10.100.12.2 send-label
+ exit-address-family
+ !
+ address-family vpnv4
+  neighbor 10.100.12.1 activate
+  neighbor 10.100.12.1 send-community extended
+  neighbor 10.100.12.2 activate
+  neighbor 10.100.12.2 send-community extended
+ exit-address-family
+!
+
+#ISP100PE6
+router bgp 100
+ bgp router-id 10.100.11.6
+ no bgp default ipv4-unicast
+ bgp log-neighbor-changes
+ neighbor 10.100.12.1 remote-as 100
+ neighbor 10.100.12.1 description ISP100RR1
+ neighbor 10.100.12.1 update-source lo0
+ neighbor 10.100.12.2 remote-as 100
+ neighbor 10.100.12.2 description ISP100RR2
+ neighbor 10.100.12.2 update-source lo0
+ !
+ address-family ipv4
+  neighbor 10.100.12.1 activate
+  neighbor 10.100.12.1 send-label
+  neighbor 10.100.12.2 activate
+  neighbor 10.100.12.2 send-label
+ exit-address-family
+ !
+ address-family vpnv4
+  neighbor 10.100.12.1 activate
+  neighbor 10.100.12.1 send-community extended
+  neighbor 10.100.12.2 activate
+  neighbor 10.100.12.2 send-community extended
+ exit-address-family
+!
+
+#ISP100PE7
+router bgp 100
+ bgp router-id 10.100.11.7
+ no bgp default ipv4-unicast
+ bgp log-neighbor-changes
+ neighbor 10.100.12.1 remote-as 100
+ neighbor 10.100.12.1 description ISP100RR1
+ neighbor 10.100.12.1 update-source lo0
+ neighbor 10.100.12.2 remote-as 100
+ neighbor 10.100.12.2 description ISP100RR2
+ neighbor 10.100.12.2 update-source lo0
+ !
+ address-family ipv4
+  neighbor 10.100.12.1 activate
+  neighbor 10.100.12.1 send-label
+  neighbor 10.100.12.2 activate
+  neighbor 10.100.12.2 send-label
+ exit-address-family
+ !
+ address-family vpnv4
+  neighbor 10.100.12.1 activate
+  neighbor 10.100.12.1 send-community extended
+  neighbor 10.100.12.2 activate
+  neighbor 10.100.12.2 send-community extended
+ exit-address-family
+!
+
+#ISP100PE8
+router bgp 100
+ bgp router-id 10.100.11.8
+ no bgp default ipv4-unicast
+ bgp log-neighbor-changes
+ neighbor 10.100.12.1 remote-as 100
+ neighbor 10.100.12.1 description ISP100RR1
+ neighbor 10.100.12.1 update-source lo0
+ neighbor 10.100.12.2 remote-as 100
+ neighbor 10.100.12.2 description ISP100RR2
+ neighbor 10.100.12.2 update-source lo0
+ !
+ address-family ipv4
+  neighbor 10.100.12.1 activate
+  neighbor 10.100.12.1 send-label
+  neighbor 10.100.12.2 activate
+  neighbor 10.100.12.2 send-label
+ exit-address-family
+ !
+ address-family vpnv4
+  neighbor 10.100.12.1 activate
+  neighbor 10.100.12.1 send-community extended
+  neighbor 10.100.12.2 activate
+  neighbor 10.100.12.2 send-community extended
+ exit-address-family
+!
+
+#ISP100RR1
+router bgp 100
+ bgp router-id 10.100.12.1
+ no bgp default ipv4-unicast
+ bgp log-neighbor-changes
+ no bgp default route-target filter
+ neighbor 10.100.11.5 remote-as 100
+ neighbor 10.100.11.5 description ISP100PE5
+ neighbor 10.100.11.5 update-source lo0
+ neighbor 10.100.11.6 remote-as 100
+ neighbor 10.100.11.6 description ISP100PE6
+ neighbor 10.100.11.6 update-source lo0
+ neighbor 10.100.11.7 remote-as 100
+ neighbor 10.100.11.7 description ISP100PE7
+ neighbor 10.100.11.7 update-source lo0
+ neighbor 10.100.11.8 remote-as 100
+ neighbor 10.100.11.8 description ISP100PE8
+ neighbor 10.100.11.8 update-source lo0
+ neighbor 10.100.12.2 remote-as 100
+ neighbor 10.100.12.2 description ISP100RR2
+ neighbor 10.100.12.2 update-source lo0
+ !
+ address-family ipv4
+  neighbor 10.100.11.5 activate
+  neighbor 10.100.11.5 send-label
+  neighbor 10.100.11.5 route-reflector-client
+  neighbor 10.100.11.6 activate
+  neighbor 10.100.11.6 send-label
+  neighbor 10.100.11.6 route-reflector-client
+  neighbor 10.100.11.7 activate
+  neighbor 10.100.11.7 send-label
+  neighbor 10.100.11.7 route-reflector-client
+  neighbor 10.100.11.8 activate
+  neighbor 10.100.11.8 send-label
+  neighbor 10.100.11.8 route-reflector-client
+  neighbor 10.100.12.2 activate
+  neighbor 10.100.12.2 send-label
+ exit-address-family
+ !
+ address-family vpnv4
+  neighbor 10.100.11.5 activate
+  neighbor 10.100.11.5 send-community extended
+  neighbor 10.100.11.5 route-reflector-client
+  neighbor 10.100.11.6 activate
+  neighbor 10.100.11.6 send-community extended
+  neighbor 10.100.11.6 route-reflector-client
+  neighbor 10.100.11.7 activate
+  neighbor 10.100.11.7 send-community extended
+  neighbor 10.100.11.7 route-reflector-client
+  neighbor 10.100.11.8 activate
+  neighbor 10.100.11.8 send-community extended
+  neighbor 10.100.11.8 route-reflector-client
+  neighbor 10.100.12.2 activate
+  neighbor 10.100.12.2 send-community extended
+ exit-address-family
+!
+
+#ISP100RR2
+router bgp 100
+ bgp router-id 10.100.12.2
+ no bgp default ipv4-unicast
+ bgp log-neighbor-changes
+ no bgp default route-target filter
+ neighbor 10.100.11.5 remote-as 100
+ neighbor 10.100.11.5 description ISP100PE5
+ neighbor 10.100.11.5 update-source lo0
+ neighbor 10.100.11.6 remote-as 100
+ neighbor 10.100.11.6 description ISP100PE6
+ neighbor 10.100.11.6 update-source lo0
+ neighbor 10.100.11.7 remote-as 100
+ neighbor 10.100.11.7 description ISP100PE7
+ neighbor 10.100.11.7 update-source lo0
+ neighbor 10.100.11.8 remote-as 100
+ neighbor 10.100.11.8 description ISP100PE8
+ neighbor 10.100.11.8 update-source lo0
+ neighbor 10.100.12.1 remote-as 100
+ neighbor 10.100.12.1 description ISP100RR1
+ neighbor 10.100.12.1 update-source lo0
+ !
+ address-family ipv4
+  neighbor 10.100.11.5 activate
+  neighbor 10.100.11.5 send-label
+  neighbor 10.100.11.5 route-reflector-client
+  neighbor 10.100.11.6 activate
+  neighbor 10.100.11.6 send-label
+  neighbor 10.100.11.6 route-reflector-client
+  neighbor 10.100.11.7 activate
+  neighbor 10.100.11.7 send-label
+  neighbor 10.100.11.7 route-reflector-client
+  neighbor 10.100.11.8 activate
+  neighbor 10.100.11.8 send-label
+  neighbor 10.100.11.8 route-reflector-client
+  neighbor 10.100.12.1 activate
+  neighbor 10.100.12.1 send-label
+ exit-address-family
+ !
+ address-family vpnv4
+  neighbor 10.100.11.5 activate
+  neighbor 10.100.11.5 send-community extended
+  neighbor 10.100.11.5 route-reflector-client
+  neighbor 10.100.11.6 activate
+  neighbor 10.100.11.6 send-community extended
+  neighbor 10.100.11.6 route-reflector-client
+  neighbor 10.100.11.7 activate
+  neighbor 10.100.11.7 send-community extended
+  neighbor 10.100.11.7 route-reflector-client
+  neighbor 10.100.11.8 activate
+  neighbor 10.100.11.8 send-community extended
+  neighbor 10.100.11.8 route-reflector-client
+  neighbor 10.100.12.1 activate
+  neighbor 10.100.12.1 send-community extended
+ exit-address-family
+!

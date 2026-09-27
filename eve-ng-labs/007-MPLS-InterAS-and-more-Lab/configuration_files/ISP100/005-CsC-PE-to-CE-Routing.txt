@@ -1,0 +1,179 @@
+#ISP100PE5
+vrf definition ISP102
+ route-target import 101:101
+!
+interface lo100
+ description CsC InterAS BGP endpoint
+ vrf forwarding ISP102
+ ip address 10.100.11.5 255.255.255.255
+ ip router isis InterAS
+!
+interface g0/2
+ ip router isis InterAS
+ isis network point-to-point
+ mpls bgp forwarding
+!
+interface g0/3
+ ip router isis InterAS
+ isis network point-to-point
+ mpls bgp forwarding
+!
+router isis InterAS
+ vrf ISP102
+ net 49.0100.B100.0000.0005.00
+ is-type level-2-only
+ metric-style wide
+ passive-interface lo100
+ log-adjacency-changes
+!
+router bgp 100
+ address-family ipv4 vrf ISP102
+  neighbor 10.102.11.21 remote-as 102
+  neighbor 10.102.11.21 description ISP102PE21
+  neighbor 10.102.11.21 update-source lo100
+  neighbor 10.102.11.21 ebgp-multihop 2
+  neighbor 10.102.11.21 activate
+  neighbor 10.102.11.21 send-label
+  neighbor 10.102.11.22 remote-as 102
+  neighbor 10.102.11.22 description ISP102PE22
+  neighbor 10.102.11.22 update-source lo100
+  neighbor 10.102.11.22 ebgp-multihop 2
+  neighbor 10.102.11.22 activate
+  neighbor 10.102.11.22 send-label
+ exit-address-family
+!
+
+#ISP100PE6
+vrf definition ISP102
+ route-target import 101:101
+!
+interface lo100
+ description CsC InterAS BGP endpoint
+ vrf forwarding ISP102
+ ip address 10.100.11.6 255.255.255.255
+ ip router isis InterAS
+!
+interface g0/2
+ ip router isis InterAS
+ isis network point-to-point
+ mpls bgp forwarding
+!
+interface g0/3
+ ip router isis InterAS
+ isis network point-to-point
+ mpls bgp forwarding
+!
+router isis InterAS
+ vrf ISP102
+ net 49.0100.B100.0000.0006.00
+ is-type level-2-only
+ metric-style wide
+ passive-interface lo100
+ log-adjacency-changes
+!
+router bgp 100
+ address-family ipv4 vrf ISP102
+  neighbor 10.102.11.21 remote-as 102
+  neighbor 10.102.11.21 description ISP102PE21
+  neighbor 10.102.11.21 update-source lo100
+  neighbor 10.102.11.21 ebgp-multihop 2
+  neighbor 10.102.11.21 activate
+  neighbor 10.102.11.21 send-label
+  neighbor 10.102.11.22 remote-as 102
+  neighbor 10.102.11.22 description ISP102PE22
+  neighbor 10.102.11.22 update-source lo100
+  neighbor 10.102.11.22 ebgp-multihop 2
+  neighbor 10.102.11.22 activate
+  neighbor 10.102.11.22 send-label
+ exit-address-family
+!
+
+#ISP100PE7
+vrf definition ISP101
+ route-target import 102:102
+!
+interface lo100
+ description CsC InterAS BGP endpoint
+ vrf forwarding ISP101
+ ip address 10.100.11.7 255.255.255.255
+ ip router isis InterAS
+!
+interface g0/2
+ ip router isis InterAS
+ isis network point-to-point
+ mpls bgp forwarding
+!
+interface g0/3
+ ip router isis InterAS
+ isis network point-to-point
+ mpls bgp forwarding
+!
+router isis InterAS
+ vrf ISP101
+ net 49.0100.B100.0000.0007.00
+ is-type level-2-only
+ metric-style wide
+ passive-interface lo100
+ log-adjacency-changes
+!
+router bgp 100
+ address-family ipv4 vrf ISP101
+  neighbor 10.101.11.111 remote-as 101
+  neighbor 10.101.11.111 description ISP101PE111
+  neighbor 10.101.11.111 update-source lo100
+  neighbor 10.101.11.111 ebgp-multihop 2
+  neighbor 10.101.11.111 activate
+  neighbor 10.101.11.111 send-label
+  neighbor 10.101.11.112 remote-as 101
+  neighbor 10.101.11.112 description ISP101PE112
+  neighbor 10.101.11.112 update-source lo100
+  neighbor 10.101.11.112 ebgp-multihop 2
+  neighbor 10.101.11.112 activate
+  neighbor 10.101.11.112 send-label
+ exit-address-family
+!
+
+#ISP100PE8
+vrf definition ISP101
+ route-target import 102:102
+!
+interface lo100
+ description CsC InterAS BGP endpoint
+ vrf forwarding ISP101
+ ip address 10.100.11.8 255.255.255.255
+ ip router isis InterAS
+!
+interface g0/2
+ ip router isis InterAS
+ isis network point-to-point
+ mpls bgp forwarding
+!
+interface g0/3
+ ip router isis InterAS
+ isis network point-to-point
+ mpls bgp forwarding
+!
+router isis InterAS
+ vrf ISP101
+ net 49.0100.B100.0000.0008.00
+ is-type level-2-only
+ metric-style wide
+ passive-interface lo100
+ log-adjacency-changes
+!
+router bgp 100
+ address-family ipv4 vrf ISP101
+  neighbor 10.101.11.111 remote-as 101
+  neighbor 10.101.11.111 description ISP101PE111
+  neighbor 10.101.11.111 update-source lo100
+  neighbor 10.101.11.111 ebgp-multihop 2
+  neighbor 10.101.11.111 activate
+  neighbor 10.101.11.111 send-label
+  neighbor 10.101.11.112 remote-as 101
+  neighbor 10.101.11.112 description ISP101PE112
+  neighbor 10.101.11.112 update-source lo100
+  neighbor 10.101.11.112 ebgp-multihop 2
+  neighbor 10.101.11.112 activate
+  neighbor 10.101.11.112 send-label
+ exit-address-family
+!

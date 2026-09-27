@@ -1,0 +1,81 @@
+#ISP101PE111
+ip prefix-list INTERAS-ISP101PE111-LO0 permit 10.101.11.111/32
+!
+route-map INTERAS-ISP101PE111-LO0 permit 10
+ match ip address prefix-list INTERAS-ISP101PE111-LO0
+!
+router isis InterAS
+ net 49.0101.B101.0000.0111.00
+ is-type level-2-only
+ metric-style wide
+ redistribute connected ip level-2 route-map INTERAS-ISP101PE111-LO0
+ log-adjacency-changes
+!
+interface g0/2
+ ip router isis InterAS
+ isis network point-to-point
+ mpls bgp forwarding
+!
+interface g0/3
+ ip router isis InterAS
+ isis network point-to-point
+ mpls bgp forwarding
+!
+router bgp 101
+ neighbor 10.100.11.7 remote-as 100
+ neighbor 10.100.11.7 description ISP100PE7
+ neighbor 10.100.11.7 update-source lo0
+ neighbor 10.100.11.7 ebgp-multihop 2
+ neighbor 10.100.11.8 remote-as 100
+ neighbor 10.100.11.8 description ISP100PE8
+ neighbor 10.100.11.8 update-source lo0
+ neighbor 10.100.11.8 ebgp-multihop 2
+ !
+ address-family ipv4
+  neighbor 10.100.11.7 activate
+  neighbor 10.100.11.7 send-label
+  neighbor 10.100.11.8 activate
+  neighbor 10.100.11.8 send-label
+ exit-address-family
+!
+
+#ISP101PE112
+ip prefix-list INTERAS-ISP101PE112-LO0 permit 10.101.11.112/32
+!
+route-map INTERAS-ISP101PE112-LO0 permit 10
+ match ip address prefix-list INTERAS-ISP101PE112-LO0
+!
+router isis InterAS
+ net 49.0101.B101.0000.0112.00
+ is-type level-2-only
+ metric-style wide
+ redistribute connected ip level-2 route-map INTERAS-ISP101PE112-LO0
+ log-adjacency-changes
+!
+interface g0/2
+ ip router isis InterAS
+ isis network point-to-point
+ mpls bgp forwarding
+!
+interface g0/3
+ ip router isis InterAS
+ isis network point-to-point
+ mpls bgp forwarding
+!
+router bgp 101
+ neighbor 10.100.11.7 remote-as 100
+ neighbor 10.100.11.7 description ISP100PE7
+ neighbor 10.100.11.7 update-source lo0
+ neighbor 10.100.11.7 ebgp-multihop 2
+ neighbor 10.100.11.8 remote-as 100
+ neighbor 10.100.11.8 description ISP100PE8
+ neighbor 10.100.11.8 update-source lo0
+ neighbor 10.100.11.8 ebgp-multihop 2
+ !
+ address-family ipv4
+  neighbor 10.100.11.7 activate
+  neighbor 10.100.11.7 send-label
+  neighbor 10.100.11.8 activate
+  neighbor 10.100.11.8 send-label
+ exit-address-family
+!
