@@ -13,10 +13,13 @@ interface Loopback11
  ip address 10.101.11.115 255.255.255.255
  ip ospf 11 area 0
 !
+interface GigabitEthernet0/10
+ no shutdown
+!
 interface GigabitEthernet0/10.12
  description CustomerA link to CE101V133 GigabitEthernet0/0.12
  encapsulation dot1Q 12
- vrf forwarding CustomerA
+ vrf forwarding CustomerAv
  ip address 10.11.64.2 255.255.255.252
  ip ospf network point-to-point
  ip ospf 11 area 0
@@ -33,6 +36,7 @@ router bgp 101
   neighbor 10.11.65.133 ebgp-multihop 2
   neighbor 10.11.65.133 update-source Loopback11
   neighbor 10.11.65.133 activate
+  neighbor 10.11.65.133 as-override
  exit-address-family
 !
 
@@ -50,6 +54,9 @@ interface Loopback11
  vrf forwarding CustomerA
  ip address 10.101.11.116 255.255.255.255
  ip ospf 11 area 0
+!
+interface GigabitEthernet0/10
+ no shutdown
 !
 interface GigabitEthernet0/10.12
  description CustomerA link to CE101V133 GigabitEthernet0/1.12
@@ -71,6 +78,7 @@ router bgp 101
   neighbor 10.11.65.133 ebgp-multihop 2
   neighbor 10.11.65.133 update-source Loopback11
   neighbor 10.11.65.133 activate
+  neighbor 10.11.65.133 as-override
  exit-address-family
 !
 
@@ -88,6 +96,9 @@ interface Loopback11
  vrf forwarding CustomerA
  ip address 10.101.11.117 255.255.255.255
  ip ospf 11 area 0
+!
+interface GigabitEthernet0/10
+ no shutdown
 !
 interface GigabitEthernet0/10.12
  description CustomerA link to CE101V134 GigabitEthernet0/0.12
@@ -109,6 +120,7 @@ router bgp 101
   neighbor 10.11.65.134 ebgp-multihop 2
   neighbor 10.11.65.134 update-source Loopback11
   neighbor 10.11.65.134 activate
+  neighbor 10.11.65.134 as-override
  exit-address-family
 !
 
@@ -126,6 +138,9 @@ interface Loopback11
  vrf forwarding CustomerA
  ip address 10.101.11.118 255.255.255.255
  ip ospf 11 area 0
+!
+interface GigabitEthernet0/10
+ no shutdown
 !
 interface GigabitEthernet0/10.12
  description CustomerA link to CE101V134 GigabitEthernet0/1.12
@@ -147,6 +162,7 @@ router bgp 101
   neighbor 10.11.65.134 ebgp-multihop 2
   neighbor 10.11.65.134 update-source Loopback11
   neighbor 10.11.65.134 activate
+  neighbor 10.11.65.134 as-override
  exit-address-family
 !
 
