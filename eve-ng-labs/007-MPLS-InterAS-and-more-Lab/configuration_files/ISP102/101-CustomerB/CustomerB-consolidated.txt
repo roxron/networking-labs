@@ -1,0 +1,283 @@
+#ISP102PE25.cfg
+vrf definition CustomerB
+ rd 10.102.11.25:12
+ !
+ address-family ipv4
+  route-target export 12:12
+  route-target import 12:12
+ exit-address-family
+!
+interface Loopback12
+ description CustomerB BGP and OSPF endpoint
+ vrf forwarding CustomerB
+ ip address 10.102.11.25 255.255.255.255
+ ip ospf 12 area 0
+!
+interface GigabitEthernet0/10
+ no shutdown
+!
+interface GigabitEthernet0/10.13
+ description CustomerB link to CE101V131 GigabitEthernet0/0.13
+ encapsulation dot1Q 13
+ vrf forwarding CustomerB
+ ip address 10.12.0.2 255.255.255.252
+ ip ospf network point-to-point
+ ip ospf 12 area 0
+ no shutdown
+!
+router ospf 12 vrf CustomerB
+ router-id 10.102.11.25
+ passive-interface Loopback12
+!
+router bgp 102
+ address-family ipv4 vrf CustomerB
+  neighbor 10.12.1.131 remote-as 65512
+  neighbor 10.12.1.131 description CustomerB CE101V131
+  neighbor 10.12.1.131 ebgp-multihop 2
+  neighbor 10.12.1.131 update-source Loopback12
+  neighbor 10.12.1.131 activate
+  neighbor 10.12.1.131 as-override
+ exit-address-family
+!
+
+#ISP102PE26.cfg
+vrf definition CustomerB
+ rd 10.102.11.26:12
+ !
+ address-family ipv4
+  route-target export 12:12
+  route-target import 12:12
+ exit-address-family
+!
+interface Loopback12
+ description CustomerB BGP and OSPF endpoint
+ vrf forwarding CustomerB
+ ip address 10.102.11.26 255.255.255.255
+ ip ospf 12 area 0
+!
+interface GigabitEthernet0/10
+ no shutdown
+!
+interface GigabitEthernet0/10.13
+ description CustomerB link to CE101V131 GigabitEthernet0/1.13
+ encapsulation dot1Q 13
+ vrf forwarding CustomerB
+ ip address 10.12.0.6 255.255.255.252
+ ip ospf network point-to-point
+ ip ospf 12 area 0
+ no shutdown
+!
+router ospf 12 vrf CustomerB
+ router-id 10.102.11.26
+ passive-interface Loopback12
+!
+router bgp 102
+ address-family ipv4 vrf CustomerB
+  neighbor 10.12.1.131 remote-as 65512
+  neighbor 10.12.1.131 description CustomerB CE101V131
+  neighbor 10.12.1.131 ebgp-multihop 2
+  neighbor 10.12.1.131 update-source Loopback12
+  neighbor 10.12.1.131 activate
+  neighbor 10.12.1.131 as-override
+ exit-address-family
+!
+
+#ISP102PE27.cfg
+vrf definition CustomerB
+ rd 10.102.11.27:12
+ !
+ address-family ipv4
+  route-target export 12:12
+  route-target import 12:12
+ exit-address-family
+!
+interface Loopback12
+ description CustomerB BGP and OSPF endpoint
+ vrf forwarding CustomerB
+ ip address 10.102.11.27 255.255.255.255
+ ip ospf 12 area 0
+!
+interface GigabitEthernet0/10
+ no shutdown
+!
+interface GigabitEthernet0/10.13
+ description CustomerB link to CE101V132 GigabitEthernet0/0.13
+ encapsulation dot1Q 13
+ vrf forwarding CustomerB
+ ip address 10.12.0.10 255.255.255.252
+ ip ospf network point-to-point
+ ip ospf 12 area 0
+ no shutdown
+!
+router ospf 12 vrf CustomerB
+ router-id 10.102.11.27
+ passive-interface Loopback12
+!
+router bgp 102
+ address-family ipv4 vrf CustomerB
+  neighbor 10.12.1.132 remote-as 65512
+  neighbor 10.12.1.132 description CustomerB CE101V132
+  neighbor 10.12.1.132 ebgp-multihop 2
+  neighbor 10.12.1.132 update-source Loopback12
+  neighbor 10.12.1.132 activate
+  neighbor 10.12.1.132 as-override
+ exit-address-family
+!
+
+#ISP102PE28.cfg
+vrf definition CustomerB
+ rd 10.102.11.28:12
+ !
+ address-family ipv4
+  route-target export 12:12
+  route-target import 12:12
+ exit-address-family
+!
+interface Loopback12
+ description CustomerB BGP and OSPF endpoint
+ vrf forwarding CustomerB
+ ip address 10.102.11.28 255.255.255.255
+ ip ospf 12 area 0
+!
+interface GigabitEthernet0/10
+ no shutdown
+!
+interface GigabitEthernet0/10.13
+ description CustomerB link to CE101V132 GigabitEthernet0/1.13
+ encapsulation dot1Q 13
+ vrf forwarding CustomerB
+ ip address 10.12.0.14 255.255.255.252
+ ip ospf network point-to-point
+ ip ospf 12 area 0
+ no shutdown
+!
+router ospf 12 vrf CustomerB
+ router-id 10.102.11.28
+ passive-interface Loopback12
+!
+router bgp 102
+ address-family ipv4 vrf CustomerB
+  neighbor 10.12.1.132 remote-as 65512
+  neighbor 10.12.1.132 description CustomerB CE101V132
+  neighbor 10.12.1.132 ebgp-multihop 2
+  neighbor 10.12.1.132 update-source Loopback12
+  neighbor 10.12.1.132 activate
+  neighbor 10.12.1.132 as-override
+ exit-address-family
+!
+
+#CE101V131.cfg
+vrf definition CustomerB
+ rd 12:12
+ !
+ address-family ipv4
+ exit-address-family
+!
+interface Loopback120
+ description CustomerB BGP and OSPF endpoint
+ vrf forwarding CustomerB
+ ip address 10.12.1.131 255.255.255.255
+ ip ospf 12 area 0
+!
+interface Loopback121
+ description CustomerB site prefix
+ vrf forwarding CustomerB
+ ip address 10.12.11.1 255.255.255.0
+!
+interface GigabitEthernet0/0.13
+ description CustomerB link to ISP102PE25 GigabitEthernet0/10.13
+ encapsulation dot1Q 13
+ vrf forwarding CustomerB
+ ip address 10.12.0.1 255.255.255.252
+ ip ospf network point-to-point
+ ip ospf 12 area 0
+ no shutdown
+!
+interface GigabitEthernet0/1.13
+ description CustomerB link to ISP102PE26 GigabitEthernet0/10.13
+ encapsulation dot1Q 13
+ vrf forwarding CustomerB
+ ip address 10.12.0.5 255.255.255.252
+ ip ospf network point-to-point
+ ip ospf 12 area 0
+ no shutdown
+!
+router ospf 12 vrf CustomerB
+ router-id 10.12.1.131
+ passive-interface Loopback120
+!
+router bgp 65000
+ address-family ipv4 vrf CustomerB
+  network 10.12.11.0 mask 255.255.255.0
+  neighbor 10.102.11.25 remote-as 102
+  neighbor 10.102.11.25 local-as 65512 no-prepend replace-as
+  neighbor 10.102.11.25 description ISP102PE25
+  neighbor 10.102.11.25 ebgp-multihop 2
+  neighbor 10.102.11.25 update-source Loopback120
+  neighbor 10.102.11.25 activate
+  neighbor 10.102.11.26 remote-as 102
+  neighbor 10.102.11.26 local-as 65512 no-prepend replace-as
+  neighbor 10.102.11.26 description ISP102PE26
+  neighbor 10.102.11.26 ebgp-multihop 2
+  neighbor 10.102.11.26 update-source Loopback120
+  neighbor 10.102.11.26 activate
+ exit-address-family
+!
+
+#CE101V132.cfg
+vrf definition CustomerB
+ rd 12:12
+ !
+ address-family ipv4
+ exit-address-family
+!
+interface Loopback120
+ description CustomerB BGP and OSPF endpoint
+ vrf forwarding CustomerB
+ ip address 10.12.1.132 255.255.255.255
+ ip ospf 12 area 0
+!
+interface Loopback121
+ description CustomerB site prefix
+ vrf forwarding CustomerB
+ ip address 10.12.12.1 255.255.255.0
+!
+interface GigabitEthernet0/0.13
+ description CustomerB link to ISP102PE27 GigabitEthernet0/10.13
+ encapsulation dot1Q 13
+ vrf forwarding CustomerB
+ ip address 10.12.0.9 255.255.255.252
+ ip ospf network point-to-point
+ ip ospf 12 area 0
+ no shutdown
+!
+interface GigabitEthernet0/1.13
+ description CustomerB link to ISP102PE28 GigabitEthernet0/10.13
+ encapsulation dot1Q 13
+ vrf forwarding CustomerB
+ ip address 10.12.0.13 255.255.255.252
+ ip ospf network point-to-point
+ ip ospf 12 area 0
+ no shutdown
+!
+router ospf 12 vrf CustomerB
+ router-id 10.12.1.132
+ passive-interface Loopback120
+!
+router bgp 65000
+ address-family ipv4 vrf CustomerB
+  network 10.12.12.0 mask 255.255.255.0
+  neighbor 10.102.11.27 remote-as 102
+  neighbor 10.102.11.27 local-as 65512 no-prepend replace-as
+  neighbor 10.102.11.27 description ISP102PE27
+  neighbor 10.102.11.27 ebgp-multihop 2
+  neighbor 10.102.11.27 update-source Loopback120
+  neighbor 10.102.11.27 activate
+  neighbor 10.102.11.28 remote-as 102
+  neighbor 10.102.11.28 local-as 65512 no-prepend replace-as
+  neighbor 10.102.11.28 description ISP102PE28
+  neighbor 10.102.11.28 ebgp-multihop 2
+  neighbor 10.102.11.28 update-source Loopback120
+  neighbor 10.102.11.28 activate
+ exit-address-family
+!
