@@ -1,4 +1,5 @@
-<mxfile host="Electron" pages="3">
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="Electron" pages="4">
   <diagram name="Core diagram" id="cLY_bWf_l1MtjqBRM57C">
     <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="2200" pageHeight="1900" math="0" shadow="0">
       <root>
@@ -1370,7 +1371,7 @@
           <mxGeometry height="24" width="220" x="1270" y="1118" as="geometry" />
         </mxCell>
         <mxCell id="lo0-5" parent="1" style="text;html=1;strokeColor=none;fillColor=#FFFFFF;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#0F172A;" value="Lo100: 10.100.20.5/32" vertex="1">
-          <mxGeometry height="24" width="220" x="340" y="742" as="geometry" />
+          <mxGeometry height="24" width="220" x="290" y="610" as="geometry" />
         </mxCell>
         <mxCell id="lo0-6" parent="1" style="text;html=1;strokeColor=none;fillColor=#FFFFFF;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#0F172A;" value="Lo100: 10.100.20.6/32" vertex="1">
           <mxGeometry height="24" width="220" x="340" y="1142" as="geometry" />
@@ -1397,13 +1398,542 @@
           <mxGeometry height="24" width="220" x="20" y="942" as="geometry" />
         </mxCell>
         <mxCell id="lo0-14" parent="1" style="text;html=1;strokeColor=none;fillColor=#FFFFFF;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#0F172A;" value="Lo100: 10.100.21.14/32" vertex="1">
-          <mxGeometry height="24" width="220" x="1860" y="942" as="geometry" />
+          <mxGeometry height="24" width="220" x="1940" y="810" as="geometry" />
         </mxCell>
         <mxCell id="lo0-15" parent="1" style="text;html=1;strokeColor=none;fillColor=#FFFFFF;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#0F172A;" value="Lo100: 10.100.21.15/32" vertex="1">
           <mxGeometry height="24" width="220" x="940" y="50" as="geometry" />
         </mxCell>
         <mxCell id="lo0-16" parent="1" style="text;html=1;strokeColor=none;fillColor=#FFFFFF;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#0F172A;" value="Lo100: 10.100.21.16/32" vertex="1">
           <mxGeometry height="24" width="220" x="940" y="1782" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="ISP100 OSPF IGP" id="fcfd05aabcb5420b9d335ab7836da91d">
+    <mxGraphModel dx="1414" dy="912" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2850" pageHeight="1900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="link-1" edge="1" parent="1" source="router-1" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#475569;fontSize=11;fontColor=#475569;labelBackgroundColor=#FFFFFF;fontSize=11;labelBackgroundColor=#FFFFFF;" target="router-2" value="10.100.1.0/30&lt;br&gt;&lt;b&gt;Area 0 | P2P&lt;/b&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label-1-source" connectable="0" parent="link-1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/0.100  .1" vertex="1">
+          <mxGeometry relative="1" x="-0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-1-target" connectable="0" parent="link-1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/0.100  .2" vertex="1">
+          <mxGeometry relative="1" x="0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="link-2" edge="1" parent="1" source="router-3" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#475569;fontSize=11;fontColor=#475569;labelBackgroundColor=#FFFFFF;fontSize=11;labelBackgroundColor=#FFFFFF;" target="router-4" value="10.100.3.0/30&lt;br&gt;&lt;b&gt;Area 0 | P2P&lt;/b&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label-2-source" connectable="0" parent="link-2" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/0.100  .1" vertex="1">
+          <mxGeometry relative="1" x="-0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-2-target" connectable="0" parent="link-2" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/0.100  .2" vertex="1">
+          <mxGeometry relative="1" x="0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="link-3" edge="1" parent="1" source="router-1" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#475569;fontSize=11;fontColor=#475569;labelBackgroundColor=#FFFFFF;fontSize=11;labelBackgroundColor=#FFFFFF;" target="router-3" value="10.100.1.4/30&lt;br&gt;&lt;b&gt;Area 0 | P2P&lt;/b&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label-3-source" connectable="0" parent="link-3" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/1.100  .5" vertex="1">
+          <mxGeometry relative="1" x="-0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-3-target" connectable="0" parent="link-3" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/1.100  .6" vertex="1">
+          <mxGeometry relative="1" x="0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="link-4" edge="1" parent="1" source="router-2" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#475569;fontSize=11;fontColor=#475569;labelBackgroundColor=#FFFFFF;fontSize=11;labelBackgroundColor=#FFFFFF;" target="router-4" value="10.100.2.4/30&lt;br&gt;&lt;b&gt;Area 0 | P2P&lt;/b&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label-4-source" connectable="0" parent="link-4" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/1.100  .5" vertex="1">
+          <mxGeometry relative="1" x="-0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-4-target" connectable="0" parent="link-4" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/1.100  .6" vertex="1">
+          <mxGeometry relative="1" x="0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="link-5" edge="1" parent="1" source="router-1" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#475569;fontSize=11;fontColor=#475569;labelBackgroundColor=#FFFFFF;fontSize=11;labelBackgroundColor=#FFFFFF;" target="router-4" value="10.100.1.8/30&lt;br&gt;&lt;b&gt;Area 0 | P2P&lt;/b&gt;">
+          <mxGeometry relative="1" x="-0.2647" y="-7" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-5-source" connectable="0" parent="link-5" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/2.100  .9" vertex="1">
+          <mxGeometry relative="1" x="-0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-5-target" connectable="0" parent="link-5" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/2.100  .10" vertex="1">
+          <mxGeometry relative="1" x="0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="link-6" edge="1" parent="1" source="router-2" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#475569;fontSize=11;fontColor=#475569;labelBackgroundColor=#FFFFFF;fontSize=11;labelBackgroundColor=#FFFFFF;" target="router-3" value="10.100.2.0/30&lt;br&gt;&lt;b&gt;Area 0 | P2P&lt;/b&gt;">
+          <mxGeometry relative="1" x="-0.3235" y="7" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-6-source" connectable="0" parent="link-6" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/2.100  .1" vertex="1">
+          <mxGeometry relative="1" x="-0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-6-target" connectable="0" parent="link-6" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/2.100  .2" vertex="1">
+          <mxGeometry relative="1" x="0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="link-7" edge="1" parent="1" source="router-1" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#475569;fontSize=11;fontColor=#475569;labelBackgroundColor=#FFFFFF;fontSize=11;labelBackgroundColor=#FFFFFF;" target="router-5" value="10.100.1.12/30&lt;br&gt;&lt;b&gt;Area 0 | P2P&lt;/b&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label-7-source" connectable="0" parent="link-7" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/3.100  .13" vertex="1">
+          <mxGeometry relative="1" x="-0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-7-target" connectable="0" parent="link-7" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/0.100  .14" vertex="1">
+          <mxGeometry relative="1" x="0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="link-8" edge="1" parent="1" source="router-3" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#475569;fontSize=11;fontColor=#475569;labelBackgroundColor=#FFFFFF;fontSize=11;labelBackgroundColor=#FFFFFF;" target="router-6" value="10.100.3.8/30&lt;br&gt;&lt;b&gt;Area 0 | P2P&lt;/b&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label-8-source" connectable="0" parent="link-8" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/3.100  .9" vertex="1">
+          <mxGeometry relative="1" x="-0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-8-target" connectable="0" parent="link-8" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/0.100  .10" vertex="1">
+          <mxGeometry relative="1" x="0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="link-9" edge="1" parent="1" source="router-2" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#475569;fontSize=11;fontColor=#475569;labelBackgroundColor=#FFFFFF;fontSize=11;labelBackgroundColor=#FFFFFF;" target="router-7" value="10.100.2.8/30&lt;br&gt;&lt;b&gt;Area 0 | P2P&lt;/b&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label-9-source" connectable="0" parent="link-9" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/3.100  .9" vertex="1">
+          <mxGeometry relative="1" x="-0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-9-target" connectable="0" parent="link-9" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/0.100  .10" vertex="1">
+          <mxGeometry relative="1" x="0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="link-10" edge="1" parent="1" source="router-4" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#475569;fontSize=11;fontColor=#475569;labelBackgroundColor=#FFFFFF;fontSize=11;labelBackgroundColor=#FFFFFF;" target="router-8" value="10.100.4.4/30&lt;br&gt;&lt;b&gt;Area 0 | P2P&lt;/b&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label-10-source" connectable="0" parent="link-10" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/3.100  .5" vertex="1">
+          <mxGeometry relative="1" x="-0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-10-target" connectable="0" parent="link-10" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/0.100  .6" vertex="1">
+          <mxGeometry relative="1" x="0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="link-11" edge="1" parent="1" source="router-1" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#475569;fontSize=11;fontColor=#475569;labelBackgroundColor=#FFFFFF;fontSize=11;labelBackgroundColor=#FFFFFF;" target="router-9" value="10.100.1.20/30&lt;br&gt;&lt;b&gt;Area 0 | P2P&lt;/b&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label-11-source" connectable="0" parent="link-11" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/4.100  .21" vertex="1">
+          <mxGeometry relative="1" x="-0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-11-target" connectable="0" parent="link-11" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/0.100  .22" vertex="1">
+          <mxGeometry relative="1" x="0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="link-12" edge="1" parent="1" source="router-2" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#475569;fontSize=11;fontColor=#475569;labelBackgroundColor=#FFFFFF;fontSize=11;labelBackgroundColor=#FFFFFF;" target="router-10" value="10.100.2.20/30&lt;br&gt;&lt;b&gt;Area 0 | P2P&lt;/b&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label-12-source" connectable="0" parent="link-12" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/4.100  .21" vertex="1">
+          <mxGeometry relative="1" x="-0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-12-target" connectable="0" parent="link-12" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/0.100  .22" vertex="1">
+          <mxGeometry relative="1" x="0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="link-13" edge="1" parent="1" source="router-3" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#475569;fontSize=11;fontColor=#475569;labelBackgroundColor=#FFFFFF;fontSize=11;labelBackgroundColor=#FFFFFF;" target="router-11" value="10.100.3.12/30&lt;br&gt;&lt;b&gt;Area 0 | P2P&lt;/b&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label-13-source" connectable="0" parent="link-13" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/4.100  .13" vertex="1">
+          <mxGeometry relative="1" x="-0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-13-target" connectable="0" parent="link-13" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/0.100  .14" vertex="1">
+          <mxGeometry relative="1" x="0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="link-14" edge="1" parent="1" source="router-4" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#475569;fontSize=11;fontColor=#475569;labelBackgroundColor=#FFFFFF;fontSize=11;labelBackgroundColor=#FFFFFF;" target="router-12" value="10.100.4.12/30&lt;br&gt;&lt;b&gt;Area 0 | P2P&lt;/b&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label-14-source" connectable="0" parent="link-14" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/4.100  .13" vertex="1">
+          <mxGeometry relative="1" x="-0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-14-target" connectable="0" parent="link-14" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/0.100  .14" vertex="1">
+          <mxGeometry relative="1" x="0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="link-15" edge="1" parent="1" source="router-3" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#475569;fontSize=11;fontColor=#475569;labelBackgroundColor=#FFFFFF;fontSize=11;labelBackgroundColor=#FFFFFF;" target="router-5" value="10.100.3.4/30&lt;br&gt;&lt;b&gt;Area 0 | P2P&lt;/b&gt;">
+          <mxGeometry relative="1" x="-0.3824" y="-7" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-15-source" connectable="0" parent="link-15" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/5.100  .5" vertex="1">
+          <mxGeometry relative="1" x="-0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-15-target" connectable="0" parent="link-15" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/1.100  .6" vertex="1">
+          <mxGeometry relative="1" x="0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="link-16" edge="1" parent="1" source="router-1" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#475569;fontSize=11;fontColor=#475569;labelBackgroundColor=#FFFFFF;fontSize=11;labelBackgroundColor=#FFFFFF;" target="router-6" value="10.100.1.16/30&lt;br&gt;&lt;b&gt;Area 0 | P2P&lt;/b&gt;">
+          <mxGeometry relative="1" x="-0.3529" y="14" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-16-source" connectable="0" parent="link-16" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/5.100  .17" vertex="1">
+          <mxGeometry relative="1" x="-0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-16-target" connectable="0" parent="link-16" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/1.100  .18" vertex="1">
+          <mxGeometry relative="1" x="0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="link-17" edge="1" parent="1" source="router-4" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#475569;fontSize=11;fontColor=#475569;labelBackgroundColor=#FFFFFF;fontSize=11;labelBackgroundColor=#FFFFFF;" target="router-7" value="10.100.4.0/30&lt;br&gt;&lt;b&gt;Area 0 | P2P&lt;/b&gt;">
+          <mxGeometry relative="1" x="-0.2353" y="-14" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-17-source" connectable="0" parent="link-17" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/5.100  .1" vertex="1">
+          <mxGeometry relative="1" x="-0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-17-target" connectable="0" parent="link-17" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/1.100  .2" vertex="1">
+          <mxGeometry relative="1" x="0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="link-18" edge="1" parent="1" source="router-2" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#475569;fontSize=11;fontColor=#475569;labelBackgroundColor=#FFFFFF;fontSize=11;labelBackgroundColor=#FFFFFF;" target="router-8" value="10.100.2.12/30&lt;br&gt;&lt;b&gt;Area 0 | P2P&lt;/b&gt;">
+          <mxGeometry relative="1" x="-0.2647" y="7" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-18-source" connectable="0" parent="link-18" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/5.100  .13" vertex="1">
+          <mxGeometry relative="1" x="-0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-18-target" connectable="0" parent="link-18" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/1.100  .14" vertex="1">
+          <mxGeometry relative="1" x="0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="link-19" edge="1" parent="1" source="router-2" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#475569;fontSize=11;fontColor=#475569;labelBackgroundColor=#FFFFFF;fontSize=11;labelBackgroundColor=#FFFFFF;" target="router-9" value="10.100.2.16/30&lt;br&gt;&lt;b&gt;Area 0 | P2P&lt;/b&gt;">
+          <mxGeometry relative="1" x="-0.4276" y="-12" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-19-source" connectable="0" parent="link-19" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/6.100  .17" vertex="1">
+          <mxGeometry relative="1" x="-0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-19-target" connectable="0" parent="link-19" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/1.100  .18" vertex="1">
+          <mxGeometry relative="1" x="0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="link-20" edge="1" parent="1" source="router-1" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#475569;fontSize=11;fontColor=#475569;labelBackgroundColor=#FFFFFF;fontSize=11;labelBackgroundColor=#FFFFFF;" target="router-10" value="10.100.1.24/30&lt;br&gt;&lt;b&gt;Area 0 | P2P&lt;/b&gt;">
+          <mxGeometry relative="1" x="-0.2419" y="-16" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-20-source" connectable="0" parent="link-20" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/6.100  .25" vertex="1">
+          <mxGeometry relative="1" x="-0.72" y="-13" as="geometry">
+            <mxPoint y="15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-20-target" connectable="0" parent="link-20" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/1.100  .26" vertex="1">
+          <mxGeometry relative="1" x="0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="link-21" edge="1" parent="1" source="router-4" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#475569;fontSize=11;fontColor=#475569;labelBackgroundColor=#FFFFFF;fontSize=11;labelBackgroundColor=#FFFFFF;" target="router-11" value="10.100.4.8/30&lt;br&gt;&lt;b&gt;Area 0 | P2P&lt;/b&gt;">
+          <mxGeometry relative="1" x="-0.4588" y="18" as="geometry">
+            <mxPoint x="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-21-source" connectable="0" parent="link-21" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/6.100  .9" vertex="1">
+          <mxGeometry relative="1" x="-0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-21-target" connectable="0" parent="link-21" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/1.100  .10" vertex="1">
+          <mxGeometry relative="1" x="0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="link-22" edge="1" parent="1" source="router-3" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#475569;fontSize=11;fontColor=#475569;labelBackgroundColor=#FFFFFF;fontSize=11;labelBackgroundColor=#FFFFFF;" target="router-12" value="10.100.3.16/30&lt;br&gt;&lt;b&gt;Area 0 | P2P&lt;/b&gt;">
+          <mxGeometry relative="1" x="-0.2107" y="22" as="geometry">
+            <mxPoint x="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-22-source" connectable="0" parent="link-22" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/6.100  .17" vertex="1">
+          <mxGeometry relative="1" x="-0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-22-target" connectable="0" parent="link-22" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/1.100  .18" vertex="1">
+          <mxGeometry relative="1" x="0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="link-23" edge="1" parent="1" source="router-5" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#2563EB;fontSize=11;fontColor=#2563EB;labelBackgroundColor=#FFFFFF;fontSize=11;labelBackgroundColor=#FFFFFF;" target="router-13" value="10.100.13.0/30&lt;br&gt;&lt;b&gt;Area 0 | P2P&lt;/b&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label-23-source" connectable="0" parent="link-23" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/2  .2" vertex="1">
+          <mxGeometry relative="1" x="-0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-23-target" connectable="0" parent="link-23" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi1  .1" vertex="1">
+          <mxGeometry relative="1" x="0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="link-24" edge="1" parent="1" source="router-6" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#2563EB;fontSize=11;fontColor=#2563EB;labelBackgroundColor=#FFFFFF;fontSize=11;labelBackgroundColor=#FFFFFF;" target="router-13" value="10.100.13.4/30&lt;br&gt;&lt;b&gt;Area 0 | P2P&lt;/b&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label-24-source" connectable="0" parent="link-24" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/2  .6" vertex="1">
+          <mxGeometry relative="1" x="-0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-24-target" connectable="0" parent="link-24" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi2  .5" vertex="1">
+          <mxGeometry relative="1" x="0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="link-25" edge="1" parent="1" source="router-7" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#2563EB;fontSize=11;fontColor=#2563EB;labelBackgroundColor=#FFFFFF;fontSize=11;labelBackgroundColor=#FFFFFF;" target="router-14" value="10.100.14.0/30&lt;br&gt;&lt;b&gt;Area 0 | P2P&lt;/b&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label-25-source" connectable="0" parent="link-25" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/2  .2" vertex="1">
+          <mxGeometry relative="1" x="-0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-25-target" connectable="0" parent="link-25" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi1  .1" vertex="1">
+          <mxGeometry relative="1" x="0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="link-26" edge="1" parent="1" source="router-8" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#2563EB;fontSize=11;fontColor=#2563EB;labelBackgroundColor=#FFFFFF;fontSize=11;labelBackgroundColor=#FFFFFF;" target="router-14" value="10.100.14.4/30&lt;br&gt;&lt;b&gt;Area 0 | P2P&lt;/b&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label-26-source" connectable="0" parent="link-26" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/2  .6" vertex="1">
+          <mxGeometry relative="1" x="-0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-26-target" connectable="0" parent="link-26" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi2  .5" vertex="1">
+          <mxGeometry relative="1" x="0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="link-27" edge="1" parent="1" source="router-9" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#2563EB;fontSize=11;fontColor=#2563EB;labelBackgroundColor=#FFFFFF;fontSize=11;labelBackgroundColor=#FFFFFF;" target="router-15" value="10.100.15.0/30&lt;br&gt;&lt;b&gt;Area 0 | P2P&lt;/b&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label-27-source" connectable="0" parent="link-27" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/2  .2" vertex="1">
+          <mxGeometry relative="1" x="-0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-27-target" connectable="0" parent="link-27" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi1  .1" vertex="1">
+          <mxGeometry relative="1" x="0.72" y="-13" as="geometry">
+            <mxPoint x="-18" y="-28" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="link-28" edge="1" parent="1" source="router-11" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#2563EB;fontSize=11;fontColor=#2563EB;labelBackgroundColor=#FFFFFF;fontSize=11;labelBackgroundColor=#FFFFFF;" target="router-16" value="10.100.16.0/30&lt;br&gt;&lt;b&gt;Area 0 | P2P&lt;/b&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label-28-source" connectable="0" parent="link-28" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/2  .2" vertex="1">
+          <mxGeometry relative="1" x="-0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-28-target" connectable="0" parent="link-28" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi1  .1" vertex="1">
+          <mxGeometry relative="1" x="0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="link-29" edge="1" parent="1" source="router-10" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#2563EB;fontSize=11;fontColor=#2563EB;labelBackgroundColor=#FFFFFF;fontSize=11;labelBackgroundColor=#FFFFFF;" target="router-15" value="10.100.15.4/30&lt;br&gt;&lt;b&gt;Area 0 | P2P&lt;/b&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label-29-source" connectable="0" parent="link-29" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/2  .6" vertex="1">
+          <mxGeometry relative="1" x="-0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-29-target" connectable="0" parent="link-29" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi2  .5" vertex="1">
+          <mxGeometry relative="1" x="0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="link-30" edge="1" parent="1" source="router-12" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#2563EB;fontSize=11;fontColor=#2563EB;labelBackgroundColor=#FFFFFF;fontSize=11;labelBackgroundColor=#FFFFFF;" target="router-16" value="10.100.16.4/30&lt;br&gt;&lt;b&gt;Area 0 | P2P&lt;/b&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label-30-source" connectable="0" parent="link-30" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi0/2  .6" vertex="1">
+          <mxGeometry relative="1" x="-0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-30-target" connectable="0" parent="link-30" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;spacing=3;" value="Gi2  .5" vertex="1">
+          <mxGeometry relative="1" x="0.72" y="-13" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="router-1" parent="1" style="shape=mxgraph.cisco.routers.router;html=1;pointerEvents=1;fillColor=#64748B;strokeColor=#FFFFFF;strokeWidth=1.5;verticalLabelPosition=bottom;verticalAlign=top;align=center;fontSize=16;fontStyle=1;fontColor=#0F172A;spacingTop=8;" value="P1" vertex="1">
+          <mxGeometry height="60" width="80" x="810" y="650" as="geometry" />
+        </mxCell>
+        <mxCell id="router-2" parent="1" style="shape=mxgraph.cisco.routers.router;html=1;pointerEvents=1;fillColor=#64748B;strokeColor=#FFFFFF;strokeWidth=1.5;verticalLabelPosition=bottom;verticalAlign=top;align=center;fontSize=16;fontStyle=1;fontColor=#0F172A;spacingTop=8;" value="P2" vertex="1">
+          <mxGeometry height="60" width="80" x="1210" y="650" as="geometry" />
+        </mxCell>
+        <mxCell id="router-3" parent="1" style="shape=mxgraph.cisco.routers.router;html=1;pointerEvents=1;fillColor=#64748B;strokeColor=#FFFFFF;strokeWidth=1.5;verticalLabelPosition=bottom;verticalAlign=top;align=center;fontSize=16;fontStyle=1;fontColor=#0F172A;spacingTop=8;" value="P3" vertex="1">
+          <mxGeometry height="60" width="80" x="810" y="1050" as="geometry" />
+        </mxCell>
+        <mxCell id="router-4" parent="1" style="shape=mxgraph.cisco.routers.router;html=1;pointerEvents=1;fillColor=#64748B;strokeColor=#FFFFFF;strokeWidth=1.5;verticalLabelPosition=bottom;verticalAlign=top;align=center;fontSize=16;fontStyle=1;fontColor=#0F172A;spacingTop=8;" value="P4" vertex="1">
+          <mxGeometry height="60" width="80" x="1210" y="1050" as="geometry" />
+        </mxCell>
+        <mxCell id="router-5" parent="1" style="shape=mxgraph.cisco.routers.router;html=1;pointerEvents=1;fillColor=#64748B;strokeColor=#FFFFFF;strokeWidth=1.5;verticalLabelPosition=bottom;verticalAlign=top;align=center;fontSize=16;fontStyle=1;fontColor=#0F172A;spacingTop=8;" value="P5" vertex="1">
+          <mxGeometry height="60" width="80" x="410" y="650" as="geometry" />
+        </mxCell>
+        <mxCell id="router-6" parent="1" style="shape=mxgraph.cisco.routers.router;html=1;pointerEvents=1;fillColor=#64748B;strokeColor=#FFFFFF;strokeWidth=1.5;verticalLabelPosition=bottom;verticalAlign=top;align=center;fontSize=16;fontStyle=1;fontColor=#0F172A;spacingTop=8;" value="P6" vertex="1">
+          <mxGeometry height="60" width="80" x="410" y="1050" as="geometry" />
+        </mxCell>
+        <mxCell id="router-7" parent="1" style="shape=mxgraph.cisco.routers.router;html=1;pointerEvents=1;fillColor=#64748B;strokeColor=#FFFFFF;strokeWidth=1.5;verticalLabelPosition=bottom;verticalAlign=top;align=center;fontSize=16;fontStyle=1;fontColor=#0F172A;spacingTop=8;" value="P7" vertex="1">
+          <mxGeometry height="60" width="80" x="1610" y="650" as="geometry" />
+        </mxCell>
+        <mxCell id="router-8" parent="1" style="shape=mxgraph.cisco.routers.router;html=1;pointerEvents=1;fillColor=#64748B;strokeColor=#FFFFFF;strokeWidth=1.5;verticalLabelPosition=bottom;verticalAlign=top;align=center;fontSize=16;fontStyle=1;fontColor=#0F172A;spacingTop=8;" value="P8" vertex="1">
+          <mxGeometry height="60" width="80" x="1610" y="1050" as="geometry" />
+        </mxCell>
+        <mxCell id="router-9" parent="1" style="shape=mxgraph.cisco.routers.router;html=1;pointerEvents=1;fillColor=#64748B;strokeColor=#FFFFFF;strokeWidth=1.5;verticalLabelPosition=bottom;verticalAlign=top;align=center;fontSize=16;fontStyle=1;fontColor=#0F172A;spacingTop=8;" value="P9" vertex="1">
+          <mxGeometry height="60" width="80" x="810" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="router-10" parent="1" style="shape=mxgraph.cisco.routers.router;html=1;pointerEvents=1;fillColor=#64748B;strokeColor=#FFFFFF;strokeWidth=1.5;verticalLabelPosition=bottom;verticalAlign=top;align=center;fontSize=16;fontStyle=1;fontColor=#0F172A;spacingTop=8;" value="P10" vertex="1">
+          <mxGeometry height="60" width="80" x="1210" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="router-11" parent="1" style="shape=mxgraph.cisco.routers.router;html=1;pointerEvents=1;fillColor=#64748B;strokeColor=#FFFFFF;strokeWidth=1.5;verticalLabelPosition=bottom;verticalAlign=top;align=center;fontSize=16;fontStyle=1;fontColor=#0F172A;spacingTop=8;" value="P11" vertex="1">
+          <mxGeometry height="60" width="80" x="810" y="1430" as="geometry" />
+        </mxCell>
+        <mxCell id="router-12" parent="1" style="shape=mxgraph.cisco.routers.router;html=1;pointerEvents=1;fillColor=#64748B;strokeColor=#FFFFFF;strokeWidth=1.5;verticalLabelPosition=bottom;verticalAlign=top;align=center;fontSize=16;fontStyle=1;fontColor=#0F172A;spacingTop=8;" value="P12" vertex="1">
+          <mxGeometry height="60" width="80" x="1210" y="1430" as="geometry" />
+        </mxCell>
+        <mxCell id="router-13" parent="1" style="shape=mxgraph.cisco.routers.router;html=1;pointerEvents=1;fillColor=#2563EB;strokeColor=#FFFFFF;strokeWidth=1.5;verticalLabelPosition=bottom;verticalAlign=top;align=center;fontSize=16;fontStyle=1;fontColor=#0F172A;spacingTop=8;" value="ISP100-PE13" vertex="1">
+          <mxGeometry height="60" width="80" x="90" y="850" as="geometry" />
+        </mxCell>
+        <mxCell id="router-14" parent="1" style="shape=mxgraph.cisco.routers.router;html=1;pointerEvents=1;fillColor=#2563EB;strokeColor=#FFFFFF;strokeWidth=1.5;verticalLabelPosition=bottom;verticalAlign=top;align=center;fontSize=16;fontStyle=1;fontColor=#0F172A;spacingTop=8;" value="ISP100-PE14" vertex="1">
+          <mxGeometry height="60" width="80" x="1930" y="850" as="geometry" />
+        </mxCell>
+        <mxCell id="router-15" parent="1" style="shape=mxgraph.cisco.routers.router;html=1;pointerEvents=1;fillColor=#2563EB;strokeColor=#FFFFFF;strokeWidth=1.5;verticalLabelPosition=bottom;verticalAlign=top;align=center;fontSize=16;fontStyle=1;fontColor=#0F172A;spacingTop=8;" value="ISP100-PE15" vertex="1">
+          <mxGeometry height="60" width="80" x="1010" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="router-16" parent="1" style="shape=mxgraph.cisco.routers.router;html=1;pointerEvents=1;fillColor=#2563EB;strokeColor=#FFFFFF;strokeWidth=1.5;verticalLabelPosition=bottom;verticalAlign=top;align=center;fontSize=16;fontStyle=1;fontColor=#0F172A;spacingTop=8;" value="ISP100-PE16" vertex="1">
+          <mxGeometry height="60" width="80" x="1010" y="1690" as="geometry" />
+        </mxCell>
+        <mxCell id="isp100-ipv4-address-label" parent="1" style="text;html=1;strokeColor=none;fillColor=#FFFFFF;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;fontColor=#0F172A;" value="ISP100&lt;br&gt;10.100.0.0/16&lt;br&gt;VRF ISP100&lt;br&gt;RD 100:100&lt;br&gt;route-target export 100:100&lt;br&gt;route-target import 100:100" vertex="1">
+          <mxGeometry height="155" width="290" x="480" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="lo0-1" parent="1" style="text;html=1;strokeColor=none;fillColor=#FFFFFF;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#0F172A;" value="Lo100: 10.100.20.1/32&lt;br&gt;&lt;b&gt;OSPF RID: 10.100.20.1&lt;/b&gt;" vertex="1">
+          <mxGeometry height="44" width="250" x="620" y="620" as="geometry" />
+        </mxCell>
+        <mxCell id="lo0-2" parent="1" style="text;html=1;strokeColor=none;fillColor=#FFFFFF;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#0F172A;" value="Lo100: 10.100.20.2/32&lt;br&gt;&lt;b&gt;OSPF RID: 10.100.20.2&lt;/b&gt;" vertex="1">
+          <mxGeometry height="44" width="250" x="1280" y="626" as="geometry" />
+        </mxCell>
+        <mxCell id="lo0-3" parent="1" style="text;html=1;strokeColor=none;fillColor=#FFFFFF;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#0F172A;" value="Lo100: 10.100.20.3/32&lt;br&gt;&lt;b&gt;OSPF RID: 10.100.20.3&lt;/b&gt;" vertex="1">
+          <mxGeometry height="44" width="250" x="620" y="1118" as="geometry" />
+        </mxCell>
+        <mxCell id="lo0-4" parent="1" style="text;html=1;strokeColor=none;fillColor=#FFFFFF;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#0F172A;" value="Lo100: 10.100.20.4/32&lt;br&gt;&lt;b&gt;OSPF RID: 10.100.20.4&lt;/b&gt;" vertex="1">
+          <mxGeometry height="44" width="250" x="1270" y="1118" as="geometry" />
+        </mxCell>
+        <mxCell id="lo0-5" parent="1" style="text;html=1;strokeColor=none;fillColor=#FFFFFF;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#0F172A;" value="Lo100: 10.100.20.5/32&lt;br&gt;&lt;b&gt;OSPF RID: 10.100.20.5&lt;/b&gt;" vertex="1">
+          <mxGeometry height="44" width="250" x="290" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="lo0-6" parent="1" style="text;html=1;strokeColor=none;fillColor=#FFFFFF;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#0F172A;" value="Lo100: 10.100.20.6/32&lt;br&gt;&lt;b&gt;OSPF RID: 10.100.20.6&lt;/b&gt;" vertex="1">
+          <mxGeometry height="44" width="250" x="340" y="1142" as="geometry" />
+        </mxCell>
+        <mxCell id="lo0-7" parent="1" style="text;html=1;strokeColor=none;fillColor=#FFFFFF;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#0F172A;" value="Lo100: 10.100.20.7/32&lt;br&gt;&lt;b&gt;OSPF RID: 10.100.20.7&lt;/b&gt;" vertex="1">
+          <mxGeometry height="44" width="250" x="1570" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="lo0-8" parent="1" style="text;html=1;strokeColor=none;fillColor=#FFFFFF;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#0F172A;" value="Lo100: 10.100.20.8/32&lt;br&gt;&lt;b&gt;OSPF RID: 10.100.20.8&lt;/b&gt;" vertex="1">
+          <mxGeometry height="44" width="250" x="1540" y="1142" as="geometry" />
+        </mxCell>
+        <mxCell id="lo0-9" parent="1" style="text;html=1;strokeColor=none;fillColor=#FFFFFF;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#0F172A;" value="Lo100: 10.100.20.9/32&lt;br&gt;&lt;b&gt;OSPF RID: 10.100.20.9&lt;/b&gt;" vertex="1">
+          <mxGeometry height="44" width="250" x="580" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="lo0-10" parent="1" style="text;html=1;strokeColor=none;fillColor=#FFFFFF;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#0F172A;" value="Lo100: 10.100.20.10/32&lt;br&gt;&lt;b&gt;OSPF RID: 10.100.20.10&lt;/b&gt;" vertex="1">
+          <mxGeometry height="44" width="250" x="1290" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="lo0-11" parent="1" style="text;html=1;strokeColor=none;fillColor=#FFFFFF;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#0F172A;" value="Lo100: 10.100.20.11/32&lt;br&gt;&lt;b&gt;OSPF RID: 10.100.20.11&lt;/b&gt;" vertex="1">
+          <mxGeometry height="44" width="250" x="580" y="1448" as="geometry" />
+        </mxCell>
+        <mxCell id="lo0-12" parent="1" style="text;html=1;strokeColor=none;fillColor=#FFFFFF;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#0F172A;" value="Lo100: 10.100.20.12/32&lt;br&gt;&lt;b&gt;OSPF RID: 10.100.20.12&lt;/b&gt;" vertex="1">
+          <mxGeometry height="44" width="250" x="1300" y="1448" as="geometry" />
+        </mxCell>
+        <mxCell id="lo0-13" parent="1" style="text;html=1;strokeColor=none;fillColor=#FFFFFF;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#0F172A;" value="Lo100: 10.100.21.13/32&lt;br&gt;&lt;b&gt;OSPF RID: 10.100.21.13&lt;/b&gt;" vertex="1">
+          <mxGeometry height="44" width="250" x="20" y="942" as="geometry" />
+        </mxCell>
+        <mxCell id="lo0-14" parent="1" style="text;html=1;strokeColor=none;fillColor=#FFFFFF;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#0F172A;" value="Lo100: 10.100.21.14/32&lt;br&gt;&lt;b&gt;OSPF RID: 10.100.21.14&lt;/b&gt;" vertex="1">
+          <mxGeometry height="44" width="250" x="1940" y="810" as="geometry" />
+        </mxCell>
+        <mxCell id="lo0-15" parent="1" style="text;html=1;strokeColor=none;fillColor=#FFFFFF;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#0F172A;" value="Lo100: 10.100.21.15/32&lt;br&gt;&lt;b&gt;OSPF RID: 10.100.21.15&lt;/b&gt;" vertex="1">
+          <mxGeometry height="44" width="250" x="940" y="22" as="geometry" />
+        </mxCell>
+        <mxCell id="lo0-16" parent="1" style="text;html=1;strokeColor=none;fillColor=#FFFFFF;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#0F172A;" value="Lo100: 10.100.21.16/32&lt;br&gt;&lt;b&gt;OSPF RID: 10.100.21.16&lt;/b&gt;" vertex="1">
+          <mxGeometry height="44" width="250" x="940" y="1782" as="geometry" />
+        </mxCell>
+        <mxCell id="ospf-heading" value="&lt;b&gt;ISP100 OSPF IGP&lt;/b&gt;&lt;br&gt;OSPFv2 process 100 | Backbone area 0&lt;br&gt;16 routers | 30 point-to-point links" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EFF6FF;strokeColor=#93C5FD;align=left;verticalAlign=top;spacing=18;fontSize=21;fontColor=#0F172A;" vertex="1" parent="1">
+          <mxGeometry x="80" y="65" width="570" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="ospf-policy" value="&lt;b&gt;OSPF process and routing context&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;P1–P12&lt;/b&gt;&lt;br&gt;router ospf 100 vrf ISP100&lt;br&gt;capability vrf-lite&lt;br&gt;&lt;br&gt;&lt;b&gt;ISP100-PE13–PE16&lt;/b&gt;&lt;br&gt;router ospf 100&lt;br&gt;Global routing table (GRT)&lt;br&gt;&lt;br&gt;Router IDs are Loopback100 IPv4 addresses.&lt;br&gt;Loopback100 /32 prefixes are advertised in area 0.&lt;br&gt;Loopbacks are passive; no adjacency on Lo100." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EFF6FF;strokeColor=#93C5FD;align=left;verticalAlign=top;spacing=18;fontSize=16;fontColor=#0F172A;" vertex="1" parent="1">
+          <mxGeometry x="2240" y="250" width="540" height="365" as="geometry" />
+        </mxCell>
+        <mxCell id="ospf-link-policy" value="&lt;b&gt;All 30 /30 links (P–P and PE–P)&lt;/b&gt;&lt;br&gt;&lt;br&gt;ip ospf 100 area 0&lt;br&gt;ip ospf network point-to-point&lt;br&gt;&lt;br&gt;All 60 link interfaces actively form adjacencies.&lt;br&gt;No DR/BDR election; no Type 2 LSA originated&lt;br&gt;for these links. Link topology and /30 prefixes&lt;br&gt;are represented in Type 1 Router LSAs.&lt;br&gt;&lt;br&gt;All numbered link labels marked P2P use this mode.&lt;br&gt;Unnumbered parent interfaces do not run OSPF." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EFF6FF;strokeColor=#93C5FD;align=left;verticalAlign=top;spacing=18;fontSize=16;fontColor=#0F172A;" vertex="1" parent="1">
+          <mxGeometry x="2240" y="645" width="540" height="330" as="geometry" />
+        </mxCell>
+        <mxCell id="ospf-metric-policy" value="&lt;b&gt;Metrics and passive-interface policy&lt;/b&gt;&lt;br&gt;&lt;br&gt;auto-cost reference-bandwidth 1000&lt;br&gt;Reference bandwidth: 1000 Mbps&lt;br&gt;1-Gbps links: calculated cost 1&lt;br&gt;(assuming the default 1-Gbps interface bandwidth)&lt;br&gt;&lt;br&gt;passive-interface default&lt;br&gt;no passive-interface &amp;lt;each numbered link&amp;gt;&lt;br&gt;&lt;br&gt;No redistribution or OSPF authentication configured." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EFF6FF;strokeColor=#93C5FD;align=left;verticalAlign=top;spacing=18;fontSize=16;fontColor=#0F172A;" vertex="1" parent="1">
+          <mxGeometry x="2240" y="1005" width="540" height="300" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
