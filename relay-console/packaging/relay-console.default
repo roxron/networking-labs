@@ -1,0 +1,9 @@
+RELAY_WEB_HOST=0.0.0.0
+RELAY_WEB_PORT=3000
+RELAY_APP_HOST=127.0.0.1
+RELAY_APP_PORT=3002
+RELAY_GATEWAY_HOST=0.0.0.0
+RELAY_GATEWAY_PORT=3001
+RELAY_DATA_DIR=/var/lib/relay-console/data
+RELAY_TLS_KEY=/var/lib/relay-console/certs/relay-console-key.pem
+RELAY_TLS_CERT=/var/lib/relay-console/certs/relay-console-cert.pem

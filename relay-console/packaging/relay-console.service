@@ -1,0 +1,23 @@
+[Unit]
+Description=Relay Console network lab session manager
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=relay-console
+Group=relay-console
+WorkingDirectory=/opt/relay-console/app
+EnvironmentFile=-/etc/default/relay-console
+ExecStart=/opt/relay-console/node/bin/node /opt/relay-console/app/service.mjs
+Restart=on-failure
+RestartSec=3
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=full
+ReadWritePaths=/var/lib/relay-console
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
